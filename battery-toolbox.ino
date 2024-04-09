@@ -36,6 +36,45 @@ RotaryEncoder joy = RotaryEncoder(ROT1, ROT2,
 static volatile int status = S_SPLASH;
 
 
+byte char_up[8] = {
+  0b00100,
+  0b01010,
+  0b10001,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000,
+};
+
+
+byte char_down[8] = {
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b00000,
+  0b10001,
+  0b01010,
+  0b00100,
+};
+
+
+byte char_updown[8] = {
+  0b00100,
+  0b01010,
+  0b10001,
+  0b00000,
+  0b00000,
+  0b10001,
+  0b01010,
+  0b00100,
+};
+
+#define CHAR_UP byte(0)
+#define CHAR_DOWN byte(1)
+#define CHAR_UPDOWN byte(2)
+
 void 
 joy_rotated() {
     joy.tick();
@@ -50,7 +89,9 @@ joy_pushed() {
 
 ISR(PCINT1_vect) {
     int v = analogRead(ROTSW);
-    if (v < 1000) {
+    // Serial.print(v);
+    // info();
+    if (v < 100) {
         return;
     }
     if (status & S_SPLASH) {
@@ -73,6 +114,9 @@ setup() {
     /* display settings */
     lcd.begin(16, 2);
     lcd.noAutoscroll();
+    lcd.createChar(0, char_up);
+    lcd.createChar(1, char_down);
+    lcd.createChar(2, char_updown);
 
     /* rotary encoder */
     attachInterrupt(digitalPinToInterrupt(ROT1), joy_rotated, CHANGE);
@@ -80,15 +124,14 @@ setup() {
    
     /* rotary encode push button */
 
-    /* turn on intruupt for port c */
+    /* Set PC4 as input */
+    DDRC &= ~(1 << DDC4);
+    
+    /* turn on intrrupt for port c */
     PCICR |= (1 << PCIE1);
 
     /* turn on pin PC4, which is PCINT12, physical pin 27 */
     PCMSK1 |= (1 << PCINT12);
-
-    /* enable pull-up on PC4 */
-    PORTC |= (1 << PC4);
-    DDRC |= (1 << DDC4);
 }
 
 
@@ -101,11 +144,14 @@ loop() {
     lcd.setCursor(0, 1);
     lcd.print(VVERSION);
 
-    // status = S_SPLASH;
     while (status & S_SPLASH);
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print("What to do?");
+    lcd.setCursor(0, 1);
+    lcd.write(CHAR_UP);
+    lcd.write(CHAR_DOWN);
+    lcd.write(CHAR_UPDOWN);
 
     static int pos = 0;
     joy.tick(); // just call tick() to check the state.
