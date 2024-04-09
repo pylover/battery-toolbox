@@ -1,7 +1,9 @@
 #include <LiquidCrystal.h>
 
 
-#define __VER__ "0.1.0a"
+#define PROJECT "Battery Toolbox"
+#define VERSION "0.1.0a"
+#define VVERSION "v"VERSION"(pylover)"
 
 
 /* lcd pinout */
@@ -19,14 +21,21 @@ setup() {
     /* Display settings */
     lcd.begin(16, 2);
     lcd.noAutoscroll();
-    lcd.clear();
 }
 
 
 void 
 loop() {
+    /* Greeting */
+    lcd.clear();
     lcd.setCursor(0, 0);
-    lcd.print("Battery Toolbox");
+    lcd.print(PROJECT);
     lcd.setCursor(0, 1);
-    lcd.print("Ver " __VER__);
+    lcd.print(VVERSION);
+
+    while (true);
+    delay(1000);
+    // lcd.clear();
+    // lcd.setCursor(0, 0);
+    // lcd.print("What to do?");
 }
