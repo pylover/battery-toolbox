@@ -29,6 +29,7 @@ byte char_updown[8] = {
 };
 
 
+#define CHAR_UP '^'
 #define CHAR_DOWN byte(0)
 #define CHAR_UPDOWN byte(1)
 
