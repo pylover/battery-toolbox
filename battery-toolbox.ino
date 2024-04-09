@@ -39,7 +39,7 @@ static struct menu_entry actions[] = {
 };
 
 
-static Menu menu(&lcd, "Select one:", actions, 6);
+static Menu menu("Select one:", actions, 6);
 
 void 
 joy_rotated() {
@@ -73,22 +73,18 @@ joy_rotated() {
 
 void
 joy_pushed() {
+    if (status & S_SPLASH) {
+        status = S_MENU;
+        return;
+    }
     infoln("Rotary Push");
 }
 
 
 ISR(PCINT1_vect) {
-    int v = analogRead(ROTSW);
-    // info(v);
-    // infoln();
-    if (v < 100) {
-        return;
+    if (PINC & (1 << PINC4)) {
+        joy_pushed();
     }
-    if (status & S_SPLASH) {
-        status = S_MENU;
-        return;
-    }
-    joy_pushed();
 }
 
 
@@ -103,9 +99,6 @@ setup() {
 
     /* display settings */
     lcd.begin(16, 2);
-    lcd.noAutoscroll();
-    lcd.createChar(0, char_down);
-    lcd.createChar(1, char_updown);
 
     /* rotary encoder */
     attachInterrupt(digitalPinToInterrupt(ROT1), joy_rotated, CHANGE);

@@ -2,9 +2,8 @@
 #include "common.h"
 
 
-Menu::Menu(LiquidCrystal *p, String title, struct menu_entry items[], 
+Menu::Menu(String title, struct menu_entry items[], 
         unsigned int itemscount) {
-    this->lcd = p;
     this->caption = title;
     this->entries = items;
     this->count = itemscount;
@@ -15,29 +14,29 @@ Menu::Menu(LiquidCrystal *p, String title, struct menu_entry items[],
 void
 Menu::update() {
     int i;
-    lcd->setCursor(0, 1);
-    i = lcd->print(this->entries[this->current].caption);
+    lcd.setCursor(0, 1);
+    i = lcd.print(this->entries[this->current].caption);
     for (; i < 15; i++) {
-        lcd->write(' ');
+        lcd.write(' ');
     }
 
     if ((this->count - this->current) == 1) {
-        lcd->write(CHAR_UP);
+        lcd.write(CHAR_UP);
     }
     else if (this->current == 0) {
-        lcd->write(CHAR_DOWN);
+        lcd.write(CHAR_DOWN);
     }
     else {
-        lcd->write(CHAR_UPDOWN);
+        lcd.write(CHAR_UPDOWN);
     }
 }
 
 
 void
 Menu::main() {
-    lcd->clear();
-    lcd->setCursor(0, 0);
-    lcd->print(this->caption);
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print(this->caption);
     update();
 
     while (true);

@@ -1,5 +1,9 @@
 #include "lcd.h"
 
 
-LCD::LCD(): LiquidCrystal(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7) {
+LCD::begin(uint8_t cols, uint8_t lines, uint8_t charsize) {
+    LiquidCrystal::begin(cols, lines, charsize);
+    lcd.noAutoscroll();
+    lcd.createChar(0, char_down);
+    lcd.createChar(1, char_updown);
 }

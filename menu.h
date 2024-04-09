@@ -42,13 +42,11 @@ struct menu_entry {
 
 class Menu {
 public:
-    Menu(LiquidCrystal *p, String title, struct menu_entry items[],
-            unsigned int count);
+    Menu(String title, struct menu_entry items[], unsigned int count);
     void Menu::update();
     void Menu::main();
     void Menu::scroll(int count);
 private:
-    LiquidCrystal *lcd;
     String caption;
     struct menu_entry *entries;
     unsigned int count;
