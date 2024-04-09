@@ -29,9 +29,22 @@ RotaryEncoder joy = RotaryEncoder(ROT1, ROT2,
 #define info Serial.println
 
 
+#define S_SPLASH 1
+#define S_MENU (1 << 1)
+
+
+static volatile int status = S_SPLASH;
+
+
 void 
 joy_rotated() {
     joy.tick();
+}
+
+
+void
+joy_pushed() {
+    info("Rotary Push");
 }
 
 
@@ -40,7 +53,11 @@ ISR(PCINT1_vect) {
     if (v < 1000) {
         return;
     }
-    info("Rotary Push");
+    if (status & S_SPLASH) {
+        status = S_MENU;
+        return;
+    }
+    joy_pushed();
 }
 
 
@@ -58,6 +75,11 @@ setup() {
     lcd.noAutoscroll();
 
     /* rotary encoder */
+    attachInterrupt(digitalPinToInterrupt(ROT1), joy_rotated, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(ROT2), joy_rotated, CHANGE);
+   
+    /* rotary encode push button */
+
     /* turn on intruupt for port c */
     PCICR |= (1 << PCIE1);
 
@@ -67,9 +89,6 @@ setup() {
     /* enable pull-up on PC4 */
     PORTC |= (1 << PC4);
     DDRC |= (1 << DDC4);
-
-    attachInterrupt(digitalPinToInterrupt(ROT1), joy_rotated, CHANGE);
-    attachInterrupt(digitalPinToInterrupt(ROT2), joy_rotated, CHANGE);
 }
 
 
@@ -82,11 +101,11 @@ loop() {
     lcd.setCursor(0, 1);
     lcd.print(VVERSION);
 
-    // while (true);
-    // delay(1000);
-    // lcd.clear();
-    // lcd.setCursor(0, 0);
-    // lcd.print("What to do?");
+    // status = S_SPLASH;
+    while (status & S_SPLASH);
+    lcd.clear();
+    lcd.setCursor(0, 0);
+    lcd.print("What to do?");
 
     static int pos = 0;
     joy.tick(); // just call tick() to check the state.
