@@ -1,6 +1,10 @@
 PRJ=$(lastword $(subst /, ,$(PWD)))
-FQBN=arduino:avr:uno
-PORT=/dev/ttyUSB0
+PACKAGER = arduino
+ARCH = avr
+BOARD = uno
+FQBN = $(PACKAGER):$(ARCH):$(BOARD)
+PORT = /dev/ttyUSB0
+BAUDRATE = 115200
 space := $(subst ,, )
 ACORE := $(subst $(space),:,$(wordlist 1,2,$(subst :, ,$(FQBN))))
 
@@ -13,7 +17,7 @@ BUILD_FLAGS= \
 	--build-property "build.extra_flags=-DPRJ=$(PRJ)"
 
 
-$(BINFILE):
+$(BINFILE): $(PRJ).ino
 	$(ACLI) $(ACLI_FLAGS) --output-dir $(BINDIR) compile $(BUILD_FLAGS) .
 
 
@@ -22,10 +26,6 @@ all: $(BINFILE)
 DEPS = \
 	LiquidCrystal \
 	RotaryEncoder
-
-
-.PHONY: en
-en:
 
 
 .PHONY: env
@@ -39,9 +39,15 @@ env:
 
 .PHONY: clean
 clean::
+	arduino-cli cache clean
 	-rm build/*
 
 
 .PHONY: flash
 flash: $(BINFILE)
 	$(ACLI) $(ACLI_FLAGS) --input-dir $(BINDIR) -p $(PORT) upload .
+
+
+.PHONY: screen
+screen:
+	screen $(PORT) $(BAUDRATE)
