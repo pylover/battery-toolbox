@@ -4,6 +4,7 @@
 #include <RotaryEncoder.h>
 #include "common.h"
 #include "menu.h"
+#include "lcd.h"
 
 
 #define PROJECT "Battery Toolbox"
@@ -11,14 +12,8 @@
 #define VVERSION "v"VERSION"(pylover)"
 
 
-/* lcd pinout */
-#define LCD_RS 12 
-#define LCD_EN 11 
-#define LCD_D4 10 
-#define LCD_D5 9 
-#define LCD_D6 8 
-#define LCD_D7 7
-static LiquidCrystal lcd(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
+// static LiquidCrystal lcd(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
+static LCD lcd;
 
 
 /* rotary encoder pinout */
@@ -45,7 +40,6 @@ static struct menu_entry actions[] = {
 
 
 static Menu menu(&lcd, "Select one:", actions, 6);
-
 
 void 
 joy_rotated() {

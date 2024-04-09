@@ -19,7 +19,9 @@ SRCS = \
 	$(PRJ).ino \
 	common.h \
 	menu.ino \
-	menu.h
+	menu.h \
+	lcd.ino \
+	lcd.h
 
 
 $(BINFILE): $(SRCS)
