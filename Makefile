@@ -15,9 +15,14 @@ ACLI_FLAGS= \
 	--fqbn $(FQBN)
 BUILD_FLAGS= \
 	--build-property "build.extra_flags=-DPRJ=$(PRJ)"
+SRCS = \
+	$(PRJ).ino \
+	common.h \
+	menu.ino \
+	menu.h
 
 
-$(BINFILE): $(PRJ).ino
+$(BINFILE): $(SRCS)
 	$(ACLI) $(ACLI_FLAGS) --output-dir $(BINDIR) compile $(BUILD_FLAGS) .
 
 

@@ -2,6 +2,8 @@
 
 #include <LiquidCrystal.h>
 #include <RotaryEncoder.h>
+#include "common.h"
+#include "menu.h"
 
 
 #define PROJECT "Battery Toolbox"
@@ -16,17 +18,15 @@
 #define LCD_D5 9 
 #define LCD_D6 8 
 #define LCD_D7 7
-LiquidCrystal lcd(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
+static LiquidCrystal lcd(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7);
+
 
 /* rotary encoder pinout */
 #define ROT1 2
 #define ROT2 3
 #define ROTSW A4 
-RotaryEncoder joy = RotaryEncoder(ROT1, ROT2, 
+static RotaryEncoder joy = RotaryEncoder(ROT1, ROT2, 
         RotaryEncoder::LatchMode::FOUR3);
-
-
-#define info Serial.println
 
 
 #define S_SPLASH 1
@@ -34,63 +34,59 @@ RotaryEncoder joy = RotaryEncoder(ROT1, ROT2,
 
 
 static volatile int status = S_SPLASH;
-
-
-byte char_up[8] = {
-  0b00100,
-  0b01010,
-  0b10001,
-  0b00000,
-  0b00000,
-  0b00000,
-  0b00000,
-  0b00000,
+static struct menu_entry actions[] = {
+    {"1. 12345678901", NULL},
+    {"2. Foo", NULL},
+    {"3. Bar", NULL},
+    {"4. Baz", NULL},
+    {"5. qux", NULL},
+    {"6. quux", NULL},
 };
 
 
-byte char_down[8] = {
-  0b00000,
-  0b00000,
-  0b00000,
-  0b00000,
-  0b00000,
-  0b10001,
-  0b01010,
-  0b00100,
-};
+static Menu menu(&lcd, "Select one:", actions, 6);
 
-
-byte char_updown[8] = {
-  0b00100,
-  0b01010,
-  0b10001,
-  0b00000,
-  0b00000,
-  0b10001,
-  0b01010,
-  0b00100,
-};
-
-#define CHAR_UP byte(0)
-#define CHAR_DOWN byte(1)
-#define CHAR_UPDOWN byte(2)
 
 void 
 joy_rotated() {
+    if (status & S_SPLASH) {
+        return;
+    }
+
     joy.tick();
+    int pos = joy.getPosition();
+    if (!pos) {
+        return;
+    }
+
+    joy.setPosition(0);
+    menu.scroll(pos);
+    
+    // static int pos = 0;
+    // joy.tick();
+    // int newPos = joy.getPosition();
+    // if (pos == newPos) {
+    //     return;
+    // }
+
+    // pos = newPos;
+    // info("pos: ");
+    // infoln(newPos);
+    // joy.setPosition(0);
+    // pos = 0;
 }
 
 
 void
 joy_pushed() {
-    info("Rotary Push");
+    infoln("Rotary Push");
 }
 
 
 ISR(PCINT1_vect) {
     int v = analogRead(ROTSW);
-    // Serial.print(v);
-    // info();
+    // info(v);
+    // infoln();
     if (v < 100) {
         return;
     }
@@ -106,24 +102,22 @@ void
 setup() {
     Serial.begin(115200);
     while (!Serial);
-    info();
-    info(PROJECT);
-    info(VVERSION);
-    info();
+    infoln();
+    infoln(PROJECT);
+    infoln(VVERSION);
+    infoln();
 
     /* display settings */
     lcd.begin(16, 2);
     lcd.noAutoscroll();
-    lcd.createChar(0, char_up);
-    lcd.createChar(1, char_down);
-    lcd.createChar(2, char_updown);
+    lcd.createChar(0, char_down);
+    lcd.createChar(1, char_updown);
 
     /* rotary encoder */
     attachInterrupt(digitalPinToInterrupt(ROT1), joy_rotated, CHANGE);
     attachInterrupt(digitalPinToInterrupt(ROT2), joy_rotated, CHANGE);
    
     /* rotary encode push button */
-
     /* Set PC4 as input */
     DDRC &= ~(1 << DDC4);
     
@@ -145,24 +139,14 @@ loop() {
     lcd.print(VVERSION);
 
     while (status & S_SPLASH);
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print("What to do?");
-    lcd.setCursor(0, 1);
-    lcd.write(CHAR_UP);
-    lcd.write(CHAR_DOWN);
-    lcd.write(CHAR_UPDOWN);
+    menu.main();
 
-    static int pos = 0;
-    joy.tick(); // just call tick() to check the state.
-    while (true) {
-        int newPos = joy.getPosition();
-        if (pos != newPos) {
-            Serial.print("pos:");
-            Serial.print(newPos);
-            Serial.print(" dir:");
-            info((int)(joy.getDirection()));
-            pos = newPos;
-        }
-    }
+    // lcd.clear();
+    // lcd.setCursor(0, 0);
+    // lcd.print("What to do?");
+    // lcd.setCursor(0, 1);
+    // lcd.print("^");
+    // lcd.write(CHAR_DOWN);
+    // lcd.write(CHAR_UPDOWN);
+    while (true);
 }
