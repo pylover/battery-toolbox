@@ -7,6 +7,7 @@ public:
     void wait();
     void pushed() override;
     int rotated(int amount) override;
+    static void Splash::show();
 private:
     volatile bool waiting;
 };

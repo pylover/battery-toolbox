@@ -27,3 +27,11 @@ void
 Splash::pushed() {
     this->waiting = false;
 }
+
+
+void
+Splash::show() {
+    Splash *splash = new Splash();
+    splash->wait();
+    delete splash;
+}

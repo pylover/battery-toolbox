@@ -7,13 +7,8 @@
 #include "splash.h"
 
 
-#define S_SPLASH 1
-#define S_MENU (1 << 1)
-
-
 static Display lcd;
 static Rotary rotary;
-static volatile int status = S_SPLASH;
 static struct menu_entry actions[] = {
     {"1. 12345678901", NULL},
     {"2. Foo", NULL},
@@ -51,11 +46,9 @@ setup() {
 void 
 loop() {
     /* Greeting */
-    Splash *splash = new Splash();
-    splash->wait();
-    delete splash;
+    Splash::show();
 
-    while (status & S_SPLASH);
+    /* Main menu */
     menu.main();
 
     // lcd.clear();
