@@ -48,18 +48,13 @@ loop() {
     /* Greeting */
     Splash::show();
 
-    /* Main menu */
-    menu.show();
-    
-    /* Selected */
-    info("Selected: ");
-    infoln(menu.selected);
-    // lcd.clear();
-    // lcd.setCursor(0, 0);
-    // lcd.print("What to do?");
-    // lcd.setCursor(0, 1);
-    // lcd.print("^");
-    // lcd.write(CHAR_DOWN);
-    // lcd.write(CHAR_UPDOWN);
+    while (true) {
+        /* Main menu */
+        menu.show();
+        
+        /* Selected */
+        info("Selected: ");
+        infoln(menu.selected);
+    }
     while (true);
 }

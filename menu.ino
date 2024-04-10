@@ -8,7 +8,7 @@ Menu::Menu(String title, struct menu_entry items[], unsigned int itemscount) {
     this->entries = items;
     this->count = itemscount;
     this->current = 0;
-    this->selected = 0;
+    this->selected = -1;
 }
 
 
@@ -16,11 +16,8 @@ void
 Menu::update() {
     int i;
     lcd.setCursor(0, 1);
-    i = lcd.print(this->entries[this->current].caption);
-    for (; i < 15; i++) {
-        lcd.write(' ');
-    }
-
+    lcd.printl(this->entries[this->current].caption);
+    lcd.setCursor(15, 1);
     if ((this->count - this->current) == 1) {
         lcd.write(CHAR_UP);
     }
@@ -35,14 +32,14 @@ Menu::update() {
 
 void
 Menu::show() {
+    this->current = 0;
     lcd.clear();
-    lcd.setCursor(0, 0);
     lcd.print(this->caption);
     rotary.consumer = this;
     rotary.setPosition(0);
     this->update();
-    this->selected = 0;
-    while (!this->selected);
+    this->selected = -1;
+    while (this->selected < 0);
     rotary.consumer = NULL;
 }
     
