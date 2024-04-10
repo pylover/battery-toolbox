@@ -2,14 +2,23 @@
 #define SPLASH_H
 
 
-class Splash: public RotaryConsumer {
+class Dialog: public RotaryConsumer {
 public:
     void wait();
     void pushed() override;
     int rotated(int amount) override;
-    static void Splash::show();
+protected:
+    virtual void print();
 private:
     volatile bool waiting;
+};
+
+
+class Splash: public Dialog {
+public:
+    static void show();
+protected:
+    void print() override;
 };
 
 

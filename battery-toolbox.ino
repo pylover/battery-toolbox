@@ -10,7 +10,7 @@
 static Display lcd;
 static Rotary rotary;
 static struct menu_entry actions[] = {
-    {"1. 12345678901", NULL},
+    {"1. DISCHARGE", NULL},
     {"2. Foo", NULL},
     {"3. Bar", NULL},
     {"4. Baz", NULL},

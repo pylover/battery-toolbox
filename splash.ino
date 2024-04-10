@@ -2,12 +2,10 @@
 
 
 void
-Splash::wait() {
+Dialog::wait() {
     this->waiting = true;
     lcd.clear();
-    lcd.print(PROJECT);
-    lcd.setCursor(0, 1);
-    lcd.print(VVERSION);
+    this->print();
     rotary.consumer = this;
     rotary.setPosition(0);
     while (this->waiting);
@@ -17,21 +15,29 @@ Splash::wait() {
 
 
 int 
-Splash::rotated(int pos) {
+Dialog::rotated(int pos) {
     this->waiting = false;
     return pos;
 }
 
 
 void
-Splash::pushed() {
+Dialog::pushed() {
     this->waiting = false;
 }
 
 
 void
 Splash::show() {
-    Splash *splash = new Splash();
-    splash->wait();
-    delete splash;
+    Splash *d = new Splash();
+    d->wait();
+    delete d;
+}
+
+
+void
+Splash::print() {
+    lcd.print(PROJECT);
+    lcd.setCursor(0, 1);
+    lcd.print(VVERSION);
 }
