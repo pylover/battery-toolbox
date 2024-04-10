@@ -1,10 +1,41 @@
 #include "rotary.h"
 
 
+static void
+Rotary::isr() {
+    rotary.rotated();
+}
+
+
+void
+Rotary::rotated() {
+    if (this->consumer == NULL) {
+        return;
+    }
+    this->tick();
+    int pos = this->consumer->rotated(this->getPosition());
+    this->setPosition(pos);
+}
+
+
+void
+Rotary::pushed() {
+    if (this->consumer == NULL) {
+        return;
+    }
+    this->consumer->pushed();
+    // if (status & S_SPLASH) {
+    //     status = S_MENU;
+    //     return;
+    // }
+    // infoln("Rotary Push");
+}
+
+
 void
 Rotary::begin() {
-    attachInterrupt(digitalPinToInterrupt(ROT1), joy_rotated, CHANGE);
-    attachInterrupt(digitalPinToInterrupt(ROT2), joy_rotated, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(ROT1), isr, CHANGE);
+    attachInterrupt(digitalPinToInterrupt(ROT2), isr, CHANGE);
     
     /* rotary encode push button */
     /* Set PC4 as input */

@@ -35,7 +35,7 @@ byte char_updown[8] = {
 
 
 struct menu_entry {
-    const char caption[16];
+    const char *caption;
     void (*func) ();
 };
 

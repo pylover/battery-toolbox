@@ -10,10 +10,22 @@
 #define ROTSW A4
 
 
+class RotaryConsumer {
+public:
+    virtual int rotated(int amount);
+    virtual void pushed();
+};
+
+
 class Rotary : public RotaryEncoder {
 public:
     Rotary(): RotaryEncoder(ROT1, ROT2, RotaryEncoder::LatchMode::FOUR3) {};
-    void Rotary::begin();
+    void begin();
+    void pushed();
+    RotaryConsumer *consumer = NULL;
+private:
+    void rotated();
+    static void isr();
 };
 
 

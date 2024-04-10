@@ -4,6 +4,7 @@
 #include "menu.h"
 #include "display.h"
 #include "rotary.h"
+#include "splash.h"
 
 
 #define S_SPLASH 1
@@ -11,7 +12,7 @@
 
 
 static Display lcd;
-static Rotary joy;
+static Rotary rotary;
 static volatile int status = S_SPLASH;
 static struct menu_entry actions[] = {
     {"1. 12345678901", NULL},
@@ -25,49 +26,10 @@ static struct menu_entry actions[] = {
 
 static Menu menu("Select one:", actions, 6);
 
-void 
-joy_rotated() {
-    if (status & S_SPLASH) {
-        return;
-    }
-
-    joy.tick();
-    int pos = joy.getPosition();
-    if (!pos) {
-        return;
-    }
-
-    joy.setPosition(0);
-    menu.scroll(pos);
-    
-    // static int pos = 0;
-    // joy.tick();
-    // int newPos = joy.getPosition();
-    // if (pos == newPos) {
-    //     return;
-    // }
-
-    // pos = newPos;
-    // info("pos: ");
-    // infoln(newPos);
-    // joy.setPosition(0);
-    // pos = 0;
-}
-
-
-void
-joy_pushed() {
-    if (status & S_SPLASH) {
-        status = S_MENU;
-        return;
-    }
-    infoln("Rotary Push");
-}
-
 
 ISR(PCINT1_vect) {
     if (PINC & (1 << PINC4)) {
-        joy_pushed();
+        rotary.pushed();
     }
 }
 
@@ -81,19 +43,17 @@ setup() {
     infoln(VVERSION);
     infoln();
 
+    rotary.begin();
     lcd.begin();
-    joy.begin();
 }
 
 
 void 
 loop() {
     /* Greeting */
-    lcd.clear();
-    lcd.setCursor(0, 0);
-    lcd.print(PROJECT);
-    lcd.setCursor(0, 1);
-    lcd.print(VVERSION);
+    Splash *splash = new Splash();
+    splash->wait();
+    delete splash;
 
     while (status & S_SPLASH);
     menu.main();

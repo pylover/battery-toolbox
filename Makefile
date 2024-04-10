@@ -20,10 +20,12 @@ SRCS = \
 	common.h \
 	rotary.ino \
 	rotary.h \
-	menu.ino \
-	menu.h \
 	display.ino \
-	display.h
+	display.h \
+	splash.ino \
+	splash.h \
+	menu.ino \
+	menu.h
 
 
 $(BINFILE): $(SRCS)
