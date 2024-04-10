@@ -16,7 +16,6 @@ ACLI_FLAGS= \
 BUILD_FLAGS= \
 	--build-property "build.extra_flags=-DPRJ=$(PRJ)"
 SRCS = \
-	$(PRJ).ino \
 	common.h \
 	rotary.ino \
 	rotary.h \
@@ -25,7 +24,8 @@ SRCS = \
 	splash.ino \
 	splash.h \
 	menu.ino \
-	menu.h
+	menu.h \
+	$(PRJ).ino \
 
 
 $(BINFILE): $(SRCS)
@@ -50,7 +50,7 @@ env:
 
 .PHONY: clean
 clean::
-	arduino-cli cache clean
+	-arduino-cli cache clean
 	-rm build/*
 
 

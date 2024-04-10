@@ -1,4 +1,6 @@
+#include <Arduino.h>
 #include "rotary.h"
+#include "common.h"
 
 
 static void
@@ -13,7 +15,15 @@ Rotary::rotated() {
         return;
     }
     this->tick();
-    int pos = this->consumer->rotated(this->getPosition());
+    int pos = this->getPosition();
+    if (pos == this->oldpos) {
+        return;
+    }
+    this->oldpos = pos;
+    pos = this->consumer->rotated(pos);
+    if (pos == this->oldpos) {
+        return;
+    }
     this->setPosition(pos);
 }
 
@@ -24,11 +34,6 @@ Rotary::pushed() {
         return;
     }
     this->consumer->pushed();
-    // if (status & S_SPLASH) {
-    //     status = S_MENU;
-    //     return;
-    // }
-    // infoln("Rotary Push");
 }
 
 
@@ -46,4 +51,7 @@ Rotary::begin() {
 
     /* turn on pin PC4, which is PCINT12, physical pin 27 */
     PCMSK1 |= (1 << PCINT12);
+
+    this->oldpos = 0;
+    this->setPosition(0);
 }

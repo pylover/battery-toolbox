@@ -1,13 +1,14 @@
+#include <Arduino.h>
 #include "menu.h"
 #include "common.h"
 
 
-Menu::Menu(String title, struct menu_entry items[], 
-        unsigned int itemscount) {
+Menu::Menu(String title, struct menu_entry items[], unsigned int itemscount) {
     this->caption = title;
     this->entries = items;
     this->count = itemscount;
     this->current = 0;
+    this->selected = 0;
 }
 
 
@@ -33,22 +34,31 @@ Menu::update() {
 
 
 void
-Menu::main() {
+Menu::show() {
     lcd.clear();
     lcd.setCursor(0, 0);
     lcd.print(this->caption);
-    update();
-
-    while (true);
+    rotary.consumer = this;
+    rotary.setPosition(0);
+    this->update();
+    this->selected = 0;
+    while (!this->selected);
+    rotary.consumer = NULL;
 }
     
 
 void 
-Menu::scroll(int pos) {
-    int newindex = this->current + pos;
-    if ((newindex < 0) || (newindex >= this->count)) {
-        return;
+Menu::pushed() {
+    this->selected = this->current;
+}
+
+
+int 
+Menu::rotated(int pos) {
+    if ((pos < 0) || (pos >= this->count)) {
+        return this->current;
     }
-    this->current = newindex;
-    update();
+    this->current = pos;
+    this->update();
+    return pos;
 }

@@ -10,6 +10,12 @@
 #define ROTSW A4
 
 
+class Foo {
+public:
+    virtual int rotated(int amount);
+    virtual void pushed();
+};
+
 class RotaryConsumer {
 public:
     virtual int rotated(int amount);
@@ -22,10 +28,11 @@ public:
     Rotary(): RotaryEncoder(ROT1, ROT2, RotaryEncoder::LatchMode::FOUR3) {};
     void begin();
     void pushed();
-    RotaryConsumer *consumer = NULL;
+    volatile RotaryConsumer *consumer = NULL;
 private:
     void rotated();
     static void isr();
+    volatile int oldpos;
 };
 
 

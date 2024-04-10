@@ -49,8 +49,11 @@ loop() {
     Splash::show();
 
     /* Main menu */
-    menu.main();
-
+    menu.show();
+    
+    /* Selected */
+    info("Selected: ");
+    infoln(menu.selected);
     // lcd.clear();
     // lcd.setCursor(0, 0);
     // lcd.print("What to do?");

@@ -10,6 +10,7 @@ Splash::wait() {
     lcd.setCursor(0, 1);
     lcd.print(VVERSION);
     rotary.consumer = this;
+    rotary.setPosition(0);
     while (this->waiting);
     lcd.clear();
     lcd.setCursor(0, 0);
@@ -18,8 +19,9 @@ Splash::wait() {
 
 
 int 
-Splash::rotated(int amount) {
+Splash::rotated(int pos) {
     this->waiting = false;
+    return pos;
 }
 
 

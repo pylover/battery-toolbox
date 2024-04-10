@@ -4,6 +4,9 @@
 
 #include <Arduino.h>
 
+#include <RotaryEncoder.h>
+#include "rotary.h"
+
 
 byte char_down[8] = {
   0b00000,
@@ -40,17 +43,20 @@ struct menu_entry {
 };
 
 
-class Menu {
+class Menu: public RotaryConsumer {
 public:
     Menu(String title, struct menu_entry items[], unsigned int count);
-    void Menu::update();
-    void Menu::main();
-    void Menu::scroll(int count);
+    void update();
+    void show();
+    volatile int selected;
+
+    void pushed() override;
+    int rotated(int amount) override;
 private:
     String caption;
     struct menu_entry *entries;
     unsigned int count;
-    int current;
+    volatile int current;
 };
 
 
