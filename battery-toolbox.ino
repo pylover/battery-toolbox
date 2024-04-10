@@ -19,7 +19,7 @@ static struct menu_entry actions[] = {
 };
 
 
-static Menu menu("Select one:", actions, 6);
+static Menu menu("Select one:", actions, ENTRYCOUNT(actions));
 
 
 ISR(PCINT1_vect) {
@@ -45,16 +45,17 @@ setup() {
 
 void 
 loop() {
+    struct menu_entry *prog;
     /* Greeting */
     Splash::show();
 
     while (true) {
         /* Main menu */
-        menu.show();
+        prog = menu.show();
         
         /* Selected */
         info("Selected: ");
-        infoln(menu.selected);
+        infoln(prog->caption);
     }
     while (true);
 }

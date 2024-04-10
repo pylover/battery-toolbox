@@ -30,17 +30,18 @@ Menu::update() {
 }
 
 
-void
+struct menu_entry* 
 Menu::show() {
     this->current = 0;
     lcd.clear();
     lcd.print(this->caption);
     rotary.consumer = this;
+    this->selected = -1;
     rotary.setPosition(0);
     this->update();
-    this->selected = -1;
     while (this->selected < 0);
     rotary.consumer = NULL;
+    return &this->entries[this->selected];
 }
     
 

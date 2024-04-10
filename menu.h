@@ -35,6 +35,7 @@ byte char_updown[8] = {
 #define CHAR_UP '^'
 #define CHAR_DOWN byte(0)
 #define CHAR_UPDOWN byte(1)
+#define ENTRYCOUNT(a) (sizeof(a) / sizeof (struct menu_entry))
 
 
 struct menu_entry {
@@ -47,16 +48,17 @@ class Menu: public RotaryConsumer {
 public:
     Menu(String title, struct menu_entry items[], unsigned int count);
     void update();
-    void show();
-    volatile int selected;
+    struct menu_entry* show();
 
     void pushed() override;
-    int rotated(int amount) override;
+    int rotated(int pos) override;
+
 private:
     String caption;
     struct menu_entry *entries;
     unsigned int count;
     volatile int current;
+    volatile int selected;
 };
 
 
