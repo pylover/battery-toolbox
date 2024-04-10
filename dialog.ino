@@ -5,7 +5,7 @@ void
 Dialog::wait() {
     this->waiting = true;
     lcd.clear();
-    this->print();
+    this->render();
     rotary.consumer = this;
     rotary.setPosition(0);
     while (this->waiting);
@@ -36,7 +36,7 @@ Splash::show() {
 
 
 void
-Splash::print() {
+Splash::render() {
     lcd.print(PROJECT);
     lcd.setCursor(0, 1);
     lcd.print(VVERSION);

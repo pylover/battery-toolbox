@@ -21,8 +21,8 @@ SRCS = \
 	rotary.h \
 	display.ino \
 	display.h \
-	splash.ino \
-	splash.h \
+	dialog.ino \
+	dialog.h \
 	menu.ino \
 	menu.h \
 	$(PRJ).ino \

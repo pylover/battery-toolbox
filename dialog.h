@@ -1,5 +1,5 @@
-#ifndef SPLASH_H
-#define SPLASH_H
+#ifndef DIALOG_H
+#define DIALOG_H
 
 
 class Dialog: public RotaryConsumer {
@@ -8,7 +8,7 @@ public:
     void pushed() override;
     int rotated(int amount) override;
 protected:
-    virtual void print();
+    virtual void render();
 private:
     volatile bool waiting;
 };
@@ -18,8 +18,8 @@ class Splash: public Dialog {
 public:
     static void show();
 protected:
-    void print() override;
+    void render() override;
 };
 
 
-#endif  // SPLASH_H
+#endif  // DIALOG_H
