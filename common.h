@@ -2,6 +2,9 @@
 #define COMMON_H
 
 
+#include <Arduino.h>
+
+
 #define PROJECT "Battery Toolbox"
 #define VERSION "0.1.0a"
 #define VVERSION "v"VERSION"(pylover)"

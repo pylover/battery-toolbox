@@ -4,7 +4,7 @@
 #include "menu.h"
 #include "display.h"
 #include "rotary.h"
-#include "splash.h"
+#include "dialog.h"
 
 
 static Display lcd;
@@ -47,15 +47,14 @@ void
 loop() {
     struct menu_entry *prog;
     /* Greeting */
-    Splash::show();
+    Dialog::show(PROJECT, VVERSION);
 
     while (true) {
         /* Main menu */
         prog = menu.show();
         
         /* Selected */
-        info("Selected: ");
-        infoln(prog->caption);
+        Dialog::show("Selected: ", prog->caption);
     }
     while (true);
 }

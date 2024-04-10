@@ -2,23 +2,18 @@
 #define DIALOG_H
 
 
+#include "common.h"
+
+
 class Dialog: public RotaryConsumer {
 public:
+    Dialog(String first, String second);
     void wait();
     void pushed() override;
     int rotated(int amount) override;
-protected:
-    virtual void render();
+    static void show(String first, String second);
 private:
     volatile bool waiting;
-};
-
-
-class Splash: public Dialog {
-public:
-    static void show();
-protected:
-    void render() override;
 };
 
 
