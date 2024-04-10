@@ -1,6 +1,7 @@
 #include "display.h"
 
 
+void
 Display::begin() {
     LiquidCrystal::begin(16, 2, LCD_5x8DOTS);
     lcd.noAutoscroll();
