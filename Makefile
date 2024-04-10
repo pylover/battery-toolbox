@@ -18,10 +18,12 @@ BUILD_FLAGS= \
 SRCS = \
 	$(PRJ).ino \
 	common.h \
+	rotary.ino \
+	rotary.h \
 	menu.ino \
 	menu.h \
-	lcd.ino \
-	lcd.h
+	display.ino \
+	display.h
 
 
 $(BINFILE): $(SRCS)
