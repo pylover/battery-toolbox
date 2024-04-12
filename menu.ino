@@ -14,9 +14,12 @@ Menu::Menu(String title, struct menu_entry items[], unsigned int itemscount) {
 
 void
 Menu::update() {
-    int i;
+    int i = 0;
     lcd.setCursor(0, 1);
-    lcd.printl(this->entries[this->current].caption);
+    i += lcd.print(this->current + 1);
+    i += lcd.print(". ");
+    i += lcd.print(this->entries[this->current].caption);
+    lcd.fill(' ', i);
     lcd.setCursor(15, 1);
     if ((this->count - this->current) == 1) {
         lcd.write(CHAR_UP);

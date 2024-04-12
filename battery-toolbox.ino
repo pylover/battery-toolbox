@@ -10,16 +10,16 @@
 static Display lcd;
 static Rotary rotary;
 static struct menu_entry actions[] = {
-    {"1. DISCHARGE", NULL},
-    {"2. Foo", NULL},
-    {"3. Bar", NULL},
-    {"4. Baz", NULL},
-    {"5. qux", NULL},
-    {"6. quux", NULL},
+    {"Examine", NULL},
+    {"Foo", NULL},
+    {"Bar", NULL},
+    {"Baz", NULL},
+    {"qux", NULL},
+    {"quux", NULL},
 };
 
 
-static Menu menu("Select one:", actions, ENTRYCOUNT(actions));
+static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
 
 
 ISR(PCINT1_vect) {
@@ -40,14 +40,34 @@ setup() {
 
     rotary.begin();
     lcd.begin();
+
+    pinMode(A0, INPUT);
+    // analogReference(INTERNAL);
+    analogReference(EXTERNAL);
 }
 
+// #define RES (((float)30) / ((float)1024))
+#define RES 0.3
 
 void 
 loop() {
     struct menu_entry *prog;
     /* Greeting */
     Dialog::show(PROJECT, VVERSION);
+    
+    int val1;
+    double v;
+    while (true) {
+        val1 = analogRead(A0);
+        v = ((double)val1) * ((double)0.016);
+        Serial.println(v);
+        lcd.clear();
+        lcd.print(val1);
+        lcd.setCursor(0, 1);
+        lcd.printDouble(v, 10000);
+        lcd.write('V');
+        delay(500);
+    }
 
     while (true) {
         /* Main menu */

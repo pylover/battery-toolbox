@@ -15,9 +15,11 @@
 
 class Display: public LiquidCrystal {
 public:
-    Display(): LiquidCrystal(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7) {};
+    Display(): LiquidCrystal(LCD_RS, LCD_EN, LCD_D4, LCD_D5, LCD_D6, LCD_D7) {
+    };
     void begin();
-    printl(char *data);
+    int fill(char c, int from=0, int to=15);
+    int printDouble(double val, unsigned int precision);
 };
 
 
