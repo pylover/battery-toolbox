@@ -19,11 +19,15 @@ def calc(r1, r2, pot, vref, vmax):
     calcv(r1, r2, pot, vmax / 2, vref, vmax)
     calcv(r1, r2, pot, vmax, vref, vmax)
     print()
-    print(f"ADC resolutino({vmax}V/1024):   {vmax / 1024:8.4f} V")
+    print(f"ADC resolutino({vmax}V/1024):   {vmax / 1024:9.4f} V")
+    print(f"R1:                             {r1:9.4f} Ω");
+    print(f"POT:                            {pot:9.4f} Ω");
+    print(f"R2:                             {r2:9.4f} Ω");
 
 
 if __name__ == '__main__':
-    calc(20000, 2800, 500, 2.2, 16.384)
+    # calc(20000, 2800, 500, 2.2, 16.384)
+    calc(20000, 6190, 5000, 4.8, 16.384)
 
 
 """
