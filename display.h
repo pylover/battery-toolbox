@@ -5,12 +5,12 @@
 #include <LiquidCrystal.h>
 
 
-#define LCD_RS 12
-#define LCD_EN 11
-#define LCD_D4 10
-#define LCD_D5 9
-#define LCD_D6 8
-#define LCD_D7 7
+#define LCD_RS 13
+#define LCD_EN 12
+#define LCD_D4 8
+#define LCD_D5 7
+#define LCD_D6 5
+#define LCD_D7 4
 
 
 class Display: public LiquidCrystal {
