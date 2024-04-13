@@ -7,7 +7,7 @@ def calc(v, zv, zw, rs):
     print()
     print(f"VDD:              {v:9.4f} V")
     print(f"Current(max):     {cmax:9.4f} A")
-    print(f"RS(max):          {rsmax:9.4f} Ω");
+    print(f"RS(min):          {rsmax:9.4f} Ω");
     print(f"RS voltage(max):  {rsmax * cmax:9.4f} V");
 
     c = (v - zv) / rs
@@ -17,6 +17,7 @@ def calc(v, zv, zw, rs):
 
 
 if __name__ == '__main__':
-    rs = 150
-    calc(5, 2.2, .5, rs)
-    # calc(3.3, 2.2, .5, rs)
+    # rs = 150
+    # calc(5, 2.2, .5, rs)
+    rs = 22
+    calc(5, 4.7, .5, rs)
