@@ -20,4 +20,4 @@ if __name__ == '__main__':
     # rs = 150
     # calc(5, 2.2, .5, rs)
     rs = 22
-    calc(5, 4.7, .5, rs)
+    calc(5, 4.85, .5, rs)

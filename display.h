@@ -19,7 +19,6 @@ public:
     };
     void begin();
     int fill(char c, int from=0, int to=15);
-    int printDouble(double val, unsigned int precision);
 };
 
 

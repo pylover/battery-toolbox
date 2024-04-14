@@ -42,6 +42,8 @@ setup() {
     lcd.begin();
 
     pinMode(A0, INPUT);
+    pinMode(A1, INPUT);
+
     // analogReference(INTERNAL);
     analogReference(EXTERNAL);
 }
@@ -51,20 +53,73 @@ setup() {
 
 void 
 loop() {
-    struct menu_entry *prog;
-    /* Greeting */
-    Dialog::show(PROJECT, VVERSION);
-    
-    int val1;
+    int adcval;
     double v;
+    struct menu_entry *prog;
+
+    // /* Greeting */
+    // Dialog::show(PROJECT, VVERSION);
+
+    /* A meter */
+    // /* Calibrate */
+    // int adcval_last = 0;
+    // int offset;
+    // Serial.print("Calibrating ACS712 ...");
+    // while (true) {
+    //     adcval = analogRead(A1);
+    //     if (adcval_last == adcval) {
+    //         break;
+    //     }
+    //     adcval_last = adcval;
+    //     offset = 512 - adcval;
+    //     Serial.print("adc val: ");
+    //     Serial.println(adcval);
+    //     Serial.print("offset: ");
+    //     Serial.println(offset);
+    //     delay(100);
+    // }
+    // Serial.print("Calibration done");
+    
+#define MAX(a, b) (a > b? a: b)
+
+    // Serial.print("Calibrating ACS712 ...");
+    // adcval = analogRead(A1);
+    // delay(10);
+    // adcval = max(adcval, analogRead(A1));
+    // delay(10);
+    // int offset = max(adcval, analogRead(A1));
+    // Serial.print("Calibration done");
+    int offset = 507;
+
     while (true) {
-        val1 = analogRead(A0);
-        v = ((double)val1) * ((double)0.016);
+        adcval = analogRead(A1);
+        delay(10);
+        adcval = max(adcval, analogRead(A1));
+        delay(10);
+        adcval = max(adcval, analogRead(A1));
+        lcd.clear();
+        lcd.print(adcval);
+        adcval -= offset;
+        // Serial.print("adc val: ");
+        // Serial.println(adcval);
+        v = ((double)adcval) * ((double)0.049);
+        // v -= 25;
+        Serial.println(v);
+        lcd.setCursor(0, 1);
+        lcd.print(v, 2);
+        lcd.write('A');
+        delay(500);
+    }
+
+    /* Battery Voltage */
+    while (true) {
+        adcval = analogRead(A0);
+        v = ((double)adcval) * ((double)0.016);
         Serial.println(v);
         lcd.clear();
-        lcd.print(val1);
+        lcd.print(adcval);
         lcd.setCursor(0, 1);
-        lcd.printDouble(v, 10000);
+        lcd.print(v, 2);
         lcd.write('V');
         delay(500);
     }
