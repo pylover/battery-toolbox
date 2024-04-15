@@ -80,8 +80,7 @@ loop() {
     // }
     // Serial.print("Calibration done");
     
-#define MAX(a, b) (a > b? a: b)
-
+    // #define MAX(a, b) (a > b? a: b)
     // Serial.print("Calibrating ACS712 ...");
     // adcval = analogRead(A1);
     // delay(10);
@@ -89,40 +88,44 @@ loop() {
     // delay(10);
     // int offset = max(adcval, analogRead(A1));
     // Serial.print("Calibration done");
-    int offset = 507;
+    // int offset = 507;
 
-    while (true) {
-        adcval = analogRead(A1);
-        delay(10);
-        adcval = max(adcval, analogRead(A1));
-        delay(10);
-        adcval = max(adcval, analogRead(A1));
-        lcd.clear();
-        lcd.print(adcval);
-        adcval -= offset;
-        // Serial.print("adc val: ");
-        // Serial.println(adcval);
-        v = ((double)adcval) * ((double)0.049);
-        // v -= 25;
-        Serial.println(v);
-        lcd.setCursor(0, 1);
-        lcd.print(v, 2);
-        lcd.write('A');
-        delay(500);
-    }
+    // while (true) {
+    //     adcval = analogRead(A1);
+    //     delay(10);
+    //     adcval = max(adcval, analogRead(A1));
+    //     delay(10);
+    //     adcval = max(adcval, analogRead(A1));
+    //     lcd.clear();
+    //     lcd.print(adcval);
+    //     adcval -= offset;
+    //     // Serial.print("adc val: ");
+    //     // Serial.println(adcval);
+    //     v = ((double)adcval) * ((double)0.049);
+    //     // v -= 25;
+    //     Serial.println(v);
+    //     lcd.setCursor(0, 1);
+    //     lcd.print(v, 2);
+    //     lcd.write('A');
+    //     delay(500);
+    // }
 
-    /* Battery Voltage */
-    while (true) {
-        adcval = analogRead(A0);
-        v = ((double)adcval) * ((double)0.016);
-        Serial.println(v);
-        lcd.clear();
-        lcd.print(adcval);
-        lcd.setCursor(0, 1);
-        lcd.print(v, 2);
-        lcd.write('V');
-        delay(500);
-    }
+    // /* Battery Voltage */
+    // while (true) {
+    //     adcval = analogRead(A0);
+    //     v = ((double)adcval) * ((double)0.016);
+    //     Serial.println(v);
+    //     lcd.clear();
+    //     lcd.print(adcval);
+    //     lcd.setCursor(0, 1);
+    //     lcd.print(v, 2);
+    //     lcd.write('V');
+    //     delay(500);
+    // }
+
+    analogWrite(10, 128); 
+    analogWrite(9, 128); 
+    TCCR1B = TCCR1B & B11100000 | B00001001; // for PWM frequency of 31372.55 Hz
 
     while (true) {
         /* Main menu */
