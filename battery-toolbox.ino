@@ -110,22 +110,30 @@ loop() {
     //     delay(500);
     // }
 
-    // /* Battery Voltage */
-    // while (true) {
-    //     adcval = analogRead(A0);
-    //     v = ((double)adcval) * ((double)0.016);
-    //     Serial.println(v);
-    //     lcd.clear();
-    //     lcd.print(adcval);
-    //     lcd.setCursor(0, 1);
-    //     lcd.print(v, 2);
-    //     lcd.write('V');
-    //     delay(500);
-    // }
+  
+    int duty = 0;
+    while (true) {
+        analogWrite(10, duty); 
+        analogWrite(9, duty); 
+        Serial.println(duty);
+        /* for PWM frequency of ~62K Hz */
+        TCCR1B = TCCR1B & B11100000 | B00001001; 
+        
+        duty = IntegerInputDialog::show("Duty Cycle:", 0, 255, duty);
+    }
 
-    analogWrite(10, 128); 
-    analogWrite(9, 128); 
-    TCCR1B = TCCR1B & B11100000 | B00001001; // for PWM frequency of 31372.55 Hz
+    /* Battery Voltage */
+    while (true) {
+        adcval = analogRead(A0);
+        v = ((double)adcval) * ((double)0.016);
+        Serial.println(v);
+        lcd.clear();
+        lcd.print(adcval);
+        lcd.setCursor(0, 1);
+        lcd.print(v, 2);
+        lcd.write('V');
+        delay(500);
+    }
 
     while (true) {
         /* Main menu */
