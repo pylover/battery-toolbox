@@ -29,3 +29,10 @@ make all
 ```bash
 make flash
 ```
+
+## References
+
+- https://docs.arduino.cc/tutorials/generic/secrets-of-arduino-pwm/
+- https://www.allaboutcircuits.com/technical-articles/low-pass-filter-a-pwm-signal-into-an-analog-voltage/
+- https://docs.arduino.cc/learn/programming/eeprom-guide/
+- https://docs.arduino.cc/learn/built-in-libraries/eeprom/
