@@ -1,5 +1,6 @@
 #include <Arduino.h>
 
+#include "lcd2x16.h"
 #include "thermistor.h"
 
 
@@ -37,5 +38,6 @@ Thermistor::get_temp() {
 
 int
 Thermistor::print(Print *display, int precision) {
-     return display->print(this->get_temp(), precision);
+    return this->print_unit(display, this->get_temp(), precision, 
+            CHAR_DEGREE); 
 }

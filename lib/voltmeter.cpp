@@ -25,6 +25,5 @@ VoltMeter::get_voltage() {
 
 int
 VoltMeter::print(Print *display, int precision) {
-    return display->print(this->get_voltage(), precision) +
-            display->write("V");
+    return Printer::print_unit(display, this->get_voltage(), precision, "V");
 }

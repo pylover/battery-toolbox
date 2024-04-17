@@ -2,6 +2,9 @@
 #define THERMISTOR_H_
 
 
+#include "printer.h"
+
+
 struct thermistor {
     float resistance;
     /* Steinhart-Hart coefficients can be calculated by
@@ -22,11 +25,11 @@ struct thermistor {
     1.169355028e-07})
 
 
-class Thermistor {
+class Thermistor: public Printer {
 public:
     Thermistor(int pin, struct thermistor th, float r);
     float get_temp();
-    int print(Print *display, int precision);
+    int print(Print *display, int precision) override;
 private:
     int pin;
     float resistor;

@@ -1,16 +1,16 @@
 #include <avr/interrupt.h>
 
+#include "lcd2x16.h"
 #include "thermistor.h"
 #include "voltmeter.h"
 
 #include "common.h"
 #include "menu.h"
-#include "display.h"
 #include "rotary.h"
 #include "dialog.h"
 
 
-static Display lcd;
+static LCD2X16 lcd(13, 12, 8, 7, 6, 4);
 static Rotary rotary;
 static struct menu_entry actions[] = {
     {"Examine", NULL},
@@ -116,21 +116,21 @@ loop() {
     //     delay(500);
     // }
 
-    // /* Thermistor */
-    // lcd.clear();
-    // lcd.print("temperature:");
-    // while (true) {
-    //     Serial.print("temperature: ");
-    //     heatsink.print(&Serial, 5);
-    //     Serial.println();
-    //     // float t = heatsink.get_temp();
+    /* Thermistor */
+    lcd.clear();
+    lcd.print("temperature:");
+    while (true) {
+        Serial.print("temperature: ");
+        heatsink.print(&Serial, 5);
+        Serial.println();
+        // float t = heatsink.get_temp();
 
-    //     lcd.setCursor(0, 1);
-    //     lcd.fill(' ', heatsink.print(&lcd, 2) + lcd.write(CHAR_DEGREE));
-    //     // /* Print temperature in port serial */
-    //     // Serial.println(t, 4);
-    //     delay(500);
-    // }
+        lcd.setCursor(0, 1);
+        lcd.fill(' ', heatsink.print(&lcd, 2) + lcd.write(CHAR_DEGREE));
+        // /* Print temperature in port serial */
+        // Serial.println(t, 4);
+        delay(500);
+    }
  
     // /* PWM DAC */
     // int duty = 0;

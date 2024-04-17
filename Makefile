@@ -19,11 +19,11 @@ BUILD_FLAGS = \
 	--library $(LIBPATH)
 
 SRCS = \
+	lib/*.h \
+	lib/*.cpp \
 	common.h \
 	rotary.ino \
 	rotary.h \
-	display.ino \
-	display.h \
 	dialog.ino \
 	dialog.h \
 	menu.ino \
