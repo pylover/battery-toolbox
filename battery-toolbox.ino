@@ -1,6 +1,7 @@
 #include <avr/interrupt.h>
 
 #include "lcd2x16.h"
+#include "acs712.h"
 #include "thermistor.h"
 #include "voltmeter.h"
 
@@ -25,6 +26,7 @@ static struct menu_entry actions[] = {
 static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
 
 static VoltMeter voltmeter(A0, 16.384 / (float)1024);
+static ACS712 ammeter(A1, 4.8 / (float)1024);
 static Thermistor heatsink(A2, THERMISTOR_100K_B3950, K(4.7));
 
 
@@ -116,21 +118,21 @@ loop() {
     //     delay(500);
     // }
 
-    /* Thermistor */
-    lcd.clear();
-    lcd.print("temperature:");
-    while (true) {
-        Serial.print("temperature: ");
-        heatsink.print(&Serial, 5);
-        Serial.println();
-        // float t = heatsink.get_temp();
+    // /* Thermistor */
+    // lcd.clear();
+    // lcd.print("temperature:");
+    // while (true) {
+    //     Serial.print("temperature: ");
+    //     heatsink.print(&Serial, 5);
+    //     Serial.println();
+    //     // float t = heatsink.get_temp();
 
-        lcd.setCursor(0, 1);
-        lcd.fill(' ', heatsink.print(&lcd, 2));
-        // /* Print temperature in port serial */
-        // Serial.println(t, 4);
-        delay(500);
-    }
+    //     lcd.setCursor(0, 1);
+    //     lcd.fill(' ', heatsink.print(&lcd, 2));
+    //     // /* Print temperature in port serial */
+    //     // Serial.println(t, 4);
+    //     delay(500);
+    // }
  
     // /* PWM DAC */
     // int duty = 0;
@@ -143,6 +145,17 @@ loop() {
     //     
     //     duty = IntegerInputDialog::show("Duty Cycle:", 0, 255, duty);
     // }
+
+    /* Ampere */
+    lcd.clear();
+    lcd.print("Current:");
+    while (true) {
+        ammeter.print(&Serial, 2);
+        Serial.println();
+        lcd.setCursor(0, 1);
+        lcd.fill(' ', ammeter.print(&lcd, 2));
+        delay(500);
+    }
 
     /* Battery Voltage */
     lcd.clear();
