@@ -8,33 +8,6 @@
 #include "rotary.h"
 
 
-byte char_down[8] = {
-  0b00000,
-  0b00000,
-  0b00000,
-  0b00000,
-  0b00000,
-  0b10001,
-  0b01010,
-  0b00100,
-};
-
-
-byte char_updown[8] = {
-  0b00100,
-  0b01010,
-  0b10001,
-  0b00000,
-  0b00000,
-  0b10001,
-  0b01010,
-  0b00100,
-};
-
-
-#define CHAR_UP '^'
-#define CHAR_DOWN byte(0)
-#define CHAR_UPDOWN byte(1)
 #define ENTRYCOUNT(a) (sizeof(a) / sizeof (struct menu_entry))
 
 

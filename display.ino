@@ -5,8 +5,9 @@ void
 Display::begin() {
     LiquidCrystal::begin(16, 2, LCD_5x8DOTS);
     this->noAutoscroll();
-    this->createChar(0, char_down);
-    this->createChar(1, char_updown);
+    this->createChar(CHAR_DOWN, char_down);
+    this->createChar(CHAR_UPDOWN, char_updown);
+    this->createChar(CHAR_DEGREE, char_degree);
 }
 
 

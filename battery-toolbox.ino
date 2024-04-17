@@ -126,7 +126,7 @@ loop() {
         // float t = heatsink.get_temp();
 
         lcd.setCursor(0, 1);
-        lcd.fill(' ', heatsink.print(&lcd, 2));
+        lcd.fill(' ', heatsink.print(&lcd, 2) + lcd.write(CHAR_DEGREE));
         // /* Print temperature in port serial */
         // Serial.println(t, 4);
         delay(500);

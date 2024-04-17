@@ -37,5 +37,5 @@ Thermistor::get_temp() {
 
 int
 Thermistor::print(Print *display, int precision) {
-	return display->print(this->get_temp(), precision);
+	 return display->print(this->get_temp(), precision);
 }
