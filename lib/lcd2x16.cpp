@@ -1,7 +1,7 @@
 #include "lcd2x16.h"
 
 
-byte char_down[8] = {
+static byte char_down[8] = {
   0b00000,
   0b00000,
   0b00000,
@@ -13,7 +13,7 @@ byte char_down[8] = {
 };
 
 
-byte char_updown[8] = {
+static byte char_updown[8] = {
   0b00100,
   0b01010,
   0b10001,
@@ -25,10 +25,10 @@ byte char_updown[8] = {
 };
 
 
-byte char_degree[8] = {
-  0b00010,
-  0b00101,
-  0b00010,
+static byte char_degree[8] = {
+  0b01000,
+  0b10100,
+  0b01000,
   0b00000,
   0b00000,
   0b00000,

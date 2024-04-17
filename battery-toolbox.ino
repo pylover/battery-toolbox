@@ -10,7 +10,7 @@
 #include "dialog.h"
 
 
-static LCD2X16 lcd(13, 12, 8, 7, 6, 4);
+static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
 static Rotary rotary;
 static struct menu_entry actions[] = {
     {"Examine", NULL},
@@ -126,7 +126,7 @@ loop() {
         // float t = heatsink.get_temp();
 
         lcd.setCursor(0, 1);
-        lcd.fill(' ', heatsink.print(&lcd, 2) + lcd.write(CHAR_DEGREE));
+        lcd.fill(' ', heatsink.print(&lcd, 2));
         // /* Print temperature in port serial */
         // Serial.println(t, 4);
         delay(500);
