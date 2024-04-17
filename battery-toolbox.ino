@@ -1,6 +1,7 @@
 #include <avr/interrupt.h>
 
 #include "thermistor.h"
+#include "voltmeter.h"
 
 #include "common.h"
 #include "menu.h"
@@ -23,9 +24,7 @@ static struct menu_entry actions[] = {
 
 static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
 
-/* Steinhart coefficients are calculated by 
- * https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html
-  */
+static VoltMeter voltmeter(A0, 16.384 / (float)1024);
 static Thermistor heatsink(A2, THERMISTOR_100K_B3950, K(4.7));
 
 
@@ -117,42 +116,42 @@ loop() {
     //     delay(500);
     // }
 
-    lcd.clear();
-    lcd.print("temperature:");
-    while (true) {
-        Serial.print("temperature: ");
-        heatsink.print(&Serial, 5);
-        Serial.println();
-        // float t = heatsink.get_temp();
+    // /* Thermistor */
+    // lcd.clear();
+    // lcd.print("temperature:");
+    // while (true) {
+    //     Serial.print("temperature: ");
+    //     heatsink.print(&Serial, 5);
+    //     Serial.println();
+    //     // float t = heatsink.get_temp();
 
-        lcd.setCursor(0, 1);
-        lcd.fill(' ', heatsink.print(&lcd, 2) + lcd.write(CHAR_DEGREE));
-        // /* Print temperature in port serial */
-        // Serial.println(t, 4);
-        delay(500);
-    }
-  
-    int duty = 0;
-    while (true) {
-        analogWrite(10, duty); 
-        analogWrite(9, duty); 
-        Serial.println(duty);
-        /* for PWM frequency of ~62K Hz */
-        TCCR1B = TCCR1B & B11100000 | B00001001; 
-        
-        duty = IntegerInputDialog::show("Duty Cycle:", 0, 255, duty);
-    }
+    //     lcd.setCursor(0, 1);
+    //     lcd.fill(' ', heatsink.print(&lcd, 2) + lcd.write(CHAR_DEGREE));
+    //     // /* Print temperature in port serial */
+    //     // Serial.println(t, 4);
+    //     delay(500);
+    // }
+ 
+    // /* PWM DAC */
+    // int duty = 0;
+    // while (true) {
+    //     analogWrite(10, duty); 
+    //     analogWrite(9, duty); 
+    //     Serial.println(duty);
+    //     /* for PWM frequency of ~62K Hz */
+    //     TCCR1B = TCCR1B & B11100000 | B00001001; 
+    //     
+    //     duty = IntegerInputDialog::show("Duty Cycle:", 0, 255, duty);
+    // }
 
     /* Battery Voltage */
+    lcd.clear();
+    lcd.print("Voltage:");
     while (true) {
-        adcval = analogRead(A0);
-        v = ((double)adcval) * ((double)0.016);
-        Serial.println(v);
-        lcd.clear();
-        lcd.print(adcval);
+        voltmeter.print(&Serial, 2);
+        Serial.println();
         lcd.setCursor(0, 1);
-        lcd.print(v, 2);
-        lcd.write('V');
+        lcd.fill(' ', voltmeter.print(&lcd, 2));
         delay(500);
     }
 
