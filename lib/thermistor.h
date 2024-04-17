@@ -14,6 +14,7 @@ struct thermistor {
 
 
 #define K(v) ((v) * 1000)
+#define THERMISTOR_SAMPLES 3
 #define THERMISTOR_100K_B3950  ((struct thermistor) { \
     K(100),  \
     0.7525536621e-03, \
@@ -25,6 +26,7 @@ class Thermistor {
 public:
     Thermistor(int pin, struct thermistor th, float r);
     float get_temp();
+    int print(Print *display, int precision);
 private:
     int pin;
     float resistor;

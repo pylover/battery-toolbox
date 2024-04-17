@@ -16,7 +16,13 @@ Thermistor::get_temp() {
 	/* Steinhart-Hart
 	 * https://en.wikipedia.org/wiki/Steinhart%E2%80%93Hart_equation
 	 */
-	float v = (float)analogRead(this->pin);
+	int i;
+	float v = 0;
+
+	for (i = 0; i < THERMISTOR_SAMPLES; i++) {
+		v += (float)analogRead(this->pin);
+	}
+	v /= THERMISTOR_SAMPLES;
 	float resistance = this->resistor * (1023.0 / v - 1.0);
 	float logn = log(resistance);
 	float logn3 = logn * logn * logn;
@@ -26,4 +32,10 @@ Thermistor::get_temp() {
 	/* Convert Kelvin to Celcius */
 	t -= 273.15;
 	return t;
+}
+
+
+int
+Thermistor::print(Print *display, int precision) {
+	return display->print(this->get_temp(), precision);
 }

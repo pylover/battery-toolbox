@@ -117,12 +117,18 @@ loop() {
     //     delay(500);
     // }
 
+    lcd.clear();
+    lcd.print("temperature:");
     while (true) {
-        float t = heatsink.get_temp();
-
-        /* Print temperature in port serial */
         Serial.print("temperature: ");
-        Serial.println(t, 4);
+        heatsink.print(&Serial, 5);
+        Serial.println();
+        // float t = heatsink.get_temp();
+
+        lcd.setCursor(0, 1);
+        lcd.fill(' ', heatsink.print(&lcd, 2));
+        // /* Print temperature in port serial */
+        // Serial.println(t, 4);
         delay(500);
     }
   
