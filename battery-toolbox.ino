@@ -1,5 +1,7 @@
 #include <avr/interrupt.h>
 
+#include "thermistor.h"
+
 #include "common.h"
 #include "menu.h"
 #include "display.h"
@@ -20,6 +22,13 @@ static struct menu_entry actions[] = {
 
 
 static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
+#define K(v) ((v) * 1000)
+
+/* Steinhart coefficients are calculated by 
+ * https://www.thinksrs.com/downloads/programs/therm%20calc/ntccalibrator/ntccalculator.html
+  */
+static Thermistor therm1(A2, K(100), K(4.7), 
+        (float[]){0.7525536621e-03, 2.104606824e-04, 1.169355028e-07});
 
 
 ISR(PCINT1_vect) {
@@ -110,6 +119,14 @@ loop() {
     //     delay(500);
     // }
 
+    while (true) {
+        float temp1 = therm1.get_temp();
+
+        /* Print temperature in port serial */
+        Serial.print("temperature: ");
+        Serial.println(temp1, 3);
+        delay(500);
+    }
   
     int duty = 0;
     while (true) {

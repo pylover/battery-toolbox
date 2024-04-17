@@ -8,13 +8,16 @@ BAUDRATE = 115200
 space := $(subst ,, )
 ACORE := $(subst $(space),:,$(wordlist 1,2,$(subst :, ,$(FQBN))))
 
-BINDIR=build
-BINFILE=$(BINDIR)/$(PRJ).ino.with_bootloader.bin
-ACLI=arduino-cli
-ACLI_FLAGS= \
+BINDIR = build
+BINFILE = $(BINDIR)/$(PRJ).ino.with_bootloader.bin
+ACLI = arduino-cli
+ACLI_FLAGS = \
 	--fqbn $(FQBN)
-BUILD_FLAGS= \
-	--build-property "build.extra_flags=-DPRJ=$(PRJ)"
+LIBPATH = lib
+BUILD_FLAGS = \
+	--build-property "build.extra_flags=-DPRJ=$(PRJ)" \
+	--library $(LIBPATH)
+
 SRCS = \
 	common.h \
 	rotary.ino \
@@ -36,16 +39,22 @@ all: $(BINFILE)
 
 DEPS = \
 	LiquidCrystal \
-	RotaryEncoder
+	RotaryEncoder \
+	ThermistorLibrary
+
+
+.PHONY: deps
+deps:
+	for dep in $(DEPS); do \
+		$(ACLI) lib install $$dep; \
+	done
 
 
 .PHONY: env
 env:
 	$(ACLI) core update-index
 	$(ACLI) core install $(ACORE)
-	for dep in $(DEPS); do \
-		$(ACLI) lib install $$dep; \
-	done
+	make deps
 
 
 .PHONY: clean

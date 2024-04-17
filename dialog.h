@@ -1,5 +1,5 @@
-#ifndef DIALOG_H
-#define DIALOG_H
+#ifndef DIALOG_H_
+#define DIALOG_H_
 
 
 #include "common.h"
@@ -31,4 +31,4 @@ private:
 };
 
 
-#endif  // DIALOG_H
+#endif  // DIALOG_H_
