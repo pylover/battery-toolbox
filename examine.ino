@@ -3,10 +3,17 @@
 
 int
 Examine::execute() {
-    lcd.clear();
-    lcd.print("Hey");
+    int i;
     this->waiting = true;
-    while (this->waiting);
+    while (this->waiting) {
+        lcd.clear();
+        voltmeter.print(&lcd, 2);
+        lcd.write(' ');
+        ammeter.print(&lcd, 2);
+        lcd.setCursor(0, 1);
+        heatsink.print(&lcd, 2);
+        delay(500);
+    }
     return 0;
 }
     

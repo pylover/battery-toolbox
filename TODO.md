@@ -5,6 +5,8 @@
 - 14V -> needs hack the switching power supply
 - IO states during boot
 - Status LED(s)
+- Zero-padding numbers
+
 
 - eeprom
 - Load temperature observation
