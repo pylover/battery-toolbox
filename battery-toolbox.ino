@@ -65,58 +65,8 @@ loop() {
     double v;
     struct menu_entry *prog;
 
-    // /* Greeting */
-    // Dialog::show(PROJECT, VVERSION);
-
-    /* A meter */
-    // /* Calibrate */
-    // int adcval_last = 0;
-    // int offset;
-    // Serial.print("Calibrating ACS712 ...");
-    // while (true) {
-    //     adcval = analogRead(A1);
-    //     if (adcval_last == adcval) {
-    //         break;
-    //     }
-    //     adcval_last = adcval;
-    //     offset = 512 - adcval;
-    //     Serial.print("adc val: ");
-    //     Serial.println(adcval);
-    //     Serial.print("offset: ");
-    //     Serial.println(offset);
-    //     delay(100);
-    // }
-    // Serial.print("Calibration done");
-    
-    // #define MAX(a, b) (a > b? a: b)
-    // Serial.print("Calibrating ACS712 ...");
-    // adcval = analogRead(A1);
-    // delay(10);
-    // adcval = max(adcval, analogRead(A1));
-    // delay(10);
-    // int offset = max(adcval, analogRead(A1));
-    // Serial.print("Calibration done");
-    // int offset = 507;
-
-    // while (true) {
-    //     adcval = analogRead(A1);
-    //     delay(10);
-    //     adcval = max(adcval, analogRead(A1));
-    //     delay(10);
-    //     adcval = max(adcval, analogRead(A1));
-    //     lcd.clear();
-    //     lcd.print(adcval);
-    //     adcval -= offset;
-    //     // Serial.print("adc val: ");
-    //     // Serial.println(adcval);
-    //     v = ((double)adcval) * ((double)0.049);
-    //     // v -= 25;
-    //     Serial.println(v);
-    //     lcd.setCursor(0, 1);
-    //     lcd.print(v, 2);
-    //     lcd.write('A');
-    //     delay(500);
-    // }
+    /* Greeting */
+    Dialog::show(PROJECT, VVERSION);
 
     // /* Thermistor */
     // lcd.clear();
@@ -146,27 +96,27 @@ loop() {
     //     duty = IntegerInputDialog::show("Duty Cycle:", 0, 255, duty);
     // }
 
-    /* Ampere */
-    lcd.clear();
-    lcd.print("Current:");
-    while (true) {
-        ammeter.print(&Serial, 2);
-        Serial.println();
-        lcd.setCursor(0, 1);
-        lcd.fill(' ', ammeter.print(&lcd, 2));
-        delay(500);
-    }
+    // /* Ampere */
+    // lcd.clear();
+    // lcd.print("Current:");
+    // while (true) {
+    //     ammeter.print(&Serial, 2);
+    //     Serial.println();
+    //     lcd.setCursor(0, 1);
+    //     lcd.fill(' ', ammeter.print(&lcd, 6));
+    //     delay(500);
+    // }
 
-    /* Battery Voltage */
-    lcd.clear();
-    lcd.print("Voltage:");
-    while (true) {
-        voltmeter.print(&Serial, 2);
-        Serial.println();
-        lcd.setCursor(0, 1);
-        lcd.fill(' ', voltmeter.print(&lcd, 2));
-        delay(500);
-    }
+    // /* Battery Voltage */
+    // lcd.clear();
+    // lcd.print("Voltage:");
+    // while (true) {
+    //     voltmeter.print(&Serial, 2);
+    //     Serial.println();
+    //     lcd.setCursor(0, 1);
+    //     lcd.fill(' ', voltmeter.print(&lcd, 2));
+    //     delay(500);
+    // }
 
     while (true) {
         /* Main menu */
