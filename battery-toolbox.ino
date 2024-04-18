@@ -69,22 +69,6 @@ loop() {
     /* Greeting */
     Dialog::show(PROJECT, VVERSION);
 
-    // /* Thermistor */
-    // lcd.clear();
-    // lcd.print("temperature:");
-    // while (true) {
-    //     Serial.print("temperature: ");
-    //     heatsink.print(&Serial, 5);
-    //     Serial.println();
-    //     // float t = heatsink.get_temp();
-
-    //     lcd.setCursor(0, 1);
-    //     lcd.fill(' ', heatsink.print(&lcd, 2));
-    //     // /* Print temperature in port serial */
-    //     // Serial.println(t, 4);
-    //     delay(500);
-    // }
- 
     // /* PWM DAC */
     // int duty = 0;
     // while (true) {
@@ -95,28 +79,6 @@ loop() {
     //     TCCR1B = TCCR1B & B11100000 | B00001001; 
     //     
     //     duty = IntegerInputDialog::show("Duty Cycle:", 0, 255, duty);
-    // }
-
-    // /* Ampere */
-    // lcd.clear();
-    // lcd.print("Current:");
-    // while (true) {
-    //     ammeter.print(&Serial, 2);
-    //     Serial.println();
-    //     lcd.setCursor(0, 1);
-    //     lcd.fill(' ', ammeter.print(&lcd, 6));
-    //     delay(500);
-    // }
-
-    // /* Battery Voltage */
-    // lcd.clear();
-    // lcd.print("Voltage:");
-    // while (true) {
-    //     voltmeter.print(&Serial, 2);
-    //     Serial.println();
-    //     lcd.setCursor(0, 1);
-    //     lcd.fill(' ', voltmeter.print(&lcd, 2));
-    //     delay(500);
     // }
 
     while (true) {
