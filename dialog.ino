@@ -1,23 +1,32 @@
 #include "dialog.h"
 
 
-Dialog::Dialog(char *first, char *second) {
-    lcd.clear();
-    lcd.print(first);
-    if (second) {
-        lcd.setCursor(0, 1);
-        lcd.print(second);
-    }
+int
+Window::showwait() {
+    rotary.consumer = this;
+    int status =this->execute();
+    rotary.consumer = NULL;
+    return status;
 }
 
 
-void
-Dialog::wait() {
-    this->waiting = true;
-    rotary.consumer = this;
-    while (this->waiting);
+Dialog::Dialog(char *first, char *second) {
+    this->first = first;
+    this->second = second;
+}
+
+
+int
+Dialog::execute() {
     lcd.clear();
-    rotary.consumer = NULL;
+    lcd.print(this->first);
+    if (second) {
+        lcd.setCursor(0, 1);
+        lcd.print(this->second);
+    }
+    this->waiting = true;
+    while (this->waiting);
+    return 0;
 }
 
 
@@ -34,11 +43,12 @@ Dialog::pushed() {
 }
 
 
-static void
+static int
 Dialog::show(char * first, char * second) {
     Dialog *d = new Dialog(first, second);
-    d->wait();
+    int status = d->showwait();
     delete d;
+    return status;
 }
 
 
@@ -65,9 +75,10 @@ static int
 IntegerInputDialog::show(char * title, int minval, int maxval, int initial) {
     IntegerInputDialog *d = new IntegerInputDialog(title, minval, maxval, 
             initial);
-    d->wait();
+    d->showwait();
+    int value = d->value;
     delete d;
-    return d->value;
+    return value;
 }
 
 

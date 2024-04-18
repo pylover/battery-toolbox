@@ -5,15 +5,26 @@
 #include "common.h"
 
 
-class Dialog: public RotaryConsumer {
+class Window: public RotaryConsumer {
+public:
+    int showwait();
+    virtual int execute();
+    // void pushed() override;
+    // int rotated(int pos) override;
+};
+
+
+class Dialog: public Window {
 public:
     Dialog(char *first, char *second);
-    void wait();
     void pushed() override;
-    int rotated(int amount) override;
-    static void show(char * first, char * second);
+    int rotated(int pos) override;
+    int execute() override;
+    static int show(char * first, char * second);
 protected:
     volatile bool waiting;
+    const char *first;
+    const char *second;
 };
 
 
@@ -21,7 +32,7 @@ class IntegerInputDialog : public Dialog {
 public:
     IntegerInputDialog(char * title, int minval, int maxval, int initial);
     void update();
-    int rotated(int amount) override;
+    int rotated(int pos) override;
     static int show(char * title, int minval, int maxval, int initial);
 protected:
     volatile int value;

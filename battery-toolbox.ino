@@ -9,12 +9,13 @@
 #include "menu.h"
 #include "rotary.h"
 #include "dialog.h"
+#include "examine.h"
 
 
 static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
 static Rotary rotary;
 static struct menu_entry actions[] = {
-    {"Examine", NULL},
+    {"Examine", Examine::show},
     {"Foo", NULL},
     {"Bar", NULL},
     {"Baz", NULL},
@@ -121,9 +122,9 @@ loop() {
     while (true) {
         /* Main menu */
         prog = menu.show();
-        
-        /* Selected */
-        Dialog::show("Selected: ", prog->caption);
+
+        /* Execute */
+        prog->func();
     }
     while (true);
 }
