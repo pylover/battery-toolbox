@@ -12,7 +12,7 @@ class VoltMeter: public Printer {
 public:
     VoltMeter(int pin, float coefficient);
     float get_voltage();
-    int print(Print *display, int precision) override;
+    int print(Print *display, int precision, int length) override;
 private:
     int pin;
     float coefficient;

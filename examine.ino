@@ -7,11 +7,12 @@ Examine::execute() {
     this->waiting = true;
     while (this->waiting) {
         lcd.clear();
-        voltmeter.print(&lcd, 2);
+        voltmeter.print(&lcd, 1, 5);
         lcd.write(' ');
-        ammeter.print(&lcd, 2);
-        lcd.setCursor(0, 1);
-        heatsink.print(&lcd, 2);
+        ammeter.print(&lcd, 2, 6);
+        lcd.write(' ');
+        heatsink.print(&lcd, 0, 3);
+        // lcd.setCursor(0, 1);
         delay(500);
     }
     return 0;

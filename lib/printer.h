@@ -7,9 +7,11 @@
 
 class Printer {
 public:
-    int print_unit(Print *display, float value, int precision, char *unit);
-    int print_unit(Print *display, float value, int precision, byte unit);
-    virtual int print(Print *display, int precision);
+    int print_unit(Print *display, float value, int precision, char *unit,
+            int length);
+    int print_unit(Print *display, float value, int precision, byte unit,
+            int length);
+    virtual int print(Print *display, int precision, int length);
 };
 
 
