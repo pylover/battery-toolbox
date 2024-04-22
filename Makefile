@@ -25,6 +25,7 @@ SRCS = \
 	dialog.h dialog.ino \
 	menu.h menu.ino \
 	examine.h examine.ino \
+	discharge.h discharge.ino \
 	$(PRJ).ino \
 
 

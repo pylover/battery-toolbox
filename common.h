@@ -14,5 +14,12 @@
 #define info Serial.print
 
 
+void
+pwm_set(int pin, int duty) {
+    analogWrite(pin, duty);
+    TCCR1B = TCCR1B & B11100000 | B00001001;
+}
+
+
 #endif  // COMMON_H
 

@@ -10,15 +10,9 @@
 #define ROTSW A4
 
 
-class Foo {
-public:
-    virtual int rotated(int amount);
-    virtual void pushed();
-};
-
 class RotaryConsumer {
 public:
-    virtual int rotated(int amount);
+    virtual int rotated(int pos) { return pos; };
     virtual void pushed();
 };
 

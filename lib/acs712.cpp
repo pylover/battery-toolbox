@@ -20,8 +20,8 @@ ACS712::get_ampere() {
     v /= ACS712_SAMPLES;
 
     v *= this->coefficient;
-    v -= 2.3718627;
-    return v * 10;
+    v -= 23.719185;
+    return v;
 }
 
 
@@ -33,7 +33,11 @@ ACS712::print(Print *display, int precision, int length) {
     char *u = "A";
 
     if (vabs) {
-        if (vabs < 1) {
+        if (vabs < .001) {
+            u = "uA";
+            v *= 1000000;
+        }
+        else if (vabs < 1) {
             u = "mA";
             v *= 1000;
         }

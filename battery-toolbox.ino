@@ -10,16 +10,14 @@
 #include "rotary.h"
 #include "dialog.h"
 #include "examine.h"
+#include "discharge.h"
 
 
 static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
 static Rotary rotary;
 static struct menu_entry actions[] = {
     {"Examine", Examine::show},
-    {"Foo", NULL},
-    {"Bar", NULL},
-    {"Baz", NULL},
-    {"qux", NULL},
+    {"Discharge", Discharge::show},
     {"quux", NULL},
 };
 
@@ -27,7 +25,7 @@ static struct menu_entry actions[] = {
 static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
 
 static VoltMeter voltmeter(A0, 16.384 / (float)1024);
-static ACS712 ammeter(A1, 4.8 / (float)1024);
+static ACS712 ammeter(A1, 48 / (float)1024);
 static Thermistor heatsink(A2, THERMISTOR_100K_B3950, K(4.7));
 
 
@@ -57,8 +55,6 @@ setup() {
     analogReference(EXTERNAL);
 }
 
-// #define RES (((float)30) / ((float)1024))
-#define RES 0.3
 
 void 
 loop() {
