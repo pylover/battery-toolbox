@@ -17,7 +17,7 @@ static Rotary rotary;
 
 #include "dialog.h"
 #include "examine.h"
-// #include "discharge.h"
+#include "discharge.h"
 
 
 static float greeting_melody[] = {
@@ -39,7 +39,7 @@ static float greeting_melody[] = {
 
 static struct menu_entry actions[] = {
     {"Examine", Examine::show},
-    // {"Discharge", Discharge::modal},
+    {"Discharge", Discharge::show},
     {"foo", NULL},
     {"bar", NULL},
     {"quux", NULL},

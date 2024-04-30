@@ -49,7 +49,7 @@ LCD2X16::begin() {
 
 int
 LCD2X16::fill(char c, int from=0, int to=15) {
-    for (; from < to; from++) {
+    for (; from <= to; from++) {
         this->write(c);
     }
 

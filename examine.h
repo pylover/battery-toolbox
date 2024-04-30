@@ -5,8 +5,6 @@
 class Examine : public Dialog<Examine> {
 public:
     int main() override;
-protected:
-    volatile bool waiting;
 };
 
 
