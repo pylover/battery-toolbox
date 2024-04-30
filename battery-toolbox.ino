@@ -4,6 +4,7 @@
 #include "acs712.h"
 #include "thermistor.h"
 #include "voltmeter.h"
+#include "play.h"
 
 #include "common.h"
 #include "menu.h"
@@ -60,13 +61,24 @@ setup() {
 
 void
 greeting() {
+    float m[] = {
+        nE3, dQ,
+        nA3, dQ,
+        nC4, dQ,
+        nB3, dQ,
+        nA3, dH,
+        nC4, dHQ,
+        nA3, dQ,
+        nB3, dQ,
+        nA3, dQ,
+        nF3, dQ,
+        nG3, dQ,
+        nE3, dH,
+        0, 0
+    };
     Dialog *d = new Dialog(PROJECT, VVERSION);
     d->show();
-    // play(BUZZER, {
-    //     nE1, dB,
-    //     nA1, dB,
-    //     nC2, dB,
-    // });
+    play(BUZZER, m);
     d->wait();
     delete d;
 }

@@ -1,24 +1,16 @@
 #ifndef LIB_PLAY_H_
 #define LIB_PLAY_H_
 
+#define dW 2000
+#define dH (dW / 2)
+#define dQ (dH / 2)
+#define dHQ (dQ / 2)
+#define dQQ (dHQ / 2)
+
 
 /*
  f ------ 2f ------- 3f ------ 4f --------- 5f --------- 6f
      oct      fifth     fourth    major 3rd    minor 3rd
-
-*/
-/*
-C#/Db	17.32 Hz	34.65 Hz	69.30 Hz	138.59 Hz	277.18 Hz	554.37 Hz	1108.73 Hz	2217.46 Hz	4434.92 Hz
-D	18.35 Hz	36.71 Hz	73.42 Hz	146.83 Hz	293.66 Hz	587.33 Hz	1174.66 Hz	2349.32 Hz	4698.63 Hz
-D#/Eb	19.45 Hz	38.89 Hz	77.78 Hz	155.56 Hz	311.13 Hz	622.25 Hz	1244.51 Hz	2489.02 Hz	4978.03 Hz
-E	20.60 Hz	41.20 Hz	82.41 Hz	164.81 Hz	329.63 Hz	659.25 Hz	1318.51 Hz	2637.02 Hz	5274.04 Hz
-F	21.83 Hz	43.65 Hz	87.31 Hz	174.61 Hz	349.23 Hz	698.46 Hz	1396.91 Hz	2793.83 Hz	5587.65 Hz
-F#/Gb	23.12 Hz	46.25 Hz	92.50 Hz	185.00 Hz	369.99 Hz	739.99 Hz	1479.98 Hz	2959.96 Hz	5919.91 Hz
-G	24.50 Hz	49.00 Hz	98.00 Hz	196.00 Hz	392.00 Hz	783.99 Hz	1567.98 Hz	3135.96 Hz	6271.93 Hz
-G#/Ab	25.96 Hz	51.91 Hz	103.83 Hz	207.65 Hz	415.30 Hz	830.61 Hz	1661.22 Hz	3322.44 Hz	6644.88 Hz
-A	27.50 Hz	55.00 Hz	110.00 Hz	220.00 Hz	440.00 Hz	880.00 Hz	1760.00 Hz	3520.00 Hz	7040.00 Hz
-A#/Bb	29.14 Hz	58.27 Hz	116.54 Hz	233.08 Hz	466.16 Hz	932.33 Hz	1864.66 Hz	3729.31 Hz	7458.62 Hz
-B	30.87 Hz	61.74 Hz	123.47 Hz	246.94 Hz	493.88 Hz	987.77 Hz	1975.53 Hz	3951.07 Hz	7902.13 Hz
 */
 #define nC0 16.35
 #define nC1 (nC0 * 2)
@@ -29,19 +21,108 @@ B	30.87 Hz	61.74 Hz	123.47 Hz	246.94 Hz	493.88 Hz	987.77 Hz	1975.53 Hz	3951.07 H
 #define nC6 (nC5 * 2)
 #define nC7 (nC6 * 2)
 
+#define nCd0 17.32
+#define nCd1 (nCd0 * 2)
+#define nCd2 (nCd1 * 2)
+#define nCd3 (nCd2 * 2)
+#define nCd4 (nCd3 * 2)
+#define nCd5 (nCd4 * 2)
+#define nCd6 (nCd5 * 2)
+#define nCd7 (nCd6 * 2)
 
-// #define nC0 16.35
-// #define nC1 (nC0 * 2)
-// #define nC2 (nC1 * 2)
-// #define nC3 (nC2 * 2)
-// #define nC4 (nC3 * 2)
-// #define nC5 (nC4 * 2)
-// #define nC6 (nC5 * 2)
-// #define nC7 (nC6 * 2)
+#define nD0 18.35
+#define nD1 (nD0 * 2)
+#define nD2 (nD1 * 2)
+#define nD3 (nD2 * 2)
+#define nD4 (nD3 * 2)
+#define nD5 (nD4 * 2)
+#define nD6 (nD5 * 2)
+#define nD7 (nD6 * 2)
+
+#define nDd0 19.45
+#define nDd1 (nDd0 * 2)
+#define nDd2 (nDd1 * 2)
+#define nDd3 (nDd2 * 2)
+#define nDd4 (nDd3 * 2)
+#define nDd5 (nDd4 * 2)
+#define nDd6 (nDd5 * 2)
+#define nDd7 (nDd6 * 2)
+
+#define nE0 20.60
+#define nE1 (nE0 * 2)
+#define nE2 (nE1 * 2)
+#define nE3 (nE2 * 2)
+#define nE4 (nE3 * 2)
+#define nE5 (nE4 * 2)
+#define nE6 (nE5 * 2)
+#define nE7 (nE6 * 2)
+
+#define nF0 21.83
+#define nF1 (nF0 * 2)
+#define nF2 (nF1 * 2)
+#define nF3 (nF2 * 2)
+#define nF4 (nF3 * 2)
+#define nF5 (nF4 * 2)
+#define nF6 (nF5 * 2)
+#define nF7 (nF6 * 2)
+
+#define nFd0 23.12
+#define nFd1 (nFd0 * 2)
+#define nFd2 (nFd1 * 2)
+#define nFd3 (nFd2 * 2)
+#define nFd4 (nFd3 * 2)
+#define nFd5 (nFd4 * 2)
+#define nFd6 (nFd5 * 2)
+#define nFd7 (nFd6 * 2)
+
+#define nG0 24.50
+#define nG1 (nG0 * 2)
+#define nG2 (nG1 * 2)
+#define nG3 (nG2 * 2)
+#define nG4 (nG3 * 2)
+#define nG5 (nG4 * 2)
+#define nG6 (nG5 * 2)
+#define nG7 (nG6 * 2)
+
+#define nGd0 25.96
+#define nGd1 (nGd0 * 2)
+#define nGd2 (nGd1 * 2)
+#define nGd3 (nGd2 * 2)
+#define nGd4 (nGd3 * 2)
+#define nGd5 (nGd4 * 2)
+#define nGd6 (nGd5 * 2)
+#define nGd7 (nGd6 * 2)
+
+#define nA0 27.50
+#define nA1 (nA0 * 2)
+#define nA2 (nA1 * 2)
+#define nA3 (nA2 * 2)
+#define nA4 (nA3 * 2)
+#define nA5 (nA4 * 2)
+#define nA6 (nA5 * 2)
+#define nA7 (nA6 * 2)
+
+#define nAd0 29.14
+#define nAd1 (nAd0 * 2)
+#define nAd2 (nAd1 * 2)
+#define nAd3 (nAd2 * 2)
+#define nAd4 (nAd3 * 2)
+#define nAd5 (nAd4 * 2)
+#define nAd6 (nAd5 * 2)
+#define nAd7 (nAd6 * 2)
+
+#define nB0 30.87
+#define nB1 (nB0 * 2)
+#define nB2 (nB1 * 2)
+#define nB3 (nB2 * 2)
+#define nB4 (nB3 * 2)
+#define nB5 (nB4 * 2)
+#define nB6 (nB5 * 2)
+#define nB7 (nB6 * 2)
 
 
 void
-play(int pin, int notes[]);
+play(int pin, float notes[]);
 
 
 #endif  // LIB_PLAY_H_
