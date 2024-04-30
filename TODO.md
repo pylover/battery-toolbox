@@ -1,11 +1,10 @@
-- Fuses
-- Heatsink
-- Box
+- Stable 12V/5V supply
 - 5V supply -> I think the arduino AMS1117 is enough
-- 14V -> needs hack the switching power supply
+- Fuses
+- Heatsink + fan
+- 14V -> needs hack the switching power supply due 12v fan.
 - IO states during boot
 - Status LED(s)
-- Zero-padding numbers
 
 
 - eeprom

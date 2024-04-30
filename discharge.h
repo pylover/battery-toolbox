@@ -7,10 +7,11 @@
 
 class Discharge : public Window {
 public:
-    int execute() override;
+    void show() override;
+    int wait() override;
     int rotated(int pos) override;
     void pushed() override;
-    static int show() {
+    static int modal() {
         Discharge *e = new Discharge();
         int status =e->showwait();
         delete e;

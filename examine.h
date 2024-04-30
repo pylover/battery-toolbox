@@ -4,10 +4,11 @@
 
 class Examine : public Window {
 public:
-    int execute() override;
+    void show() override;
+    int wait() override;
     int rotated(int pos) override;
     void pushed() override;
-    static int show() {
+    static int modal() {
         Examine *e = new Examine();
         int status =e->showwait();
         delete e;

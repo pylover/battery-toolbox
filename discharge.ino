@@ -1,10 +1,15 @@
 #include "discharge.h"
 
 
-int
-Discharge::execute() {
-    int i;
+void
+Discharge::show() {
     lcd.clear();
+}
+
+
+int
+Discharge::wait() {
+    int i;
     i = lcd.print("Discharging ");
     this->waiting = true;
     while (this->waiting) {

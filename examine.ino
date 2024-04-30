@@ -1,11 +1,16 @@
 #include "examine.h"
 
 
-int
-Examine::execute() {
-    int i;
+void
+Examine::show() {
     lcd.clear();
     lcd.write("Examination");
+}
+
+
+int
+Examine::wait() {
+    int i;
     this->waiting = true;
     while (this->waiting) {
         lcd.setCursor(0, 1);

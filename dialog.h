@@ -8,9 +8,8 @@
 class Window: public RotaryConsumer {
 public:
     int showwait();
-    virtual int execute();
-    // void pushed() override;
-    // int rotated(int pos) override;
+    virtual void show();
+    virtual int wait();
 };
 
 
@@ -19,8 +18,9 @@ public:
     Dialog(char *first, char *second);
     void pushed() override;
     int rotated(int pos) override;
-    int execute() override;
-    static int show(char * first, char * second);
+    void show() override;
+    int wait() override;
+    static int modal(char * first, char * second);
 protected:
     volatile bool waiting;
     const char *first;
@@ -33,7 +33,7 @@ public:
     IntegerInputDialog(char * title, int minval, int maxval, int initial);
     void update();
     int rotated(int pos) override;
-    static int show(char * title, int minval, int maxval, int initial);
+    static int modal(char * title, int minval, int maxval, int initial);
 protected:
     volatile int value;
 private:

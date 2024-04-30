@@ -3,10 +3,8 @@
 
 int
 Window::showwait() {
-    rotary.consumer = this;
-    int status =this->execute();
-    rotary.consumer = NULL;
-    return status;
+    this->show();
+    return this->wait();
 }
 
 
@@ -16,16 +14,23 @@ Dialog::Dialog(char *first, char *second) {
 }
 
 
-int
-Dialog::execute() {
+void
+Dialog::show() {
+    rotary.consumer = this;
+    this->waiting = true;
     lcd.clear();
     lcd.print(this->first);
     if (second) {
         lcd.setCursor(0, 1);
         lcd.print(this->second);
     }
-    this->waiting = true;
+}
+
+
+int
+Dialog::wait() {
     while (this->waiting);
+    rotary.consumer = NULL;
     return 0;
 }
 
@@ -44,7 +49,7 @@ Dialog::pushed() {
 
 
 static int
-Dialog::show(char * first, char * second) {
+Dialog::modal(char * first, char * second) {
     Dialog *d = new Dialog(first, second);
     int status = d->showwait();
     delete d;
@@ -72,7 +77,7 @@ IntegerInputDialog::update() {
 
 
 static int 
-IntegerInputDialog::show(char * title, int minval, int maxval, int initial) {
+IntegerInputDialog::modal(char * title, int minval, int maxval, int initial) {
     IntegerInputDialog *d = new IntegerInputDialog(title, minval, maxval, 
             initial);
     d->showwait();

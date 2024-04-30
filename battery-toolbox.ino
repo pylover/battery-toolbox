@@ -16,8 +16,8 @@
 static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
 static Rotary rotary;
 static struct menu_entry actions[] = {
-    {"Examine", Examine::show},
-    {"Discharge", Discharge::show},
+    {"Examine", Examine::modal},
+    {"Discharge", Discharge::modal},
     {"quux", NULL},
 };
 
@@ -53,6 +53,22 @@ setup() {
 
     // analogReference(INTERNAL);
     analogReference(EXTERNAL);
+   
+    pinMode(BUZZER, OUTPUT);
+}
+
+
+void
+greeting() {
+    Dialog *d = new Dialog(PROJECT, VVERSION);
+    d->show();
+    // play(BUZZER, {
+    //     nE1, dB,
+    //     nA1, dB,
+    //     nC2, dB,
+    // });
+    d->wait();
+    delete d;
 }
 
 
@@ -63,7 +79,7 @@ loop() {
     struct menu_entry *prog;
 
     /* Greeting */
-    Dialog::show(PROJECT, VVERSION);
+    greeting();
 
     // /* PWM DAC */
     // int duty = 0;
