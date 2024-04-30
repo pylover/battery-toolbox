@@ -16,7 +16,7 @@ static Rotary rotary;
 
 
 #include "dialog.h"
-// #include "examine.h"
+#include "examine.h"
 // #include "discharge.h"
 
 
@@ -35,18 +35,10 @@ static float greeting_melody[] = {
     nE3, dH,
     0, 0
 };
-// class Greeting: public Message<Greeting> {
-// public:
-//     Greeting::Greeting(): Message(PROJECT, VVERSION, greeting_melody) {}
-//     int 
-//     show() override {
-//         return Message::show();
-//     }
-// };
 
 
 static struct menu_entry actions[] = {
-    // {"Examine", Examine::modal},
+    {"Examine", Examine::show},
     // {"Discharge", Discharge::modal},
     {"foo", NULL},
     {"bar", NULL},
@@ -95,7 +87,7 @@ loop() {
     struct menu_entry *prog;
 
     /* Greeting */
-    Message::modal(PROJECT, VVERSION, greeting_melody);
+    Message::show(PROJECT, VVERSION, greeting_melody);
     // Greeting::modal();
 
     // /* PWM DAC */

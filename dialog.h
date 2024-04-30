@@ -5,6 +5,7 @@
 #include "common.h"
 
 
+template <class T>
 class Dialog: public RotaryConsumer {
 public:
     void
@@ -13,13 +14,19 @@ public:
     }
     int
     rotated(int pos) override {
-        this->active = false;
         return pos;
     }
-    virtual int show() {
+    virtual int main() {
         while (this->active);
         return 0;
     }
+    static int
+    show() {
+        T d;
+        return Dialog::modal(&d);
+    }
+protected:
+    volatile bool active;
     static int
     modal(class Dialog *dialog) {
         int status;
@@ -27,16 +34,14 @@ public:
         lcd.clear();
         rotary.consumer = dialog;
         dialog->active = true;
-        status = dialog->show();
+        status = dialog->main();
         rotary.consumer = NULL;
         return status;
     }
-protected:
-    volatile bool active;
 };
 
 
-class Message: public Dialog {
+class Message: public Dialog<Message> {
 public:
     Message(char *title, char *description, melody_t melody) {
         this->title = title;
@@ -44,17 +49,17 @@ public:
         this->melody = melody;
     }
     int
-    show() override {
+    main() override {
         lcd.print(this->title);
         lcd.setCursor(0, 1);
         lcd.print(this->description);
         if (this->melody) {
             play(BUZZER, this->melody, &this->active);
         }
-        return Dialog::show();
+        return Dialog::main();
     };
     static void
-    modal(char *title, char *description, melody_t melody) {
+    show(char *title, char *description, melody_t melody) {
         Message d(title, description, melody);
         Dialog::modal(&d);
     }
@@ -68,7 +73,7 @@ protected:
 // class Dialog: public Window {
 // public:
 //     Dialog(char *first, char *second);
-//     void show() override;
+//     void main() override;
 //     int wait() override;
 //     static int modal(char * first, char * second);
 // protected:
