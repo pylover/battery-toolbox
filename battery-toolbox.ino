@@ -1,24 +1,55 @@
 #include <avr/interrupt.h>
 
-#include "lcd2x16.h"
-#include "acs712.h"
-#include "thermistor.h"
-#include "voltmeter.h"
-#include "play.h"
+#include <lcd2x16.h>
+#include <acs712.h>
+#include <thermistor.h>
+#include <voltmeter.h>
+#include <melody.h>
 
 #include "common.h"
 #include "menu.h"
 #include "rotary.h"
-#include "dialog.h"
-#include "examine.h"
-#include "discharge.h"
 
 
 static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
 static Rotary rotary;
+
+
+#include "dialog.h"
+// #include "examine.h"
+// #include "discharge.h"
+
+
+static float greeting_melody[] = {
+    nE3, dQ,
+    nA3, dQ,
+    nC4, dQ,
+    nB3, dQ,
+    nA3, dH,
+    nC4, dHQ,
+    nA3, dQ,
+    nB3, dQ,
+    nA3, dQ,
+    nF3, dQ,
+    nG3, dQ,
+    nE3, dH,
+    0, 0
+};
+// class Greeting: public Message<Greeting> {
+// public:
+//     Greeting::Greeting(): Message(PROJECT, VVERSION, greeting_melody) {}
+//     int 
+//     show() override {
+//         return Message::show();
+//     }
+// };
+
+
 static struct menu_entry actions[] = {
-    {"Examine", Examine::modal},
-    {"Discharge", Discharge::modal},
+    // {"Examine", Examine::modal},
+    // {"Discharge", Discharge::modal},
+    {"foo", NULL},
+    {"bar", NULL},
     {"quux", NULL},
 };
 
@@ -51,36 +82,9 @@ setup() {
 
     pinMode(A0, INPUT);
     pinMode(A1, INPUT);
-
-    // analogReference(INTERNAL);
-    analogReference(EXTERNAL);
-   
     pinMode(BUZZER, OUTPUT);
-}
 
-
-void
-greeting() {
-    float m[] = {
-        nE3, dQ,
-        nA3, dQ,
-        nC4, dQ,
-        nB3, dQ,
-        nA3, dH,
-        nC4, dHQ,
-        nA3, dQ,
-        nB3, dQ,
-        nA3, dQ,
-        nF3, dQ,
-        nG3, dQ,
-        nE3, dH,
-        0, 0
-    };
-    Dialog *d = new Dialog(PROJECT, VVERSION);
-    d->show();
-    play(BUZZER, m);
-    d->wait();
-    delete d;
+    analogReference(EXTERNAL);
 }
 
 
@@ -91,7 +95,8 @@ loop() {
     struct menu_entry *prog;
 
     /* Greeting */
-    greeting();
+    Message::modal(PROJECT, VVERSION, greeting_melody);
+    // Greeting::modal();
 
     // /* PWM DAC */
     // int duty = 0;

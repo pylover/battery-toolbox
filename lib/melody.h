@@ -1,5 +1,6 @@
-#ifndef LIB_PLAY_H_
-#define LIB_PLAY_H_
+#ifndef LIB_MELODY_H_
+#define LIB_MELODY_H_
+
 
 #define dW 2000
 #define dH (dW / 2)
@@ -121,8 +122,26 @@
 #define nB7 (nB6 * 2)
 
 
+typedef float* melody_t;
+
+
 void
-play(int pin, float notes[]);
+play(int pin, melody_t melody, volatile bool *more) {
+    int i = 0;
+    int s;
+    int dur;
+
+    while (*more && melody[i]) {
+        tone(pin, melody[i++]);
+        dur = (int) melody[i++];
+        while (*more && dur) {
+            s = min(dur, 50);
+            delay(s);
+            dur -= s;
+        }
+        noTone(pin);
+    }
+}
 
 
 #endif  // LIB_PLAY_H_
