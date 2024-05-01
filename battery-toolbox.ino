@@ -21,18 +21,18 @@ static Rotary rotary;
 
 
 static float greeting_melody[] = {
-    nE3, dQ,
-    nA3, dQ,
-    nC4, dQ,
-    nB3, dQ,
-    nA3, dH,
-    nC4, dHQ,
-    nA3, dQ,
-    nB3, dQ,
-    nA3, dQ,
-    nF3, dQ,
-    nG3, dQ,
-    nE3, dH,
+    nE4, dQ,
+    nA4, dQ,
+    nC5, dQ,
+    nB4, dQ,
+    nA4, dH,
+    nC5, dHQ,
+    nA4, dQ,
+    nB4, dQ,
+    nA4, dQ,
+    nF4, dQ,
+    nG4, dQ,
+    nE4, dH,
     0, 0
 };
 

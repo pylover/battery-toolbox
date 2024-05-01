@@ -1,5 +1,5 @@
-#ifndef COMMON_H
-#define COMMON_H
+#ifndef COMMON_H_
+#define COMMON_H_
 
 
 #include <Arduino.h>
@@ -30,8 +30,7 @@ pwm_set(int pin, int duty) {
 template<typename T, typename U>
 void
 printu(Print *display, T val, U unit, int precision, int maxlen) {
-    int tmp;
-    int p = pow(10, precision);
+    unsigned p = pow(10, precision) + 1;
     char r = 0;
 
     /* Reduce maxlen to freeup space for unit */
@@ -55,8 +54,8 @@ printu(Print *display, T val, U unit, int precision, int maxlen) {
     }
 
     /* round */
-    tmp = (int) (val * p);
-    val = ((T) tmp) / p;
+    val /= p;
+    val *= p;
 
     char buffer[maxlen];
     String v = dtostrf(val, maxlen, precision, buffer);
@@ -68,5 +67,5 @@ printu(Print *display, T val, U unit, int precision, int maxlen) {
 }
 
 
-#endif  // COMMON_H
+#endif  // COMMON_H_
 

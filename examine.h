@@ -2,7 +2,7 @@
 #define EXAMINE_H_
 
 
-class Examine : public Dialog<Examine> {
+class Examine: public Program<Examine> {
 public:
     int main() override;
 };

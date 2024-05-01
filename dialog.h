@@ -5,7 +5,6 @@
 #include "common.h"
 
 
-template <class T>
 class Dialog: public RotaryConsumer {
 public:
     void
@@ -19,11 +18,6 @@ public:
     virtual int main() {
         while (this->active);
         return 0;
-    }
-    static int
-    show() {
-        T d;
-        return Dialog::modal(&d);
     }
 protected:
     volatile bool active;
@@ -41,7 +35,18 @@ protected:
 };
 
 
-class Message: public Dialog<Message> {
+template <class T>
+class Program: public Dialog {
+public:
+    static int
+    show() {
+        T d;
+        return Dialog::modal(&d);
+    }
+};
+
+
+class Message: public Dialog {
 public:
     Message(char *title, char *description, melody_t melody) {
         this->title = title;
@@ -70,6 +75,64 @@ protected:
 };
 
 
+template<typename T, typename U>
+class NumInput: public Dialog {
+public:
+    NumInput(char *title, U unit, T minval, T maxval,
+            T initial, T step) {
+        this->title = title;
+        this->unit = unit;
+        this->minval = minval;
+        this->maxval = maxval;
+        this->pos = (int) initial / step;
+        this->step = step;
+    }
+    int
+    main() override {
+        lcd.print(this->title);
+        this->update();
+        return Dialog::main();
+    };
+    int
+    rotated(int pos) override {
+        int mins = this->minval / this->step;
+        int maxs = this->maxval / this->step;
+
+        if (pos == this->pos) {
+            return pos;
+        }
+        else if (pos < mins) {
+            pos = mins;
+        }
+        else if (pos > maxs) {
+            pos = maxs;
+        }
+
+        this->pos = pos;
+        this->update();
+        return pos;
+    }
+    static T
+    show(char *title, U unit, T minval, T maxval, T initial, T step) {
+        NumInput d(title, unit, minval, maxval, initial, step);
+        Dialog::modal(&d);
+        return d.pos * step;
+    }
+protected:
+    volatile T pos;
+    char *title;
+    U unit;
+    T minval;
+    T maxval;
+    T step;
+    void
+    update() {
+        lcd.setCursor(0, 1);
+        printu(&lcd, this->pos * this->step, this->unit, 2, 16);
+    }
+};
+
+
 // class FloatInput: public Dialog<FloatInput> {
 // public:
 //     FloatInput::FloatInput(char *title, char unit, float minval,
@@ -81,20 +144,6 @@ protected:
 //     }
 //     int
 //     rotated(int pos) override {
-//         if (pos == this->value) {
-//             return pos;
-//         }
-//         else if (pos < this->minval) {
-//             pos = this->minval;
-//         }
-//         else if (pos > this->maxval) {
-//             pos = this->maxval;
-//         }
-//
-//         this->value = pos;
-//         this->update();
-//         this->waiting = false;
-//         return pos;
 //     }
 // };
 

@@ -5,7 +5,7 @@
 #define DISCHARGE_PWMPIN 9
 
 
-class Discharge: public Dialog<Discharge> {
+class Discharge: public Program<Discharge> {
 public:
     int main() override;
     int rotated(int pos) override;
