@@ -19,7 +19,7 @@ struct menu_entry {
 
 class Menu: public RotaryConsumer {
 public:
-    Menu(String title, struct menu_entry items[], unsigned int count);
+    Menu(const char *title, struct menu_entry items[], unsigned int count);
     void update();
     struct menu_entry* show();
 

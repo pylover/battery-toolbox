@@ -8,11 +8,12 @@
 #include "melody.h"
 #include "menu.h"
 #include "rotary.h"
-#include "persistent.h"
+#include "db.h"
 
 
 static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
 static Rotary rotary;
+static struct db db;
 
 
 #include "dialog.h"
@@ -88,13 +89,11 @@ loop() {
     if (eeprom_crc_check()) {
         eeprom_format();
     }
-    // Serial.print("CRC32 of EEPROM data: 0x");
-    // Serial.println(eeprom_crc(), HEX);
     
-    while(true);
+    db_load(&db);
+    
     /* Greeting */
     Message::show(PROJECT, VVERSION, greeting_melody);
-    // Greeting::modal();
 
     // /* PWM DAC */
     // int duty = 0;

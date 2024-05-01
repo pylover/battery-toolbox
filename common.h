@@ -36,8 +36,16 @@ printu(Print *display, T val, U unit, int precision, int maxlen) {
     /* Reduce maxlen to freeup space for unit */
     maxlen--;
 
+    /* round */
+    val /= p;
+    val *= p;
+
     /* unit and ratio */
-    if (val < 1) {
+    if (val == 0) {
+        r = 0;
+        precision = 0;
+    }
+    else if (val < 1) {
         if (val < .000001) {
             val *= 1000000000;
             r = 'n';
@@ -51,11 +59,8 @@ printu(Print *display, T val, U unit, int precision, int maxlen) {
             r = 'm';
         }
         maxlen--;
+        precision = 0;
     }
-
-    /* round */
-    val /= p;
-    val *= p;
 
     char buffer[maxlen];
     String v = dtostrf(val, maxlen, precision, buffer);

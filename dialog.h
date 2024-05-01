@@ -7,11 +7,11 @@
 
 class Dialog: public RotaryConsumer {
 public:
-    void
+    virtual void
     pushed() override {
         this->active = false;
     }
-    int
+    virtual int
     rotated(int pos) override {
         return pos;
     }
@@ -26,10 +26,11 @@ protected:
         int status;
 
         lcd.clear();
+        RotaryConsumer *backup = rotary.consumer;
         rotary.consumer = dialog;
         dialog->active = true;
         status = dialog->main();
-        rotary.consumer = NULL;
+        rotary.consumer = backup;
         return status;
     }
 };
@@ -79,12 +80,14 @@ template<typename T, typename U>
 class NumInput: public Dialog {
 public:
     NumInput(char *title, U unit, T minval, T maxval,
-            T initial, T step) {
+            T initial, T step, int precision=0) {
         this->title = title;
         this->unit = unit;
         this->minval = minval;
         this->maxval = maxval;
-        this->pos = (int) initial / step;
+        this->pos = (int) (initial / step);
+        this->precision = precision;
+        rotary.setPosition(this->pos);
         this->step = step;
     }
     int
@@ -113,14 +116,16 @@ public:
         return pos;
     }
     static T
-    show(char *title, U unit, T minval, T maxval, T initial, T step) {
-        NumInput d(title, unit, minval, maxval, initial, step);
+    show(char *title, U unit, T minval, T maxval, T initial, T step,
+            int precision=0) {
+        NumInput d(title, unit, minval, maxval, initial, step, precision);
         Dialog::modal(&d);
         return d.pos * step;
     }
 protected:
     volatile T pos;
     char *title;
+    int precision;
     U unit;
     T minval;
     T maxval;
@@ -128,38 +133,9 @@ protected:
     void
     update() {
         lcd.setCursor(0, 1);
-        printu(&lcd, this->pos * this->step, this->unit, 2, 16);
+        printu(&lcd, this->pos * this->step, this->unit, this->precision, 16);
     }
 };
-
-
-// class FloatInput: public Dialog<FloatInput> {
-// public:
-//     FloatInput::FloatInput(char *title, char unit, float minval,
-//             float maxval, float initial, float step) {
-//     }
-//     int
-//     main() override {
-//
-//     }
-//     int
-//     rotated(int pos) override {
-//     }
-// };
-
-
-// class IntegerInputDialog : public Dialog {
-// public:
-//     IntegerInputDialog(char * title, int minval, int maxval, int initial);
-//     void update();
-//     int rotated(int pos) override;
-//     static int modal(char * title, int minval, int maxval, int initial);
-// protected:
-//     volatile int value;
-// private:
-//     int minval;
-//     int maxval;
-// };
 
 
 #endif  // DIALOG_H_

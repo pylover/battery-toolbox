@@ -3,7 +3,8 @@
 #include "common.h"
 
 
-Menu::Menu(String title, struct menu_entry items[], unsigned int itemscount) {
+Menu::Menu(const char *title, struct menu_entry items[], 
+        unsigned int itemscount) {
     this->caption = title;
     this->entries = items;
     this->count = itemscount;
@@ -35,12 +36,11 @@ Menu::update() {
 
 struct menu_entry* 
 Menu::show() {
-    this->current = 0;
     lcd.clear();
     lcd.print(this->caption);
     rotary.consumer = this;
     this->selected = -1;
-    rotary.setPosition(0);
+    rotary.setPosition(this->current);
     this->update();
     while (this->selected < 0);
     rotary.consumer = NULL;

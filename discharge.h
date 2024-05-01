@@ -11,8 +11,6 @@ public:
     int rotated(int pos) override;
 protected:
     volatile int duty;
-private:
-    int dutyloc;
 };
 
 
