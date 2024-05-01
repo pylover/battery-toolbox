@@ -1,10 +1,10 @@
 #include <avr/interrupt.h>
 
-#include <lcd2x16.h>
-#include <acs712.h>
-#include <thermistor.h>
-#include <voltmeter.h>
-#include <melody.h>
+#include "lcd2x16.h"
+#include "acs712.h"
+#include "thermistor.h"
+#include "voltmeter.h"
+#include "melody.h"
 
 #include "common.h"
 #include "menu.h"
@@ -82,8 +82,6 @@ setup() {
 
 void 
 loop() {
-    int adcval;
-    double v;
     struct menu_entry *prog;
 
     /* Greeting */

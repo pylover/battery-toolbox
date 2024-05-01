@@ -70,15 +70,32 @@ protected:
 };
 
 
-// class Dialog: public Window {
+// class FloatInput: public Dialog<FloatInput> {
 // public:
-//     Dialog(char *first, char *second);
-//     void main() override;
-//     int wait() override;
-//     static int modal(char * first, char * second);
-// protected:
-//     const char *first;
-//     const char *second;
+//     FloatInput::FloatInput(char *title, char unit, float minval,
+//             float maxval, float initial, float step) {
+//     }
+//     int
+//     main() override {
+//
+//     }
+//     int
+//     rotated(int pos) override {
+//         if (pos == this->value) {
+//             return pos;
+//         }
+//         else if (pos < this->minval) {
+//             pos = this->minval;
+//         }
+//         else if (pos > this->maxval) {
+//             pos = this->maxval;
+//         }
+//
+//         this->value = pos;
+//         this->update();
+//         this->waiting = false;
+//         return pos;
+//     }
 // };
 
 

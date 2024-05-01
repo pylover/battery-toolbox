@@ -2,17 +2,17 @@
 #define VOLTMETER_H_
 
 
-#include "printer.h"
+#include "common.h"
 
 
 #define VOLTMETER_SAMPLES 3
 
 
-class VoltMeter: public Printer {
+class VoltMeter {
 public:
     VoltMeter(int pin, float coefficient);
     float get_voltage();
-    int print(Print *display, int precision, int length) override;
+    void print(Print *display, int precision, int length);
 private:
     int pin;
     float coefficient;

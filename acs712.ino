@@ -25,26 +25,9 @@ ACS712::get_ampere() {
 }
 
 
-int
+void
 ACS712::print(Print *display, int precision, int length) {
     float v = this->get_ampere();
-    float vabs = abs(v);
-    int p = 0;
-    char *u = "A";
-
-    if (vabs) {
-        if (vabs < .001) {
-            u = "uA";
-            v *= 1000000;
-        }
-        else if (vabs < 1) {
-            u = "mA";
-            v *= 1000;
-        }
-        else {
-            p = precision;
-        }
-    }
-    return Printer::print_unit(display, v, p, u, length);
+    printu(display, abs(v), 'A', precision, length);
 }
 

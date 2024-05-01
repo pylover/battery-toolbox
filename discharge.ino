@@ -4,6 +4,9 @@
 int
 Discharge::main() {
     this->duty = 0;
+   
+    // TODO:
+    // float v = FloatInput::show("Cut-off voltage:");
     dutyloc = lcd.print("Discharging ");
     while (this->active) {
         lcd.setCursor(dutyloc, 0);

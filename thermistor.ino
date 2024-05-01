@@ -36,8 +36,7 @@ Thermistor::get_temp() {
 }
 
 
-int
+void
 Thermistor::print(Print *display, int precision, int length) {
-    return this->print_unit(display, this->get_temp(), precision, 
-            CHAR_DEGREE, length); 
+    printu(display, this->get_temp(), CHAR_DEGREE, precision, length); 
 }

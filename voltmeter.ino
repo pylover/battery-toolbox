@@ -23,20 +23,8 @@ VoltMeter::get_voltage() {
 }
 
 
-int
+void
 VoltMeter::print(Print *display, int precision, int length) {
     float v = this->get_voltage();
-    int p = 0;
-    char *u = "V";
-
-    if (v) {
-        if (v < 1) {
-            u = "mV";
-            v *= 1000;
-        }
-        else {
-            p = precision;
-        }
-    }
-    return Printer::print_unit(display, v, p, u, length);
+    printu(display, v, 'V', precision, length);
 }

@@ -13,20 +13,12 @@ BINFILE = $(BINDIR)/$(PRJ).ino.with_bootloader.bin
 ACLI = arduino-cli
 ACLI_FLAGS = \
 	--fqbn $(FQBN)
-LIBPATH = lib
+# LIBPATH = lib
+#	--library $(LIBPATH)
 BUILD_FLAGS = \
-	--build-property "build.extra_flags=-DPRJ=$(PRJ)" \
-	--library $(LIBPATH)
+	--build-property "build.extra_flags=-DPRJ=$(PRJ)"
 
-SRCS = \
-	lib/*.h lib/*.cpp \
-	common.h \
-	rotary.h rotary.ino \
-	dialog.h dialog.ino \
-	menu.h menu.ino \
-	examine.h examine.ino \
-	discharge.h discharge.ino \
-	$(PRJ).ino \
+SRCS = *.h *.ino
 
 
 $(BINFILE): $(SRCS)

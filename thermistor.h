@@ -2,7 +2,7 @@
 #define THERMISTOR_H_
 
 
-#include "printer.h"
+#include "common.h"
 
 
 struct thermistor {
@@ -25,11 +25,11 @@ struct thermistor {
     1.169355028e-07})
 
 
-class Thermistor: public Printer {
+class Thermistor {
 public:
     Thermistor(int pin, struct thermistor th, float r);
     float get_temp();
-    int print(Print *display, int precision, int length) override;
+    void print(Print *display, int precision, int length);
 private:
     int pin;
     float resistor;

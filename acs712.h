@@ -2,17 +2,17 @@
 #define ACS712_H_
 
 
-#include "printer.h"
+#include "common.h"
 
 
 #define ACS712_SAMPLES 3
 
 
-class ACS712: public Printer {
+class ACS712 {
 public:
     ACS712(int pin, float coefficient);
     float get_ampere();
-    int print(Print *display, int precision, int length) override;
+    void print(Print *display, int precision, int length);
 private:
     int pin;
     float coefficient;
