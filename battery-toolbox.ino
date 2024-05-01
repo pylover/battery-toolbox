@@ -1,14 +1,14 @@
 #include <avr/interrupt.h>
 
+#include "common.h"
 #include "lcd2x16.h"
 #include "acs712.h"
 #include "thermistor.h"
 #include "voltmeter.h"
 #include "melody.h"
-
-#include "common.h"
 #include "menu.h"
 #include "rotary.h"
+#include "persistent.h"
 
 
 static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
@@ -40,6 +40,7 @@ static float greeting_melody[] = {
 static struct menu_entry actions[] = {
     {"Examine", Examine::show},
     {"Discharge", Discharge::show},
+    {"Charge", NULL},
     {"foo", NULL},
     {"bar", NULL},
     {"quux", NULL},
@@ -84,6 +85,13 @@ void
 loop() {
     struct menu_entry *prog;
 
+    if (eeprom_crc_check()) {
+        eeprom_format();
+    }
+    // Serial.print("CRC32 of EEPROM data: 0x");
+    // Serial.println(eeprom_crc(), HEX);
+    
+    while(true);
     /* Greeting */
     Message::show(PROJECT, VVERSION, greeting_melody);
     // Greeting::modal();
