@@ -11,6 +11,8 @@
 #define CHAR_DOWN byte(0)
 #define CHAR_UPDOWN byte(1)
 #define CHAR_DEGREE byte(2)
+#define CHAR_BACKSLASH byte(3)
+#define CHAR_FULL byte(4)
 
 
 class LCD2X16: public LiquidCrystal {
