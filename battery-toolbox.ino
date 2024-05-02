@@ -19,6 +19,7 @@ static struct db db;
 #include "dialog.h"
 #include "examine.h"
 #include "discharge.h"
+#include "charge.h"
 
 
 static float greeting_melody[] = {
@@ -41,10 +42,7 @@ static float greeting_melody[] = {
 static struct menu_entry actions[] = {
     {"Examine", Examine::show},
     {"Discharge", Discharge::show},
-    {"Charge", NULL},
-    {"foo", NULL},
-    {"bar", NULL},
-    {"quux", NULL},
+    {"Charge", Charge::show},
 };
 
 

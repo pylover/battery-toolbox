@@ -61,7 +61,7 @@ static byte char_full[8] = {
 };
 
 
-static byte char_80p[8] = {
+static byte char_75p[8] = {
     0b00000,
     0b00000,
     0b11111,
@@ -73,7 +73,7 @@ static byte char_80p[8] = {
 };
 
 
-static byte char_40p[8] = {
+static byte char_50p[8] = {
     0b00000,
     0b00000,
     0b00000,
@@ -85,14 +85,14 @@ static byte char_40p[8] = {
 };
 
 
-static byte char_empty[8] = {
+static byte char_25p[8] = {
     0b00000,
     0b00000,
     0b00000,
     0b00000,
     0b00000,
     0b00000,
-    0b00000,
+    0b11111,
     0b11111,
 };
 
@@ -106,9 +106,9 @@ LCD2X16::begin() {
     this->createChar(CHAR_DEGREE, char_degree);
     this->createChar(CHAR_BACKSLASH, char_backslash);
     this->createChar(CHAR_FULL, char_full);
-    this->createChar(CHAR_FULL + 1, char_80p);
-    this->createChar(CHAR_FULL + 2, char_40p);
-    this->createChar(CHAR_FULL + 3, char_empty);
+    this->createChar(CHAR_75P, char_75p);
+    this->createChar(CHAR_50P, char_50p);
+    this->createChar(CHAR_25P, char_25p);
 }
 
 

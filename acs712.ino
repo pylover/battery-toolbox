@@ -20,7 +20,7 @@ ACS712::get_ampere() {
     v /= ACS712_SAMPLES;
 
     v *= this->coefficient;
-    v -= 23.719185;
+    v -= 23.718750;
     return v;
 }
 

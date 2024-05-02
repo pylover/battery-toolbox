@@ -44,6 +44,7 @@ printu(Print *display, T val, U unit, int precision, int maxlen) {
     if (val == 0) {
         r = 0;
         precision = 0;
+        val = abs(val);
     }
     else if (val < 1) {
         if (val < .000001) {
