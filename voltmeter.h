@@ -5,12 +5,12 @@
 #include "common.h"
 
 
-#define VOLTMETER_SAMPLES 3
+#define VOLTMETER_SAMPLES 5
 
 
 class VoltMeter {
 public:
-    VoltMeter(int pin, float coefficient);
+    VoltMeter(int pin, float r1, float r2);
     float get_voltage();
     void print(Print *display, int precision, int length);
 private:

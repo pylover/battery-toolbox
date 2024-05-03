@@ -22,23 +22,6 @@ static struct db db;
 #include "charge.h"
 
 
-static float greeting_melody[] = {
-    nE4, dQ,
-    nA4, dQ,
-    nC5, dQ,
-    nB4, dQ,
-    nA4, dH,
-    nC5, dHQ,
-    nA4, dQ,
-    nB4, dQ,
-    nA4, dQ,
-    nF4, dQ,
-    nG4, dQ,
-    nE4, dH,
-    0, 0
-};
-
-
 static struct menu_entry actions[] = {
     {"Examine", Examine::show},
     {"Discharge", Discharge::show},
@@ -48,7 +31,8 @@ static struct menu_entry actions[] = {
 
 static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
 
-static VoltMeter voltmeter(A0, 16.384 / (float)1024);
+static VoltMeter voltmeter(A0, 44200, 13000);
+static VoltMeter involtage(A5, 44200, 13000);
 static ACS712 ammeter(A1, 48 / (float)1024);
 static Thermistor heatsink(A2, THERMISTOR_100K_B3950, K(4.7));
 
@@ -72,8 +56,6 @@ setup() {
     rotary.begin();
     lcd.begin();
 
-    pinMode(A0, INPUT);
-    pinMode(A1, INPUT);
     pinMode(BUZZER, OUTPUT);
 
     analogReference(EXTERNAL);
@@ -89,7 +71,14 @@ loop() {
     }
     
     db_load(&db);
-    
+  
+    lcd.clear();
+    while (true) {
+        lcd.setCursor(0, 1);
+        involtage.print(&lcd, 2, 8);
+        delay(200);
+    }
+
     /* Greeting */
     Message::show(PROJECT, VVERSION, greeting_melody);
 

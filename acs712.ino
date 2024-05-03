@@ -6,6 +6,7 @@
 ACS712::ACS712(int pin, float coefficient) {
     this->pin = pin;
     this->coefficient = coefficient;
+    pinMode(pin, INPUT);
 }
 
 

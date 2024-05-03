@@ -144,4 +144,21 @@ play(int pin, melody_t melody, volatile bool *more) {
 }
 
 
+static float greeting_melody[] = {
+    nE4, dQ,
+    nA4, dQ,
+    nC5, dQ,
+    nB4, dQ,
+    nA4, dH,
+    nC5, dHQ,
+    nA4, dQ,
+    nB4, dQ,
+    nA4, dQ,
+    nF4, dQ,
+    nG4, dQ,
+    nE4, dH,
+    0, 0
+};
+
+
 #endif  // LIB_PLAY_H_
