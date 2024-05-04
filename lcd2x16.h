@@ -25,9 +25,9 @@ public:
     };
     void begin();
     int fill(char c, int from=0, int to=15);
-    template<typename T, typename U>
+    template<typename T>
     void
-    printu(T val, U unit, int precision, int len) {
+    printu(T val, char unit, int precision, int len) {
         unsigned p = pow(10, precision) + 1;
         char r = 0;
 
