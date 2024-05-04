@@ -53,11 +53,11 @@ struct thermistor {
 
 
 class Thermistor {
-public:
+ public:
     Thermistor(int pin, struct thermistor th, float r);
     float get_temp();
     void print(int precision, int len);
-private:
+ private:
     int pin;
     float resistor;
     struct thermistor thermistor;

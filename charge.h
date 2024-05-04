@@ -34,10 +34,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 
 class Charge: public Program<Charge> {
-public:
+ public:
     int main() override;
     int rotated(int pos) override;
-protected:
+ protected:
     volatile int duty;
 };
 

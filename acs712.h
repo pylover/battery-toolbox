@@ -34,12 +34,12 @@ POSSIBILITY OF SUCH DAMAGE.
 
 
 class ACS712 {
-public:
+ public:
     ACS712(int pin, float r1, float r2);
     float get_ampere();
     void print(int precision, int len);
     void callibrate();
-private:
+ private:
     int pin;
     float offset;
     float coefficient;

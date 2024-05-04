@@ -26,8 +26,8 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef LIB_MELODY_H_
-#define LIB_MELODY_H_
+#ifndef MELODY_H_
+#define MELODY_H_
 
 
 #define dW 2000
@@ -197,4 +197,4 @@ static struct note greeting_melody[] = {
 };
 
 
-#endif  // LIB_PLAY_H_
+#endif  // MELODY_H_

@@ -26,8 +26,8 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef ROTARY_H
-#define ROTARY_H
+#ifndef ROTARY_H_
+#define ROTARY_H_
 
 
 #include <RotaryEncoder.h>
@@ -39,23 +39,23 @@ POSSIBILITY OF SUCH DAMAGE.
 
 
 class RotaryConsumer {
-public:
-    virtual int rotated(int pos) { return pos; };
+ public:
+    virtual int rotated(int pos) { return pos; }
     virtual void pushed();
 };
 
 
 class Rotary : public RotaryEncoder {
-public:
-    Rotary(): RotaryEncoder(ROT1, ROT2, RotaryEncoder::LatchMode::FOUR3) {};
+ public:
+    Rotary(): RotaryEncoder(ROT1, ROT2, RotaryEncoder::LatchMode::FOUR3) {}
     void begin();
     void pushed();
     volatile RotaryConsumer *consumer = NULL;
-private:
+ private:
     void rotated();
     static void isr();
     volatile int oldpos;
 };
 
 
-#endif  // ROTARY_H
+#endif  // ROTARY_H_

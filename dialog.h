@@ -31,11 +31,11 @@ POSSIBILITY OF SUCH DAMAGE.
 
 
 class Dialog: public RotaryConsumer {
-public:
-    virtual void pushed() override;
-    virtual int rotated(int pos) override;
+ public:
+    virtual void pushed();
+    virtual int rotated(int pos);
     virtual int main();
-protected:
+ protected:
     volatile bool active;
     static int modal(class Dialog *dialog);
 };
@@ -43,17 +43,17 @@ protected:
 
 template <class T>
 class Program: public Dialog {
-public:
+ public:
     static int show();
 };
 
 
 class Message: public Dialog {
-public:
+ public:
     Message(char *title, char *description, struct note *melody);
     int main() override;
     static void show(char *title, char *description, struct note *melody);
-protected:
+ protected:
     char *title;
     char *description;
     struct note *melody;
@@ -61,14 +61,14 @@ protected:
 
 
 class NumInput: public Dialog {
-public:
+ public:
     NumInput(char *title, char unit, float minval, float maxval,
             float initial, float step, int precision=0);
     int main();
     int rotated(int pos) override;
     static float show(char *title, char unit, float minval, float maxval,
             float initial, float step, int precision=0);
-protected:
+ protected:
     volatile int pos;
     char *title;
     int precision;

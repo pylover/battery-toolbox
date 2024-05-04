@@ -26,8 +26,8 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef MENU_H
-#define MENU_H
+#ifndef MENU_H_
+#define MENU_H_
 
 
 #include <Arduino.h>
@@ -41,12 +41,12 @@ POSSIBILITY OF SUCH DAMAGE.
 
 struct menu_entry {
     const char *caption;
-    void (*func) ();
+    void (*func)();
 };
 
 
 class Menu: public RotaryConsumer {
-public:
+ public:
     Menu(const char *title, struct menu_entry items[], unsigned int count);
     void update();
     struct menu_entry* show();
@@ -54,7 +54,7 @@ public:
     void pushed() override;
     int rotated(int pos) override;
 
-private:
+ private:
     String caption;
     struct menu_entry *entries;
     unsigned int count;
@@ -63,4 +63,4 @@ private:
 };
 
 
-#endif  // MENU_H
+#endif  // MENU_H_
