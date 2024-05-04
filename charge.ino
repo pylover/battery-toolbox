@@ -39,7 +39,7 @@ Charge::main() {
         c = (c + 4) % 4;
 
         lcd.setCursor(0, 1);
-        voltmeter.print(&lcd, 1, 5);
+        vmeter.print(&lcd, 1, 5);
         lcd.write(' ');
         ammeter.print(&lcd, 1, 5);
         lcd.write(' ');

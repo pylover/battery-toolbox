@@ -10,11 +10,14 @@
 
 class VoltMeter {
 public:
-    VoltMeter(int pin, float r1, float r2);
-    float get_voltage();
+    VoltMeter(int pinh, int pinl, float r1, float r2);
+    float vhigh();
+    float vlow();
+    float vdiff();
     void print(Print *display, int precision, int length);
 private:
-    int pin;
+    int pinh;
+    int pinl;
     float coefficient;
 };
 

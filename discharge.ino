@@ -35,7 +35,7 @@ Discharge::main() {
 
         lcd.setCursor(0, 1);
         // lcd.fill(' ', dutyloc + lcd.print(this->duty));
-        voltmeter.print(&lcd, 1, 5);
+        vmeter.print(&lcd, 1, 5);
         lcd.write(' ');
         ammeter.print(&lcd, 1, 5);
         lcd.write(' ');

@@ -31,8 +31,7 @@ static struct menu_entry actions[] = {
 
 static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
 
-static VoltMeter voltmeter(A0, K(44.2), K(13));
-static VoltMeter involtage(A5, K(44.2), K(13));
+static VoltMeter vmeter(A5, A0, K(44.2), K(13));
 static ACS712 ammeter(A1, 48 / (float)1024);
 static Thermistor heatsink(A2, THERMISTOR_100K_B3950, K(4.7));
 
