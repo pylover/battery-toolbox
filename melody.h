@@ -122,18 +122,26 @@
 #define nB7 (nB6 * 2)
 
 
-typedef float* melody_t;
+struct note {
+    int tone;
+    int duration;
+};
 
 
 void
-play(int pin, melody_t melody, volatile bool *more) {
+play(int pin, struct note *melody, volatile bool *more) {
     int i = 0;
     int s;
     int dur;
+    struct note *n;
 
-    while (*more && melody[i]) {
-        tone(pin, melody[i++]);
-        dur = (int) melody[i++];
+    while (*more) {
+        n = &melody[i];
+        if (!n->duration) {
+            break;
+        }
+        tone(pin, n->tone);
+        dur = (int) n->duration;
         while (*more && dur) {
             s = min(dur, 50);
             delay(s);
@@ -144,20 +152,20 @@ play(int pin, melody_t melody, volatile bool *more) {
 }
 
 
-static float greeting_melody[] = {
-    nE4, dQ,
-    nA4, dQ,
-    nC5, dQ,
-    nB4, dQ,
-    nA4, dH,
-    nC5, dHQ,
-    nA4, dQ,
-    nB4, dQ,
-    nA4, dQ,
-    nF4, dQ,
-    nG4, dQ,
-    nE4, dH,
-    0, 0
+static struct note greeting_melody[] = {
+    {nE4, dQ},
+    {nA4, dQ},
+    {nC5, dQ},
+    {nB4, dQ},
+    {nA4, dH},
+    {nC5, dHQ},
+    {nA4, dQ},
+    {nB4, dQ},
+    {nA4, dQ},
+    {nF4, dQ},
+    {nG4, dQ},
+    {nE4, dH},
+    {0, 0}
 };
 
 

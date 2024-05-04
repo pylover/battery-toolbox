@@ -59,6 +59,8 @@ setup() {
     pinMode(BUZZER, OUTPUT);
 
     analogReference(EXTERNAL);
+    
+    pinMode(9, OUTPUT);
 }
 
 
@@ -72,13 +74,13 @@ loop() {
     
     db_load(&db);
   
-    while (true) {
-        lcd.clear();
-        voltmeter.print(&lcd, 2, 8);
-        lcd.setCursor(0, 1);
-        involtage.print(&lcd, 2, 8);
-        delay(300);
-    }
+    // while (true) {
+    //     lcd.clear();
+    //     voltmeter.print(&lcd, 2, 8);
+    //     lcd.setCursor(0, 1);
+    //     involtage.print(&lcd, 2, 8);
+    //     delay(300);
+    // }
 
     /* Greeting */
     Message::show(PROJECT, VVERSION, greeting_melody);
