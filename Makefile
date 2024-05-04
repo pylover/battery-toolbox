@@ -21,6 +21,18 @@ BUILD_FLAGS = \
 SRCS = *.h *.ino
 
 
+PRETTYC_FLAGS = \
+    --recursive \
+    --verbose=0 \
+    --repository=. \
+    --extensions=c,h,in \
+    --linelength=80 \
+    --headers=h,in \
+    --includeorder=standardcfirst \
+    --root=. \
+	.
+
+
 $(BINFILE): $(SRCS)
 	$(ACLI) $(ACLI_FLAGS) --output-dir $(BINDIR) compile $(BUILD_FLAGS) .
 
@@ -61,3 +73,8 @@ flash: $(BINFILE)
 .PHONY: screen
 screen:
 	screen $(PORT) $(BAUDRATE)
+
+
+.PHONY: lint
+lint:
+	prettyc $(PRETTYC_FLAGS)
