@@ -26,8 +26,8 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef PERSISTENT_H_
-#define PERSISTENT_H_
+#ifndef DB_H_
+#define DB_H_
 
 
 #include "eeprom.h"
@@ -64,4 +64,4 @@ db_commit(struct db *d) {
 }
 
 
-#endif  // PERSISTENT_H_
+#endif  // DB_H_

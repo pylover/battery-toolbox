@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 
 class Examine: public Program<Examine> {
-public:
+ public:
     int main() override;
 };
 

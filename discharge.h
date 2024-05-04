@@ -34,10 +34,10 @@ POSSIBILITY OF SUCH DAMAGE.
 
 
 class Discharge: public Program<Discharge> {
-public:
+ public:
     int main() override;
     int rotated(int pos) override;
-protected:
+ protected:
     volatile int duty;
 };
 

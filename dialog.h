@@ -63,11 +63,11 @@ class Message: public Dialog {
 class NumInput: public Dialog {
  public:
     NumInput(char *title, char unit, float minval, float maxval,
-            float initial, float step, int precision=0);
+            float initial, float step, int precision = 0);
     int main();
     int rotated(int pos) override;
     static float show(char *title, char unit, float minval, float maxval,
-            float initial, float step, int precision=0);
+            float initial, float step, int precision = 0);
  protected:
     volatile int pos;
     char *title;
