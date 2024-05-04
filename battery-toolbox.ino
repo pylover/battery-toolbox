@@ -9,13 +9,6 @@
 #include "menu.h"
 #include "rotary.h"
 #include "db.h"
-
-
-static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
-static Rotary rotary;
-static struct db db;
-
-
 #include "dialog.h"
 #include "examine.h"
 #include "discharge.h"
@@ -29,8 +22,11 @@ static struct menu_entry actions[] = {
 };
 
 
+#define BUZZER 6
 static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
-
+static struct db db;
+static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
+static Rotary rotary;
 static VoltMeter vmeter(A5, A0, K(44.2), K(13));
 static ACS712 ammeter(A1, 48 / (float)1024);
 static Thermistor heatsink(A2, THERMISTOR_100K_B3950, K(4.7));

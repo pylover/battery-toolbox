@@ -22,11 +22,4 @@ pwm_set(int pin, int duty) {
 }
 
 
-#define BUZZER 6
-#define buzz(f) tone(BUZZER, f)
-#define nobuzz() noTone(BUZZER)
-#define buzzwait(f, i) buzz(1000); delay(i); nobuzz()
-
-
 #endif  // COMMON_H_
-

@@ -32,23 +32,22 @@ protected:
 };
 
 
-template<typename T, typename U>
 class NumInput: public Dialog {
 public:
-    NumInput(char *title, U unit, T minval, T maxval, T initial, T step,
-            int precision=0);
+    NumInput(char *title, char unit, float minval, float maxval,
+            float initial, float step, int precision=0);
     int main();
     int rotated(int pos) override;
-    static T show(char *title, U unit, T minval, T maxval, T initial, T step,
-            int precision=0);
+    static float show(char *title, char unit, float minval, float maxval,
+            float initial, float step, int precision=0);
 protected:
-    volatile T pos;
+    volatile int pos;
     char *title;
     int precision;
-    U unit;
-    T minval;
-    T maxval;
-    T step;
+    char unit;
+    float minval;
+    float maxval;
+    float step;
     void update();
 };
 

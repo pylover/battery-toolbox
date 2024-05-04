@@ -70,9 +70,8 @@ Message::show(char *title, char *description, struct note *melody) {
 }
 
 
-template<typename T, typename U>
-NumInput<T, U>::NumInput(char *title, U unit, T minval, T maxval, T initial, T step, 
-        int precision=0) {
+NumInput::NumInput(char *title, char unit, float minval, float maxval, 
+        float initial, float step, int precision=0) {
     this->title = title;
     this->unit = unit;
     this->minval = minval;
@@ -84,18 +83,16 @@ NumInput<T, U>::NumInput(char *title, U unit, T minval, T maxval, T initial, T s
 }
 
 
-template<typename T, typename U>
 int
-NumInput<T, U>::main() {
+NumInput::main() {
     lcd.print(this->title);
     this->update();
     return Dialog::main();
 };
 
 
-template<typename T, typename U>
 int
-NumInput<T, U>::rotated(int pos) {
+NumInput::rotated(int pos) {
     int mins = this->minval / this->step;
     int maxs = this->maxval / this->step;
 
@@ -115,19 +112,17 @@ NumInput<T, U>::rotated(int pos) {
 }
 
 
-template<typename T, typename U>
-static T
-NumInput<T, U>::show(char *title, U unit, T minval, T maxval, T initial, 
-        T step, int precision=0) {
+static float
+NumInput::show(char *title, char unit, float minval, float maxval, 
+        float initial, float step, int precision=0) {
     NumInput d(title, unit, minval, maxval, initial, step, precision);
     Dialog::modal(&d);
     return d.pos * step;
 }
     
 
-template<typename T, typename U>
 void
-NumInput<T, U>::update() {
+NumInput::update() {
     lcd.setCursor(0, 1);
     lcd.printu(this->pos * this->step, this->unit, this->precision, 16);
 }

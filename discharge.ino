@@ -5,11 +5,9 @@ int
 Discharge::main() {
     this->duty = 0;
    
-    float v = NumInput<float, char>::show("Cut-off voltage:", 'V', 0, 14, 
-            db.discharge.v, 0.1, 1);
-
-    float i = NumInput<float, char>::show("Current:", 'A', 0, 14, 
-            db.discharge.i, 0.05, 2);
+    float v = NumInput::show("Cut-off voltage:", 'V', 0, 14, db.discharge.v, 
+            0.1, 1);
+    float i = NumInput::show("Current:", 'A', 0, 14, db.discharge.i, 0.05, 2);
 
     if (v != db.discharge.v) {
         db.discharge.v = v;
