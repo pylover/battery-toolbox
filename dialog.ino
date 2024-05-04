@@ -129,5 +129,5 @@ template<typename T, typename U>
 void
 NumInput<T, U>::update() {
     lcd.setCursor(0, 1);
-    printu(&lcd, this->pos * this->step, this->unit, this->precision, 16);
+    lcd.printu(this->pos * this->step, this->unit, this->precision, 16);
 }

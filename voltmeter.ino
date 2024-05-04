@@ -26,7 +26,7 @@ VoltMeter::vhigh() {
 
 
 void
-VoltMeter::print(Print *display, int precision, int length) {
+VoltMeter::print(int precision, int length) {
     float v = this->vhigh();
-    printu(display, v, 'V', precision, length);
+    lcd.printu(v, 'V', precision, length);
 }

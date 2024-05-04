@@ -37,6 +37,6 @@ Thermistor::get_temp() {
 
 
 void
-Thermistor::print(Print *display, int precision, int length) {
-    printu(display, this->get_temp(), CHAR_DEGREE, precision, length); 
+Thermistor::print(int precision, int len) {
+    lcd.printu(this->get_temp(), CHAR_DEGREE, precision, len); 
 }

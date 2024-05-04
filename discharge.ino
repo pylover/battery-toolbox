@@ -35,11 +35,11 @@ Discharge::main() {
 
         lcd.setCursor(0, 1);
         // lcd.fill(' ', dutyloc + lcd.print(this->duty));
-        vmeter.print(&lcd, 1, 5);
+        vmeter.print(1, 5);
         lcd.write(' ');
-        ammeter.print(&lcd, 1, 5);
+        ammeter.print(1, 5);
         lcd.write(' ');
-        heatsink.print(&lcd, 0, 4);
+        heatsink.print(0, 4);
         pwm_set(DISCHARGE_PWMPIN, this->duty);
         delay(300);
     }

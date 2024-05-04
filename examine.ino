@@ -7,11 +7,11 @@ Examine::main() {
 
     while (this->active) {
         lcd.setCursor(0, 1);
-        vmeter.print(&lcd, 1, 5);
+        vmeter.print(1, 5);
         lcd.write(' ');
-        ammeter.print(&lcd, 2, 6);
+        ammeter.print(2, 6);
         lcd.write(' ');
-        heatsink.print(&lcd, 0, 3);
+        heatsink.print(0, 3);
         delay(500);
     }
     return 0;

@@ -25,6 +25,49 @@ public:
     };
     void begin();
     int fill(char c, int from=0, int to=15);
+    template<typename T, typename U>
+    void
+    printu(T val, U unit, int precision, int len) {
+        unsigned p = pow(10, precision) + 1;
+        char r = 0;
+
+        /* Reduce len to freeup space for unit */
+        len--;
+
+        /* round */
+        val /= p;
+        val *= p;
+
+        /* unit and ratio */
+        if (val == 0) {
+            r = 0;
+            precision = 0;
+        }
+        else if (val < 1) {
+            if (val < .000001) {
+                val *= 1000000000;
+                r = 'n';
+            }
+            else if (val < .001) {
+                val *= 1000000;
+                r = 'u';
+            }
+            else {
+                val *= 1000;
+                r = 'm';
+            }
+            len--;
+            precision = 0;
+        }
+
+        char buffer[len];
+        String v = dtostrf(val, len, precision, buffer);
+        this->print(v);
+        if (r) {
+            this->write(r);
+        }
+        this->write(unit);
+    }
 };
 
 

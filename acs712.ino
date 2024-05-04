@@ -27,8 +27,8 @@ ACS712::get_ampere() {
 
 
 void
-ACS712::print(Print *display, int precision, int length) {
+ACS712::print(int precision, int len) {
     float v = this->get_ampere();
-    printu(display, abs(v), 'A', precision, length);
+    lcd.printu(v, 'A', precision, len);
 }
 

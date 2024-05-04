@@ -14,7 +14,7 @@ public:
     float vhigh();
     float vlow();
     float vdiff();
-    void print(Print *display, int precision, int length);
+    void print(int precision, int length);
 private:
     int pinh;
     int pinl;

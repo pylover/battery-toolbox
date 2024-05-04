@@ -12,7 +12,7 @@ class ACS712 {
 public:
     ACS712(int pin, float coefficient);
     float get_ampere();
-    void print(Print *display, int precision, int length);
+    void print(int precision, int len);
 private:
     int pin;
     float coefficient;

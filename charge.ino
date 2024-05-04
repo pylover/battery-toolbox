@@ -33,17 +33,17 @@ Charge::main() {
         lcd.setCursor(10, 0);
         d = (float)this->duty * 100.0;
         d /= 255;
-        printu(&lcd, d, '%', 0, 4);
+        lcd.printu(d, '%', 0, 4);
         lcd.write(' ');
         lcd.write(c-- + CHAR_FULL);
         c = (c + 4) % 4;
 
         lcd.setCursor(0, 1);
-        vmeter.print(&lcd, 1, 5);
+        vmeter.print(1, 5);
         lcd.write(' ');
-        ammeter.print(&lcd, 1, 5);
+        ammeter.print(1, 5);
         lcd.write(' ');
-        heatsink.print(&lcd, 0, 4);
+        heatsink.print(0, 4);
         pwm_set(DISCHARGE_PWMPIN, this->duty);
         delay(300);
     }
