@@ -16,7 +16,6 @@ struct thermistor {
 };
 
 
-#define K(v) ((v) * 1000)
 #define THERMISTOR_SAMPLES 3
 #define THERMISTOR_100K_B3950  ((struct thermistor) { \
     K(100),  \

@@ -10,7 +10,7 @@
 #define VVERSION "v"VERSION"(pylover)"
 
 
-#define VREF    4.8
+#define K(v) (((float)v) * 1000.0)
 #define infoln Serial.println
 #define info Serial.print
 
@@ -18,6 +18,7 @@
 void
 pwm_set(int pin, int duty) {
     analogWrite(pin, duty);
+    /* for PWM frequency of ~62K Hz */
     TCCR1B = TCCR1B & B11100000 | B00001001;
 }
 

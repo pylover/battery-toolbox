@@ -22,13 +22,15 @@ static struct menu_entry actions[] = {
 };
 
 
+#define VREF 4.8
 #define BUZZER 6
+#define MOSFET 9
 static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
 static struct db db;
 static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
 static Rotary rotary;
 static VoltMeter vmeter(A5, A0, K(44.2), K(13));
-static ACS712 ammeter(A1, 48 / (float)1024);
+static ACS712 ammeter(A1, K(1.8), K(47));
 static Thermistor heatsink(A2, THERMISTOR_100K_B3950, K(4.7));
 
 
@@ -43,19 +45,21 @@ void
 setup() {
     Serial.begin(115200);
     while (!Serial);
+
+    /* Serial greeting */
     infoln();
     infoln(PROJECT);
     infoln(VVERSION);
     infoln();
 
+    analogReference(EXTERNAL);
+    pinMode(BUZZER, OUTPUT);
+    pinMode(MOSFET, OUTPUT);
+    digitalWrite(BUZZER, 0);
+    digitalWrite(MOSFET, 0);
     rotary.begin();
     lcd.begin();
-
-    pinMode(BUZZER, OUTPUT);
-
-    analogReference(EXTERNAL);
-    
-    pinMode(9, OUTPUT);
+    ammeter.callibrate();
 }
 
 
@@ -68,29 +72,9 @@ loop() {
     }
     
     db_load(&db);
-  
-    // while (true) {
-    //     lcd.clear();
-    //     voltmeter.print(&lcd, 2, 8);
-    //     lcd.setCursor(0, 1);
-    //     involtage.print(&lcd, 2, 8);
-    //     delay(300);
-    // }
-
+    
     /* Greeting */
     Message::show(PROJECT, VVERSION, greeting_melody);
-
-    // /* PWM DAC */
-    // int duty = 0;
-    // while (true) {
-    //     analogWrite(10, duty); 
-    //     analogWrite(9, duty); 
-    //     Serial.println(duty);
-    //     /* for PWM frequency of ~62K Hz */
-    //     TCCR1B = TCCR1B & B11100000 | B00001001; 
-    //     
-    //     duty = IntegerInputDialog::show("Duty Cycle:", 0, 255, duty);
-    // }
 
     while (true) {
         /* Main menu */
