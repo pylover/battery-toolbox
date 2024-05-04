@@ -123,28 +123,33 @@ LCD2X16::fill(char c, int from=0, int to=15) {
     
 
 void
-LCD2X16::printu(float val, char unit, int precision, int len) {
+LCD2X16::printu(float val, const char unit, int precision, int len) {
     unsigned p = pow(10, precision) + 1;
     char r = 0;
+    char buffer[len];
+    float absval = abs(val);
 
     /* Reduce len to freeup space for unit */
     len--;
 
     /* round */
-    val /= p;
-    val *= p;
+    absval /= p;
+    absval *= p;
+    // val /= p;
+    // val *= p;
 
     /* unit and ratio */
-    if (val == 0) {
+    if (absval == 0) {
         r = 0;
         precision = 0;
+        val = 0;
     }
-    else if (val < 1) {
-        if (val < .000001) {
+    else if (absval < 1) {
+        if (absval < .000001) {
             val *= 1000000000;
             r = 'n';
         }
-        else if (val < .001) {
+        else if (absval < .001) {
             val *= 1000000;
             r = 'u';
         }
@@ -156,7 +161,6 @@ LCD2X16::printu(float val, char unit, int precision, int len) {
         precision = 0;
     }
 
-    char buffer[len];
     String v = dtostrf(val, len, precision, buffer);
     this->print(v);
     if (r) {

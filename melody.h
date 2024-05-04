@@ -136,7 +136,7 @@ play(int pin, struct note *melody, volatile bool *more) {
     struct note *n;
 
     while (*more) {
-        n = &melody[i];
+        n = &melody[i++];
         if (!n->duration) {
             break;
         }

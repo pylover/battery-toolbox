@@ -16,9 +16,10 @@ ACS712::get_ampere() {
     float v = 0;
 
     for (i = 0; i < ACS712_SAMPLES; i++) {
-        v += (float)analogRead(this->pin);
+        // v += (float)analogRead(this->pin);
+        v = max(v, analogRead(this->pin));
     }
-    v /= ACS712_SAMPLES;
+    // v /= ACS712_SAMPLES;
 
     v *= this->coefficient;
     v -= 23.718750;

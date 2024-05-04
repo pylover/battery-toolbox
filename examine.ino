@@ -7,7 +7,7 @@ Examine::main() {
 
     while (this->active) {
         lcd.setCursor(0, 1);
-        vmeter.print(1, 5);
+        vmeter.printhigh(1, 5);
         lcd.write(' ');
         ammeter.print(2, 6);
         lcd.write(' ');

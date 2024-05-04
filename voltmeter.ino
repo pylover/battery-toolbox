@@ -13,20 +13,49 @@ VoltMeter::VoltMeter(int pinh, int pinl, float r1, float r2) {
 
 
 float 
-VoltMeter::vhigh() {
+VoltMeter::read(int pin) {
     int i;
     float v = 0;
 
     for (i = 0; i < VOLTMETER_SAMPLES; i++) {
-        v += analogRead(this->pinh);
+        v += analogRead(pin);
     }
     v /= (float)VOLTMETER_SAMPLES;
     return v * this->coefficient;
 }
 
 
+float 
+VoltMeter::vhigh() {
+    return this->read(this->pinh);
+}
+
+
+float 
+VoltMeter::vlow() {
+    return this->read(this->pinl);
+}
+
+
+float 
+VoltMeter::vdiff() {
+    return this->read(this->pinh) - this->read(this->pinl);
+}
+
+
 void
-VoltMeter::print(int precision, int length) {
-    float v = this->vhigh();
-    lcd.printu(v, 'V', precision, length);
+VoltMeter::printhigh(int precision, int len) {
+    lcd.printu(this->vhigh(), 'V', precision, len);
+}
+    
+
+void
+VoltMeter::printlow(int precision, int len) {
+    lcd.printu(this->vlow(), 'V', precision, len);
+}
+
+
+void
+VoltMeter::printdiff(int precision, int len) {
+    lcd.printu(this->vhigh() - this->vlow(), 'V', precision, len);
 }

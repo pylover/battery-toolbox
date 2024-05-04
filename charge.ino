@@ -3,6 +3,7 @@
 
 int
 Charge::main() {
+    int oldduty = 0;
     this->duty = 0;
    
     float v = NumInput::show("Cut-off voltage:", 'V', 0, 14, db.discharge.v, 
@@ -25,26 +26,39 @@ Charge::main() {
     }
 
     lcd.clear();
-    lcd.print("Charging ");
+    pwm_set(DISCHARGE_PWMPIN, this->duty);
     int c = 3;
     float d;
     while (this->active) {
-        lcd.setCursor(10, 0);
-        d = (float)this->duty * 100.0;
-        d /= 255;
-        lcd.printu(d, '%', 0, 4);
-        lcd.write(' ');
+        /* Animation */
+        lcd.setCursor(0, 0);
         lcd.write(c-- + CHAR_FULL);
+        lcd.write("C");
         c = (c + 4) % 4;
 
+        /* Duty Cycle */
+        lcd.setCursor(3, 0);
+        d = (float)this->duty * 100.0;
+        d /= 255;
+        lcd.printu(d, '%', 1, 6);
+      
+        /* Temperature */
+        lcd.setCursor(10, 0);
+        heatsink.print(1, 6);
+
+        /* Voltage */
         lcd.setCursor(0, 1);
-        vmeter.print(1, 5);
-        lcd.write(' ');
-        ammeter.print(1, 5);
-        lcd.write(' ');
-        heatsink.print(0, 4);
-        pwm_set(DISCHARGE_PWMPIN, this->duty);
-        delay(300);
+        vmeter.printdiff(2, 9);
+
+        /* Current */
+        lcd.setCursor(10, 1);
+        ammeter.print(1, 6);
+
+        if (oldduty != this->duty) {
+            pwm_set(DISCHARGE_PWMPIN, this->duty);
+            oldduty = this->duty;
+        }
+        delay(500);
     }
 
     digitalWrite(DISCHARGE_PWMPIN, 0);
