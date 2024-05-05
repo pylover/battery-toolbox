@@ -36,17 +36,17 @@ POSSIBILITY OF SUCH DAMAGE.
 #define DBADDR  0x0
 
 
-struct vi {
-    float v;
-    float i;
+struct watt {
+    float voltage;
+    float current;
 };
 
 
 struct db {
     bool dirty;
 
-    struct vi change;
-    struct vi discharge;
+    struct watt charge;
+    struct watt discharge;
 };
 
 

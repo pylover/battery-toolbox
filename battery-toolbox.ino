@@ -44,15 +44,17 @@ POSSIBILITY OF SUCH DAMAGE.
 
 
 static struct menu_entry actions[] = {
-    {"Examine", Examine::show},
-    {"Discharge", Discharge::show},
     {"Charge", Charge::show},
+    {"Discharge", Discharge::show},
+    {"Examine", Examine::show},
 };
 
 
+#define MAXTEMP 125
 #define VREF 4.8
-#define BUZZER 6
 #define MOSFET 9
+#define BUZZER 6
+#define BUZZ(t) tone(BUZZER, 1000); delay(t); noTone(BUZZER)
 static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
 static struct db db;
 static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
@@ -101,8 +103,8 @@ loop() {
     
     db_load(&db);
     
-    /* Greeting */
-    Message::show(PROJECT, VVERSION, greeting_melody);
+    // /* Greeting */
+    // Message::show(PROJECT, VVERSION, greeting_melody);
 
     while (true) {
         /* Main menu */

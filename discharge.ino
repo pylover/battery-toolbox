@@ -33,17 +33,19 @@ int
 Discharge::main() {
     this->duty = 0;
    
-    float v = NumInput::show("Cut-off voltage:", 'V', 0, 14, db.discharge.v, 
+    float maxv = NumInput::show("Cut-off voltage:", 'V', 0, 14, 
+            db.discharge.voltage, 
             0.1, 1);
-    float i = NumInput::show("Current:", 'A', 0, 14, db.discharge.i, 0.05, 2);
+    float maxc = NumInput::show("Current:", 'A', 0, 14, 
+            db.discharge.current, 0.05, 2);
 
-    if (v != db.discharge.v) {
-        db.discharge.v = v;
+    if (maxv != db.discharge.voltage) {
+        db.discharge.voltage = maxv;
         db.dirty = true;
     }
 
-    if (i != db.discharge.i) {
-        db.discharge.i = i;
+    if (maxc != db.discharge.current) {
+        db.discharge.current = maxc;
         db.dirty = true;
     }
 
@@ -66,11 +68,11 @@ Discharge::main() {
         ammeter.print(1, 5);
         lcd.write(' ');
         heatsink.print(0, 4);
-        pwm_set(DISCHARGE_PWMPIN, this->duty);
+        pwm_set(MOSFET, this->duty);
         delay(300);
     }
 
-    digitalWrite(DISCHARGE_PWMPIN, 0);
+    digitalWrite(MOSFET, 0);
     return 0;
 }
     

@@ -30,9 +30,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #define DISCHARGE_H_
 
 
-#define DISCHARGE_PWMPIN 9
-
-
 class Discharge: public Program<Discharge> {
  public:
     int main() override;
