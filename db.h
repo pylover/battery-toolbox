@@ -43,25 +43,17 @@ struct watt {
 
 
 struct db {
-    bool dirty;
-
     struct watt charge;
     struct watt discharge;
 };
 
 
 void
-db_load(struct db *d) {
-    EEPROM.get(DBADDR, *d);
-}
+db_load(struct db *d);
 
 
 void
-db_commit(struct db *d) {
-    d->dirty = false;
-    EEPROM.put(DBADDR, *d);
-    eeprom_crc_store();
-}
+db_commit(struct db *d);
 
 
 #endif  // DB_H_

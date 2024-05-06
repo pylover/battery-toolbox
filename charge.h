@@ -30,30 +30,15 @@ POSSIBILITY OF SUCH DAMAGE.
 #define CHARGE_H_
 
 
-#define DISCHARGE_PWMPIN 9
+#include "mosfet.h"
 
 
-enum charger_status {
-    CS_CHARGING,
-    CS_COOLING,
-    CS_DONE,
-};
-
-
-class Charge: public Program<Charge> {
- public:
-    int main() override;
-    int rotated(int pos) override;
-    void printstatus(int counter, float t, float v, float c);
+class Charge: public Mosfet<Charge> {
  protected:
-    volatile int duty = 0;
-    volatile int risk = 0;
-    float maxc;
-    float maxv;
-    enum charger_status status;
-    void ask();
-    int mosfet(int d);
-    void tick(unsigned int ticks, float t, float v, float c);
+    float voltage_get();
+    bool completed(float v);
+    struct watt * dbentry_get();
+    bool issafe(float c);
 };
 
 

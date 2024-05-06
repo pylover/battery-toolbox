@@ -30,12 +30,15 @@ POSSIBILITY OF SUCH DAMAGE.
 #define DISCHARGE_H_
 
 
-class Discharge: public Program<Discharge> {
- public:
-    int main() override;
-    int rotated(int pos) override;
+#include "mosfet.h"
+
+
+class Discharge: public Mosfet<Discharge> {
  protected:
-    volatile int duty;
+    float voltage_get();
+    bool completed(float v);
+    struct watt * dbentry_get();
+    bool issafe(float c);
 };
 
 

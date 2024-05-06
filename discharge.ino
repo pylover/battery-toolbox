@@ -29,64 +29,28 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "discharge.h"
 
 
-int
-Discharge::main() {
-    this->duty = 0;
-   
-    float maxv = NumInput::show("Cut-off voltage:", 'V', 0, 14, 
-            db.discharge.voltage, 
-            0.1, 1);
-    float maxc = NumInput::show("Current:", 'A', 0, 14, 
-            db.discharge.current, 0.05, 2);
-
-    if (maxv != db.discharge.voltage) {
-        db.discharge.voltage = maxv;
-        db.dirty = true;
-    }
-
-    if (maxc != db.discharge.current) {
-        db.discharge.current = maxc;
-        db.dirty = true;
-    }
-
-    if (db.dirty) {
-        db_commit(&db);
-    }
-
-    lcd.clear();
-    lcd.print("Discharging ");
-    char c = 0;
-    while (this->active) {
-        lcd.setCursor(15, 0);
-        lcd.write(c++ + CHAR_FULL);
-        c %= 4;
-
-        lcd.setCursor(0, 1);
-        // lcd.fill(' ', dutyloc + lcd.print(this->duty));
-        vmeter.printlow(1, 5);
-        lcd.write(' ');
-        ammeter.print(1, 5);
-        lcd.write(' ');
-        heatsink.print(0, 4);
-        pwm_set(MOSFET, this->duty);
-        delay(300);
-    }
-
-    digitalWrite(MOSFET, 0);
-    return 0;
+struct watt *
+Discharge::dbentry_get() {
+    return &db.discharge;
 }
-    
 
-int 
-Discharge::rotated(int pos) {
-    if (pos < 0) {
-        this->duty = 0;
-    }
-    else if (pos > 255) {
-        this->duty = 255;
-    }
-    else {
-        this->duty = pos;
-    }
-    return this->duty;
+
+bool
+Discharge::completed(float v) {
+    // Serial.print(this->voltage_threshold);
+    // Serial.print(' ');
+    // Serial.println(v);
+    return v < this->voltage_threshold;
+}
+
+
+float
+Discharge::voltage_get() {
+    return vmeter.vhigh();
+}
+
+
+bool
+Discharge::issafe(float c) {
+    return (this->current_threshold - c) > (CURRENT_STEP * 8);
 }

@@ -26,64 +26,48 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
-#include <Arduino.h>
-
-#include "voltmeter.h"
-
-
-VoltMeter::VoltMeter(int pinh, int pinl, float r1, float r2) {
-    this->pinl = pinl;
-    this->pinh = pinh;
-    this->coefficient = VREF * (r1 + r2) / r2 / 1024.0;
-    pinMode(pinh, INPUT);
-    pinMode(pinl, INPUT);
-}
+#ifndef MOSFET_H_
+#define MOSFET_H_
 
 
-float 
-VoltMeter::read(int pin) {
-    int i;
-    float v = 0;
-
-    for (i = 0; i < VOLTMETER_SAMPLES; i++) {
-        v += analogRead(pin);
-    }
-    v /= (float)VOLTMETER_SAMPLES;
-    return v * this->coefficient;
-}
+#include "dialog.h"
 
 
-float 
-VoltMeter::vhigh() {
-    return this->read(this->pinh);
-}
+#define MAX_CURRENT 10
+#define COOLING_STEPDOWN 10
+#define VOLTAGE_STEP 0.1
+#define CURRENT_STEP 0.05
 
 
-float 
-VoltMeter::vlow() {
-    return this->read(this->pinl);
-}
+enum mosfet_status {
+    CS_PASSING,
+    CS_COOLING,
+    CS_DONE,
+};
 
 
-float 
-VoltMeter::vdiff() {
-    return this->read(this->pinh) - this->read(this->pinl);
-}
-// 
-// 
-// void
-// VoltMeter::printhigh(int precision, int len) {
-//     lcd.printu(this->vhigh(), 'V', precision, len);
-// }
-//     
-// 
-// void
-// VoltMeter::printlow(int precision, int len) {
-//     lcd.printu(this->vlow(), 'V', precision, len);
-// }
-// 
-// 
-// void
-// VoltMeter::printdiff(int precision, int len) {
-//     lcd.printu(this->vhigh() - this->vlow(), 'V', precision, len);
-// }
+
+template <class T>
+class Mosfet: public Program<T> {
+ public:
+    int main() override;
+    int rotated(int pos) override;
+    void printstatus(int counter, float t, float v, float c);
+ protected:
+    volatile int duty = 0;
+    volatile int risk = 0;
+    float current_threshold;
+    float voltage_threshold;
+    enum mosfet_status status;
+    void ask();
+    int mosfet(int d);
+    void tick(unsigned int ticks, float t, float v, float c);
+    virtual struct watt * dbentry_get();
+    virtual float voltage_get();
+    virtual bool completed(float v);
+    virtual bool issafe(float c);
+};
+
+
+#endif  // MOSFET_H_
+

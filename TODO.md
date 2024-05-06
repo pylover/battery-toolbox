@@ -2,3 +2,4 @@
 - Discharge program
 - Examination
 - Readme: Wiring
+- Program completion melody
