@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "acs712.h"
 
 
-#define ACS712_SAMPLES 10
+#define ACS712_SAMPLES 5
 
 
 ACS712::ACS712(int pin, float r1, float r2) {

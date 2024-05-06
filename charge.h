@@ -38,7 +38,8 @@ class Charge: public Mosfet<Charge> {
     float voltage_get();
     bool completed(float v);
     struct watt * dbentry_get();
-    bool issafe(float c);
+    char * title_get();
+    void animate(int frame);
 };
 
 

@@ -1,3 +1,4 @@
+- Turnoff mosfet before voltage sampling
 - Charge program
 - Discharge program
 - Examination

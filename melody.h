@@ -197,4 +197,13 @@ static struct note greeting_melody[] = {
 };
 
 
+static struct note programfinish_melody[] = {
+    {nD3, dQ},
+    {nA3, dQ},
+    {nD4, dQ},
+    {nF4, dQ},
+    {0, 0}
+};
+
+
 #endif  // MELODY_H_

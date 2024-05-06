@@ -34,7 +34,7 @@ POSSIBILITY OF SUCH DAMAGE.
 
 
 #define MAX_CURRENT 10
-#define COOLING_STEPDOWN 10
+#define COOLING_STEPDOWN 20
 #define VOLTAGE_STEP 0.1
 #define CURRENT_STEP 0.05
 
@@ -66,6 +66,8 @@ class Mosfet: public Program<T> {
     virtual float voltage_get();
     virtual bool completed(float v);
     virtual bool issafe(float c);
+    virtual char * title_get();
+    virtual void animate(int frame);
 };
 
 

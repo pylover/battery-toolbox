@@ -47,7 +47,14 @@ Charge::voltage_get() {
 }
 
 
-bool
-Charge::issafe(float c) {
-    return (this->current_threshold - c) > CURRENT_STEP;
+char * 
+Charge::title_get() {
+    return "Charge";
+}
+
+
+void
+Charge::animate(int frame) {
+    lcd.write(frame + CHAR_FULL);
+    lcd.write("C");
 }

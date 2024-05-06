@@ -58,6 +58,13 @@ Mosfet<T>::ask() {
 
 
 template <class T>
+bool
+Mosfet<T>::issafe(float c) {
+    return (this->current_threshold - c) > CURRENT_STEP;
+}
+
+
+template <class T>
 void
 Mosfet<T>::tick(unsigned int ticks, float t, float v, float c) {
     /* Nothing to do when program was completed */
@@ -69,6 +76,7 @@ Mosfet<T>::tick(unsigned int ticks, float t, float v, float c) {
     if (this->completed(v)) {
         this->mosfet(0);
         this->status = CS_DONE;
+        play(BUZZER, programfinish_melody, &this->active);
         return;
     }
 
@@ -77,7 +85,7 @@ Mosfet<T>::tick(unsigned int ticks, float t, float v, float c) {
         this->status = CS_COOLING;
         this->risk = this->duty - 1;
         this->mosfet(max(0, this->duty - COOLING_STEPDOWN));
-        Serial.print("Overheat, duty: ");
+        Serial.print("Overheat, decreasing the risk factor. duty: ");
         Serial.println(this->duty);
         BUZZ(100);
         return;
@@ -85,7 +93,7 @@ Mosfet<T>::tick(unsigned int ticks, float t, float v, float c) {
 
     /* Increase risk threshold if possible */
     if ((ticks % 100 == 0) && (this->risk < 255) && this->issafe(c)) {
-        Serial.print("Increase risk:: ");
+        Serial.print("Increase the risk factor: ");
         Serial.println(++this->risk);
         BUZZ(20);
         delay(20);
@@ -113,8 +121,10 @@ Mosfet<T>::main() {
     float t, v, c;
     while (this->active) {
         t = heatsink.get_temp();
-        v = this->voltage_get();
         c = ammeter.get_ampere();
+        pwm_set(MOSFET, 0);
+        v = this->voltage_get();
+        pwm_set(MOSFET, this->duty);
 
         if (!(ticks % 30)) {
             this->printstatus(frame--, t, v, c);
@@ -166,13 +176,13 @@ Mosfet<T>::mosfet(int d) {
 
 template <class T>
 void 
-Mosfet<T>::printstatus(int counter, float t, float v, float c) {
+Mosfet<T>::printstatus(int frame, float t, float v, float c) {
     float d = (float)this->duty * 100.0 / 255;
 
     lcd.setCursor(0, 0);
     if (this->status == CS_DONE) {
-        // TODO: use anstract program name
-        lcd.print("Charge Completed");
+        lcd.print(this->title_get());
+        lcd.print(" Completed");
 
         /* Voltage */
         lcd.setCursor(0, 1);
@@ -185,8 +195,7 @@ Mosfet<T>::printstatus(int counter, float t, float v, float c) {
     }
     
     /* Animation */
-    lcd.write(counter-- + CHAR_FULL);
-    lcd.write("C");
+    this->animate(frame);
 
     /* Duty Cycle */
     lcd.setCursor(3, 0);
@@ -201,7 +210,7 @@ Mosfet<T>::printstatus(int counter, float t, float v, float c) {
     lcd.printu(v, 'V', 2, 5);
 
     /* Current */
-    lcd.printu(c, 0, 1, 5);
+    lcd.printu(c, 0, 2, 5);
     lcd.write('/');
     lcd.printu(this->current_threshold, 'A', 2, 5);
 }

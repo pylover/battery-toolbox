@@ -50,7 +50,14 @@ Discharge::voltage_get() {
 }
 
 
-bool
-Discharge::issafe(float c) {
-    return (this->current_threshold - c) > (CURRENT_STEP * 8);
+char * 
+Discharge::title_get() {
+    return "Discha";
+}
+
+
+void
+Discharge::animate(int frame) {
+    lcd.write((3 - frame) + CHAR_FULL);
+    lcd.write("D");
 }
