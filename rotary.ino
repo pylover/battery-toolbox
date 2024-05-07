@@ -40,11 +40,11 @@ Rotary::isr() {
 Rotary::Rotary(): RotaryEncoder(ROT1, ROT2, RotaryEncoder::LatchMode::FOUR3) {
     attachInterrupt(digitalPinToInterrupt(ROT1), isr, CHANGE);
     attachInterrupt(digitalPinToInterrupt(ROT2), isr, CHANGE);
-    
+
     /* rotary encode push button */
     /* Set PC4 as input */
     DDRC &= ~(1 << DDC4);
-    
+
     /* turn on intrrupt for port c */
     PCICR |= (1 << PCIE1);
 

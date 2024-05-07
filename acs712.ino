@@ -42,8 +42,8 @@ ACS712::ACS712(int pin, float r1, float r2) {
 }
 
 
-    
-void 
+
+void
 ACS712::callibrate() {
     int i;
     for (i = 0; i < ACS712_SAMPLES; i++) {
@@ -52,7 +52,7 @@ ACS712::callibrate() {
 }
 
 
-float 
+float
 ACS712::get_ampere() {
     int i;
     float v = 0;
@@ -61,7 +61,7 @@ ACS712::get_ampere() {
         v += (float)analogRead(this->pin);
     }
     v /= ACS712_SAMPLES;
-    
+
     v *= this->coefficient;
     v -= this->offset;
     return v;

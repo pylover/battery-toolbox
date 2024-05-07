@@ -47,7 +47,7 @@ Charge::voltage_get() {
 }
 
 
-char * 
+char *
 Charge::title_get() {
     return "Charge";
 }

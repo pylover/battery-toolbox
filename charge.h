@@ -34,8 +34,6 @@ POSSIBILITY OF SUCH DAMAGE.
 
 
 class Charge: public Mosfet<Charge> {
-//  public:
-//      Charge(): Mosfet() {}
  protected:
      float voltage_get();
      bool completed(float v);

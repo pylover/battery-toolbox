@@ -27,7 +27,7 @@ ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
 #include "dialog.h"
-    
+
 
 void
 Dialog::pushed() {
@@ -41,12 +41,12 @@ Dialog::rotated(int pos) {
 }
 
 
-int 
+int
 Dialog::main() {
-    while (this->active);
+    while (this->active) {}
     return 0;
 }
-    
+
 
 static int
 Dialog::modal(class Dialog *dialog) {
@@ -60,7 +60,7 @@ Dialog::modal(class Dialog *dialog) {
     rotary.consumer = backup;
     return status;
 }
-    
+
 
 
 template<class T>
@@ -88,7 +88,7 @@ Message::main() {
         play(BUZZER, this->melody, &this->active);
     }
     return Dialog::main();
-};
+}
 
 
 static void
@@ -98,8 +98,8 @@ Message::show(char *title, char *description, struct note *melody) {
 }
 
 
-NumInput::NumInput(char *title, char unit, float minval, float maxval, 
-        float initial, float step, int precision=0) {
+NumInput::NumInput(char *title, char unit, float minval, float maxval,
+        float initial, float step, int precision = 0) {
     this->title = title;
     this->unit = unit;
     this->minval = minval;
@@ -116,7 +116,7 @@ NumInput::main() {
     lcd.print(this->title);
     this->update();
     return Dialog::main();
-};
+}
 
 
 int
@@ -141,13 +141,13 @@ NumInput::rotated(int pos) {
 
 
 static float
-NumInput::show(char *title, char unit, float minval, float maxval, 
-        float initial, float step, int precision=0) {
+NumInput::show(char *title, char unit, float minval, float maxval,
+        float initial, float step, int precision = 0) {
     NumInput d(title, unit, minval, maxval, initial, step, precision);
     Dialog::modal(&d);
     return d.pos * step;
 }
-    
+
 
 void
 NumInput::update() {

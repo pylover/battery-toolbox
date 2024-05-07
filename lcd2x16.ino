@@ -125,7 +125,7 @@ static byte char_25p[8] = {
 };
 
 
-LCD2X16::LCD2X16(int rs, int en, int d4, int d5, int d6, int d7): 
+LCD2X16::LCD2X16(int rs, int en, int d4, int d5, int d6, int d7):
         LiquidCrystal(rs, en, d4, d5, d6, d7) {
     LiquidCrystal::begin(16, 2, LCD_5x8DOTS);
     this->noAutoscroll();
@@ -141,17 +141,17 @@ LCD2X16::LCD2X16(int rs, int en, int d4, int d5, int d6, int d7):
 
 
 int
-LCD2X16::fill(char c, int from=0, int to=15) {
+LCD2X16::fill(char c, int from = 0, int to = 15) {
     for (; from <= to; from++) {
         this->write(c);
     }
 
     return to - from;
 }
-    
+
 
 void
-LCD2X16::printu(float val, const char unit, int precision, int len, 
+LCD2X16::printu(float val, const char unit, int precision, int len,
         bool prefix = true) {
     unsigned p = pow(10, precision) + 1;
     char r = 0;

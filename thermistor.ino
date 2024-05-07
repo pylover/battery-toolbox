@@ -38,7 +38,7 @@ Thermistor::Thermistor(int pin, struct thermistor th, float r) {
     this->resistor = r;
     pinMode(pin, INPUT);
 }
-    
+
 
 float
 Thermistor::get_temp() {
@@ -66,5 +66,5 @@ Thermistor::get_temp() {
 
 void
 Thermistor::print(int precision, int len) {
-    lcd.printu(this->get_temp(), CHAR_DEGREE, precision, len); 
+    lcd.printu(this->get_temp(), CHAR_DEGREE, precision, len);
 }

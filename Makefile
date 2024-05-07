@@ -25,7 +25,7 @@ PRETTYC_FLAGS = \
     --recursive \
     --verbose=0 \
     --repository=. \
-    --extensions=c,h,in \
+    --extensions=c,h,ino,cpp \
     --linelength=80 \
     --headers=h,in \
     --includeorder=standardcfirst \

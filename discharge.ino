@@ -50,7 +50,7 @@ Discharge::voltage_get() {
 }
 
 
-char * 
+char *
 Discharge::title_get() {
     return "Discha";
 }

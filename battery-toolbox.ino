@@ -54,7 +54,11 @@ static struct menu_entry actions[] = {
 #define VREF 4.8
 #define MOSFET 9
 #define BUZZER 6
-#define BUZZ(t) tone(BUZZER, 1000); delay(t); noTone(BUZZER)
+#define RELAY 11
+#define BUZZ(t) \
+    tone(BUZZER, 1000); \
+    delay(t); \
+    noTone(BUZZER)
 static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
 static struct db db;
 static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
@@ -71,16 +75,22 @@ ISR(PCINT1_vect) {
 }
 
 
-void 
+void
 setup() {
     Serial.begin(115200);
-    while (!Serial);
+    while (!Serial) {}
 
     analogReference(EXTERNAL);
+
     pinMode(BUZZER, OUTPUT);
     digitalWrite(BUZZER, 0);
+
     pinMode(MOSFET, OUTPUT);
     digitalWrite(MOSFET, 0);
+
+    pinMode(RELAY, OUTPUT);
+    digitalWrite(RELAY, 1);
+
     ammeter.callibrate();
 
     /* Serial greeting */
@@ -91,7 +101,7 @@ setup() {
 }
 
 
-void 
+void
 loop() {
     struct menu_entry *prog;
 
@@ -107,9 +117,9 @@ loop() {
     if (eeprom_crc_check()) {
         eeprom_format();
     }
-    
+
     db_load();
-    
+
     // /* Greeting */
     // Message::show(PROJECT, VVERSION, greeting_melody);
 
@@ -120,5 +130,5 @@ loop() {
         /* Execute */
         prog->func();
     }
-    while (true);
+    while (true) {}
 }

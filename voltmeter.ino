@@ -40,7 +40,7 @@ VoltMeter::VoltMeter(int pinh, int pinl, float r1, float r2) {
 }
 
 
-float 
+float
 VoltMeter::read(int pin) {
     int i;
     float v = 0;
@@ -53,37 +53,19 @@ VoltMeter::read(int pin) {
 }
 
 
-float 
+float
 VoltMeter::vhigh() {
     return this->read(this->pinh);
 }
 
 
-float 
+float
 VoltMeter::vlow() {
     return this->read(this->pinl);
 }
 
 
-float 
+float
 VoltMeter::vdiff() {
     return this->read(this->pinh) - this->read(this->pinl);
 }
-// 
-// 
-// void
-// VoltMeter::printhigh(int precision, int len) {
-//     lcd.printu(this->vhigh(), 'V', precision, len);
-// }
-//     
-// 
-// void
-// VoltMeter::printlow(int precision, int len) {
-//     lcd.printu(this->vlow(), 'V', precision, len);
-// }
-// 
-// 
-// void
-// VoltMeter::printdiff(int precision, int len) {
-//     lcd.printu(this->vhigh() - this->vlow(), 'V', precision, len);
-// }

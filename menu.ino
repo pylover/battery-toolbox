@@ -31,7 +31,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "common.h"
 
 
-Menu::Menu(const char *title, struct menu_entry items[], 
+Menu::Menu(const char *title, struct menu_entry items[],
         unsigned int itemscount) {
     this->caption = title;
     this->entries = items;
@@ -62,7 +62,7 @@ Menu::update() {
 }
 
 
-struct menu_entry* 
+struct menu_entry*
 Menu::show() {
     lcd.clear();
     lcd.print(this->caption);
@@ -70,19 +70,19 @@ Menu::show() {
     this->selected = -1;
     rotary.setPosition(this->current);
     this->update();
-    while (this->selected < 0);
+    while (this->selected < 0) {}
     rotary.consumer = NULL;
     return &this->entries[this->selected];
 }
-    
 
-void 
+
+void
 Menu::pushed() {
     this->selected = this->current;
 }
 
 
-int 
+int
 Menu::rotated(int pos) {
     if ((pos < 0) || (pos >= this->count)) {
         return this->current;

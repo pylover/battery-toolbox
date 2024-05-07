@@ -50,25 +50,24 @@ enum mosfet_status {
 template <class T>
 class Mosfet: public Program<T> {
  public:
-    // Mosfet();
-    int main() override;
-    int rotated(int pos) override;
-    void printstatus(int counter, float t, float v, float c);
+     int main() override;
+     int rotated(int pos) override;
+     void printstatus(int counter, float t, float v, float c);
  protected:
-    volatile int duty = 0;
-    volatile int risk = 0;
-    float current_threshold;
-    float voltage_threshold;
-    enum mosfet_status status;
-    void ask();
-    int mosfet(int d);
-    void tick(unsigned int ticks, float t, float v, float c);
-    virtual struct watt * dbentry_get();
-    virtual float voltage_get();
-    virtual bool completed(float v);
-    virtual bool issafe(float c);
-    virtual char * title_get();
-    virtual void animate(int frame);
+     volatile int duty = 0;
+     volatile int risk = 0;
+     float current_threshold;
+     float voltage_threshold;
+     enum mosfet_status status;
+     void ask();
+     int mosfet(int d);
+     void tick(unsigned int ticks, float t, float v, float c);
+     virtual struct watt * dbentry_get();
+     virtual float voltage_get();
+     virtual bool completed(float v);
+     virtual bool issafe(float c);
+     virtual char * title_get();
+     virtual void animate(int frame);
 };
 
 

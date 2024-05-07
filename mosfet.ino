@@ -29,25 +29,18 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "mosfet.h"
 
 
-// template <class T>
-// Mosfet<T>::Mosfet() {
-//     pinmode(mosfet, output);
-//     digitalwrite(mosfet, 0);
-// }
-
-
 template <class T>
 void
 Mosfet<T>::ask() {
     bool dirty = false;
     struct watt *entry = this->dbentry_get();
 
-    this->voltage_threshold = NumInput::show("Cut-off voltage:", 'V', 0, 14, 
+    this->voltage_threshold = NumInput::show("Cut-off voltage:", 'V', 0, 14,
             entry->voltage, VOLTAGE_STEP, 1);
 
-    this->current_threshold = NumInput::show("Current:", 'A', 0, 10, 
+    this->current_threshold = NumInput::show("Current:", 'A', 0, 10,
             entry->current, CURRENT_STEP, 2);
-    
+
     if (this->voltage_threshold != entry->voltage) {
         entry->voltage = this->voltage_threshold;
         dirty = true;
@@ -120,7 +113,7 @@ int
 Mosfet<T>::main() {
     this->risk = 255;
     this->mosfet(0);
-    this->ask(); 
+    this->ask();
     rotary.setPosition(this->current_threshold / CURRENT_STEP);
     lcd.clear();
     int frame = 3;
@@ -137,7 +130,7 @@ Mosfet<T>::main() {
             this->printstatus(frame--, t, v, c);
             frame = (frame + 4) % 4;
         }
-        
+
         this->tick(ticks++, t, v, c);
         delay(10);
     }
@@ -145,10 +138,10 @@ Mosfet<T>::main() {
     this->mosfet(0);
     return 0;
 }
-    
+
 
 template <class T>
-int 
+int
 Mosfet<T>::rotated(int pos) {
     float c = pos * CURRENT_STEP;
 
@@ -166,7 +159,7 @@ Mosfet<T>::rotated(int pos) {
 
 
 template <class T>
-int 
+int
 Mosfet<T>::mosfet(int d) {
     if (d > 255) {
         this->duty = 255;
@@ -182,7 +175,7 @@ Mosfet<T>::mosfet(int d) {
 
 
 template <class T>
-void 
+void
 Mosfet<T>::printstatus(int frame, float t, float v, float c) {
     float d = (float)this->duty * 100.0 / 255;
 
@@ -194,20 +187,20 @@ Mosfet<T>::printstatus(int frame, float t, float v, float c) {
         /* Voltage */
         lcd.setCursor(0, 1);
         lcd.printu(v, 'V', 3, 9);
-    
+
         /* Temperature */
         lcd.setCursor(10, 1);
         lcd.printu(t, CHAR_DEGREE, 1, 6);
         return;
     }
-    
+
     /* Animation */
     this->animate(frame);
 
     /* Duty Cycle */
     lcd.setCursor(3, 0);
     lcd.printu(d, '%', 1, 6, false);
-    
+
     /* Temperature */
     lcd.setCursor(10, 0);
     lcd.printu(t, CHAR_DEGREE, 1, 6);
