@@ -30,18 +30,21 @@ POSSIBILITY OF SUCH DAMAGE.
 #define DISCHARGE_H_
 
 
-#include "mosfet.h"
+#include "program.h"
 
 
-class Discharge: public Mosfet {
+class Discharge: public Program {
  public:
      static int show();
+     // int main() override;
  protected:
-    float voltage_get();
-    bool completed(float v);
-    struct watt * dbentry_get();
-    char * title_get();
-    void animate(int frame);
+     float voltage_get();
+     bool completed(float v);
+     struct watt * dbentry_get();
+     char * title_get();
+     void animate(int frame);
+     void prepare() override;
+     void terminate() override;
 };
 
 

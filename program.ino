@@ -26,11 +26,11 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
-#include "mosfet.h"
+#include "program.h"
 
 
 void
-Mosfet::ask() {
+Program::ask() {
     bool dirty = false;
     struct watt *entry = this->dbentry_get();
 
@@ -56,14 +56,8 @@ Mosfet::ask() {
 }
 
 
-bool
-Mosfet::issafe(float c) {
-    return (this->current_threshold - c) > (CURRENT_STEP * 3);
-}
-
-
 void
-Mosfet::tick(unsigned int ticks, float t, float v, float c) {
+Program::tick(unsigned int ticks, float t, float v, float c) {
     /* Nothing to do when program was completed */
     if (this->status == CS_DONE) {
         return;
@@ -89,7 +83,8 @@ Mosfet::tick(unsigned int ticks, float t, float v, float c) {
     }
 
     /* Increase risk threshold if possible */
-    if ((ticks % 100 == 0) && (this->risk < 255) && this->issafe(c)) {
+    if ((ticks % 100 == 0) && (this->risk < 255) &&
+            ((this->current_threshold - c) > (CURRENT_STEP * 3))) {
         Serial.print("Increase the risk factor: ");
         Serial.println(++this->risk);
         BUZZ(20);
@@ -105,16 +100,31 @@ Mosfet::tick(unsigned int ticks, float t, float v, float c) {
 }
 
 
-int
-Mosfet::main() {
+void
+Program::prepare() {
     this->risk = 255;
     this->mosfet(0);
     this->ask();
     rotary.setPosition(this->current_threshold / CURRENT_STEP);
     lcd.clear();
+}
+
+
+void
+Program::terminate() {
+    this->mosfet(0);
+}
+
+
+int
+Program::main() {
     int frame = 3;
     unsigned int ticks = 0;
     float t, v, c;
+
+    this->prepare();
+
+    /* main loop */
     while (this->active) {
         t = heatsink.get_temp();
         c = ammeter.get_ampere();
@@ -131,13 +141,13 @@ Mosfet::main() {
         delay(10);
     }
 
-    this->mosfet(0);
+    this->terminate();
     return 0;
 }
 
 
 int
-Mosfet::rotated(int pos) {
+Program::rotated(int pos) {
     float c = pos * CURRENT_STEP;
 
     if (c < 0) {
@@ -154,7 +164,7 @@ Mosfet::rotated(int pos) {
 
 
 int
-Mosfet::mosfet(int d) {
+Program::mosfet(int d) {
     if (d > 255) {
         this->duty = 255;
     }
@@ -169,7 +179,7 @@ Mosfet::mosfet(int d) {
 
 
 void
-Mosfet::printstatus(int frame, float t, float v, float c) {
+Program::printstatus(int frame, float t, float v, float c) {
     float d = (float)this->duty * 100.0 / 255;
 
     lcd.setCursor(0, 0);

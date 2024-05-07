@@ -30,10 +30,10 @@ POSSIBILITY OF SUCH DAMAGE.
 #define CHARGE_H_
 
 
-#include "mosfet.h"
+#include "program.h"
 
 
-class Charge: public Mosfet {
+class Charge: public Program {
  public:
      static int show();
  protected:

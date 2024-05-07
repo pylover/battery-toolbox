@@ -39,6 +39,7 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "db.h"
 #include "dialog.h"
 #include "examine.h"
+#include "program.h"
 #include "discharge.h"
 #include "charge.h"
 
@@ -53,12 +54,18 @@ static struct menu_entry actions[] = {
 #define MAXTEMP 125
 #define VREF 4.8
 #define MOSFET 9
+
+#define RELAY_PIN 11
+#define ON 0
+#define OFF 1
+#define RELAY(s) digitalWrite(RELAY_PIN, s)
+
 #define BUZZER 6
-#define RELAY 11
 #define BUZZ(t) \
     tone(BUZZER, 1000); \
     delay(t); \
     noTone(BUZZER)
+
 static Menu menu("Main menu:", actions, ENTRYCOUNT(actions));
 static struct db db;
 static LCD2X16 lcd(13, 12, 8, 7, 5, 4);
@@ -88,8 +95,8 @@ setup() {
     pinMode(MOSFET, OUTPUT);
     digitalWrite(MOSFET, 0);
 
-    pinMode(RELAY, OUTPUT);
-    digitalWrite(RELAY, 1);
+    pinMode(RELAY_PIN, OUTPUT);
+    RELAY(OFF);
 
     ammeter.callibrate();
 

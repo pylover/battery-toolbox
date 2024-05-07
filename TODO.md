@@ -1,8 +1,6 @@
 - RLoad voltage during discharge/examination
 - Examination with 100% duty cycle
-- Turnoff mosfet before voltage sampling
-- Charge program
-- Discharge program
 - Examination
-- Readme: Wiring
-- Program completion melody
+- Readme: 
+  - Circuit
+  - Wiring

@@ -26,8 +26,8 @@ CONTRACT, STRICT LIABILITY, OR TORT (INCLUDING NEGLIGENCE OR OTHERWISE)
 ARISING IN ANY WAY OUT OF THE USE OF THIS SOFTWARE, EVEN IF ADVISED OF THE
 POSSIBILITY OF SUCH DAMAGE.
 */
-#ifndef MOSFET_H_
-#define MOSFET_H_
+#ifndef PROGRAM_H_
+#define PROGRAM_H_
 
 
 #include "dialog.h"
@@ -47,7 +47,7 @@ enum mosfet_status {
 
 
 
-class Mosfet: public Dialog {
+class Program: public Dialog {
  public:
      int main() override;
      int rotated(int pos) override;
@@ -61,14 +61,14 @@ class Mosfet: public Dialog {
      void ask();
      int mosfet(int d);
      void tick(unsigned int ticks, float t, float v, float c);
+     virtual void prepare();
+     virtual void terminate();
      virtual struct watt * dbentry_get();
      virtual float voltage_get();
      virtual bool completed(float v);
-     virtual bool issafe(float c);
      virtual char * title_get();
      virtual void animate(int frame);
 };
 
 
-#endif  // MOSFET_H_
-
+#endif  // PROGRAM_H_

@@ -29,6 +29,20 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "discharge.h"
 
 
+void
+Discharge::prepare() {
+    Program::prepare();
+    RELAY(ON);
+}
+
+
+void
+Discharge::terminate() {
+    RELAY(OFF);
+    Program::terminate();
+}
+
+
 static int
 Discharge::show() {
     Discharge d;
