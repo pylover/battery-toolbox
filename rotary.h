@@ -47,8 +47,7 @@ class RotaryConsumer {
 
 class Rotary : public RotaryEncoder {
  public:
-    Rotary(): RotaryEncoder(ROT1, ROT2, RotaryEncoder::LatchMode::FOUR3) {}
-    void begin();
+    Rotary();
     void pushed();
     volatile RotaryConsumer *consumer = NULL;
  private:

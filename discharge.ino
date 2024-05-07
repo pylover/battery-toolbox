@@ -40,7 +40,7 @@ Discharge::completed(float v) {
     // Serial.print(this->voltage_threshold);
     // Serial.print(' ');
     // Serial.println(v);
-    return v < this->voltage_threshold;
+    return v && (v < this->voltage_threshold);
 }
 
 

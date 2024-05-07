@@ -50,6 +50,7 @@ enum mosfet_status {
 template <class T>
 class Mosfet: public Program<T> {
  public:
+    // Mosfet();
     int main() override;
     int rotated(int pos) override;
     void printstatus(int counter, float t, float v, float c);

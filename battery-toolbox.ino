@@ -76,20 +76,18 @@ setup() {
     Serial.begin(115200);
     while (!Serial);
 
+    analogReference(EXTERNAL);
+    pinMode(BUZZER, OUTPUT);
+    digitalWrite(BUZZER, 0);
+    pinMode(MOSFET, OUTPUT);
+    digitalWrite(MOSFET, 0);
+    ammeter.callibrate();
+
     /* Serial greeting */
     infoln();
     infoln(PROJECT);
     infoln(VVERSION);
     infoln();
-
-    analogReference(EXTERNAL);
-    pinMode(BUZZER, OUTPUT);
-    pinMode(MOSFET, OUTPUT);
-    digitalWrite(BUZZER, 0);
-    digitalWrite(MOSFET, 0);
-    rotary.begin();
-    lcd.begin();
-    ammeter.callibrate();
 }
 
 

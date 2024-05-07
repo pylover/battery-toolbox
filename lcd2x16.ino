@@ -125,8 +125,8 @@ static byte char_25p[8] = {
 };
 
 
-void
-LCD2X16::begin() {
+LCD2X16::LCD2X16(int rs, int en, int d4, int d5, int d6, int d7): 
+        LiquidCrystal(rs, en, d4, d5, d6, d7) {
     LiquidCrystal::begin(16, 2, LCD_5x8DOTS);
     this->noAutoscroll();
     this->createChar(CHAR_DOWN, char_down);

@@ -29,6 +29,13 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "mosfet.h"
 
 
+// template <class T>
+// Mosfet<T>::Mosfet() {
+//     pinmode(mosfet, output);
+//     digitalwrite(mosfet, 0);
+// }
+
+
 template <class T>
 void
 Mosfet<T>::ask() {
@@ -60,7 +67,7 @@ Mosfet<T>::ask() {
 template <class T>
 bool
 Mosfet<T>::issafe(float c) {
-    return (this->current_threshold - c) > CURRENT_STEP;
+    return (this->current_threshold - c) > (CURRENT_STEP * 3);
 }
 
 
