@@ -29,6 +29,13 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "charge.h"
 
 
+static int
+Charge::show() {
+    Charge d;
+    return Dialog::modal(&d);
+}
+
+
 struct watt *
 Charge::dbentry_get() {
     return &db.charge;

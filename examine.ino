@@ -29,6 +29,13 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "examine.h"
 
 
+static int
+Examine::show() {
+    Charge d;
+    return Dialog::modal(&d);
+}
+
+
 int
 Examine::main() {
     lcd.write("Examination");

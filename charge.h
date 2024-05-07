@@ -33,7 +33,9 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "mosfet.h"
 
 
-class Charge: public Mosfet<Charge> {
+class Charge: public Mosfet {
+ public:
+     static int show();
  protected:
      float voltage_get();
      bool completed(float v);

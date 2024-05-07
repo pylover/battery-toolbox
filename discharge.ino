@@ -29,6 +29,13 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "discharge.h"
 
 
+static int
+Discharge::show() {
+    Discharge d;
+    return Dialog::modal(&d);
+}
+
+
 struct watt *
 Discharge::dbentry_get() {
     return &db.discharge;

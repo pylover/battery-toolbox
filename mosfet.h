@@ -47,8 +47,7 @@ enum mosfet_status {
 
 
 
-template <class T>
-class Mosfet: public Program<T> {
+class Mosfet: public Dialog {
  public:
      int main() override;
      int rotated(int pos) override;

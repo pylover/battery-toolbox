@@ -30,9 +30,10 @@ POSSIBILITY OF SUCH DAMAGE.
 #define EXAMINE_H_
 
 
-class Examine: public Program<Examine> {
+class Examine: public Dialog {
  public:
-    int main() override;
+     static int show();
+     int main() override;
 };
 
 

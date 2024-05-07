@@ -62,16 +62,6 @@ Dialog::modal(class Dialog *dialog) {
 }
 
 
-
-template<class T>
-static int
-Program<T>::show() {
-    T d;
-    return Dialog::modal(&d);
-}
-
-
-
 Message::Message(char *title, char *description, struct note *melody) {
     this->title = title;
     this->description = description;

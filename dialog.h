@@ -41,13 +41,6 @@ class Dialog: public RotaryConsumer {
 };
 
 
-template <class T>
-class Program: public Dialog {
- public:
-    static int show();
-};
-
-
 class Message: public Dialog {
  public:
     Message(char *title, char *description, struct note *melody);

@@ -29,9 +29,8 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "mosfet.h"
 
 
-template <class T>
 void
-Mosfet<T>::ask() {
+Mosfet::ask() {
     bool dirty = false;
     struct watt *entry = this->dbentry_get();
 
@@ -57,16 +56,14 @@ Mosfet<T>::ask() {
 }
 
 
-template <class T>
 bool
-Mosfet<T>::issafe(float c) {
+Mosfet::issafe(float c) {
     return (this->current_threshold - c) > (CURRENT_STEP * 3);
 }
 
 
-template <class T>
 void
-Mosfet<T>::tick(unsigned int ticks, float t, float v, float c) {
+Mosfet::tick(unsigned int ticks, float t, float v, float c) {
     /* Nothing to do when program was completed */
     if (this->status == CS_DONE) {
         return;
@@ -108,9 +105,8 @@ Mosfet<T>::tick(unsigned int ticks, float t, float v, float c) {
 }
 
 
-template <class T>
 int
-Mosfet<T>::main() {
+Mosfet::main() {
     this->risk = 255;
     this->mosfet(0);
     this->ask();
@@ -140,9 +136,8 @@ Mosfet<T>::main() {
 }
 
 
-template <class T>
 int
-Mosfet<T>::rotated(int pos) {
+Mosfet::rotated(int pos) {
     float c = pos * CURRENT_STEP;
 
     if (c < 0) {
@@ -158,9 +153,8 @@ Mosfet<T>::rotated(int pos) {
 }
 
 
-template <class T>
 int
-Mosfet<T>::mosfet(int d) {
+Mosfet::mosfet(int d) {
     if (d > 255) {
         this->duty = 255;
     }
@@ -174,9 +168,8 @@ Mosfet<T>::mosfet(int d) {
 }
 
 
-template <class T>
 void
-Mosfet<T>::printstatus(int frame, float t, float v, float c) {
+Mosfet::printstatus(int frame, float t, float v, float c) {
     float d = (float)this->duty * 100.0 / 255;
 
     lcd.setCursor(0, 0);
