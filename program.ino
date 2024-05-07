@@ -76,8 +76,6 @@ Program::tick(unsigned int ticks, float t, float v, float c) {
         this->status = CS_COOLING;
         this->risk = this->duty - 1;
         this->mosfet(max(0, this->duty - COOLING_STEPDOWN));
-        Serial.print("Overheat, decreasing the risk factor. duty: ");
-        Serial.println(this->duty);
         BUZZ(100);
         return;
     }
@@ -85,8 +83,6 @@ Program::tick(unsigned int ticks, float t, float v, float c) {
     /* Increase risk threshold if possible */
     if ((ticks % 100 == 0) && (this->risk < 255) &&
             ((this->current_threshold - c) > (CURRENT_STEP * 3))) {
-        Serial.print("Increase the risk factor: ");
-        Serial.println(++this->risk);
         BUZZ(20);
         delay(20);
         BUZZ(20);

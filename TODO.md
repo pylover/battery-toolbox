@@ -1,6 +1,6 @@
 - RLoad voltage during discharge/examination
 - Examination with 100% duty cycle
-- Examination
+- Turn on/off fan based on mosfet temperature
 - Readme: 
   - Circuit
   - Wiring
