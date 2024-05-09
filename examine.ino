@@ -42,11 +42,12 @@ Examine::main() {
 
     while (this->active) {
         lcd.setCursor(0, 1);
-        lcd.printu(vmeter.vlow(), 'V', 1, 5);
-        lcd.write(' ');
-        ammeter.print(2, 6);
-        lcd.write(' ');
-        heatsink.print(0, 3);
+        lcd.printuu(vmeter.vlow(), 2, 5, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
+        // lcd.write(' ');
+        // ammeter.print(2, 6);
+        // lcd.write(' ');
+        // heatsink.print(0, 3);
+        // lcd.printu(heatsink.get_temp(), CHAR_DEGREE, 1, 5);
         delay(500);
     }
     return 0;

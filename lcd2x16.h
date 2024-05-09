@@ -50,8 +50,8 @@ class LCD2X16: public LiquidCrystal {
     LCD2X16(int rs, int en, int d4, int d5, int d6, int d7);
     void begin();
     int fill(char c, int from = 0, int to = 15);
-    void printu(float val, const char unit, int precision, int len,
-            bool prefix = true);
+    void printuu(float val, int precision, int len, const char unit = 0,
+        const char miliunit = 0, const char microunit = 0);
 };
 
 

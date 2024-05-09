@@ -66,11 +66,3 @@ ACS712::get_ampere() {
     v -= this->offset;
     return v;
 }
-
-
-void
-ACS712::print(int precision, int len) {
-    float v = this->get_ampere();
-    lcd.printu(v, 'A', precision, len);
-}
-

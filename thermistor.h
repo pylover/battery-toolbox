@@ -56,7 +56,6 @@ class Thermistor {
  public:
     Thermistor(int pin, struct thermistor th, float r);
     float get_temp();
-    void print(int precision, int len);
  private:
     int pin;
     float resistor;

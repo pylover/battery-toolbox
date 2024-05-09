@@ -176,39 +176,53 @@ void
 Program::printstatus(float t, float v, float c) {
     float d = (float)this->duty * 100.0 / 255;
     char *title = this->title_get();
+    float cth = this->current_threshold;
 
-    lcd.setCursor(0, 0);
-    if (this->status == CS_DONE) {
-        lcd.print(title);
-        lcd.print(" Completed");
-
-        /* Voltage */
-        lcd.setCursor(0, 1);
-        lcd.printu(v, 'V', 3, 9);
-
-        /* Temperature */
-        lcd.setCursor(10, 1);
-        lcd.printu(t, CHAR_DEGREE, 1, 6);
-        return;
-    }
-
-    /* Animation */
+    lcd.clear();
+    /* Caption */
     lcd.write(title[0]);
 
-    /* Duty Cycle */
-    lcd.setCursor(3, 0);
-    lcd.printu(d, '%', 1, 6, false);
-
-    /* Temperature */
-    lcd.setCursor(10, 0);
-    lcd.printu(t, CHAR_DEGREE, 1, 6);
-
-    /* Voltage */
-    lcd.setCursor(0, 1);
-    lcd.printu(v, 'V', 2, 5);
+    /* Duty cycle */
+    lcd.printuu(d, 1, 5, '%');
 
     /* Current */
-    lcd.printu(c, 0, 2, 5);
+    lcd.setCursor(7, 0);
+    lcd.printuu(c, 1, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
     lcd.write('/');
-    lcd.printu(this->current_threshold, 'A', 2, 5);
+    lcd.printuu(cth, 1, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
+    lcd.setCursor(0, 1);
+
+    /* Voltage */
+    lcd.write('B');
+    lcd.printuu(v, 1, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
+    lcd.print(" L");
+    lcd.printuu(v, 1, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
+    lcd.write(' ');
+    lcd.printuu(t, 0, 4, CHAR_DEGREE);
+
+    // lcd.setCursor(0, 0);
+    // if (this->status == CS_DONE) {
+    //     lcd.print(title);
+    //     lcd.print(" Completed");
+
+    //     /* Voltage */
+    //     lcd.setCursor(0, 1);
+    //     lcd.printu(v, 'V', 3, 9);
+
+    //     /* Temperature */
+    //     lcd.setCursor(10, 1);
+    //     lcd.printu(t, CHAR_DEGREE, 1, 6);
+    //     return;
+    // }
+
+    // /* Animation */
+    // lcd.write(title[0]);
+
+    // /* Duty Cycle */
+    // lcd.setCursor(3, 0);
+    // lcd.printu(d, '%', 1, 6, false);
+
+    // /* Temperature */
+    // lcd.setCursor(10, 0);
+    // lcd.printu(t, CHAR_DEGREE, 1, 6);
 }

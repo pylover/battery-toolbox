@@ -125,18 +125,14 @@ LCD2X16::fill(char c, int from = 0, int to = 15) {
 
 
 void
-LCD2X16::printu(float val, const char unit, int precision, int len,
-        bool prefix = true) {
+LCD2X16::printuu(float val, int precision, int len, const char unit = 0,
+        const char miliunit = 0, const char microunit = 0) {
     unsigned p = pow(10, precision) + 1;
-    char r = 0;
     char *v;
-    char buffer[len];
+    char buffer[len + 1];
+    buffer[len] = 0;
     float absval = abs(val);
-
-    /* Reduce len to freeup space for unit */
-    if (unit) {
-        len--;
-    }
+    char u = unit;
 
     /* round */
     absval /= p;
@@ -144,35 +140,37 @@ LCD2X16::printu(float val, const char unit, int precision, int len,
 
     /* unit and ratio */
     if (absval == 0) {
-        r = 0;
         precision = 0;
-        val = 0;
     }
-    else if (prefix && (absval < 1)) {
-        if (absval < .000001) {
-            val *= 1000000000;
-            r = 'n';
-        }
-        else if (absval < .001) {
-            val *= 1000000;
-            r = 'u';
-        }
-        else {
-            val *= 1000;
-            r = 'm';
-        }
-        len--;
+    else if (microunit && (absval < .001)) {
+        val *= 1000000;
+        u = microunit;
         precision = 0;
+    }
+    else if (miliunit && (absval < 1)) {
+        val *= 1000;
+        u = miliunit;
+        precision = 0;
+    }
+
+    if (!precision) {
+        /* Preserve one char for unit */
+        len--;
     }
 
     val /= p;
     val *= p;
     v = dtostrf(val, len, precision, buffer);
-    this->print(v);
-    if (r) {
-        this->write(r);
+    Serial.println(v);
+    if (!u) {
+        return;
     }
-    if (unit) {
-        this->write(unit);
+
+    if (precision) {
+        buffer[len - precision - 1] = u;
     }
+    else {
+        buffer[len] = u;
+    }
+    this->print(buffer);
 }

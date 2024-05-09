@@ -112,15 +112,6 @@ void
 loop() {
     struct menu_entry *prog;
 
-    // while (true) {
-    //     float l = vmeter.vlow();
-    //     float h = vmeter.vhigh();
-    //     Serial.print(l, 3);
-    //     Serial.print(' ');
-    //     Serial.println(h, 3);
-    //     delay(500);
-    // }
-
     if (eeprom_crc_check()) {
         eeprom_format();
     }

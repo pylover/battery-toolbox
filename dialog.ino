@@ -142,5 +142,5 @@ NumInput::show(char *title, char unit, float minval, float maxval,
 void
 NumInput::update() {
     lcd.setCursor(0, 1);
-    lcd.printu(this->pos * this->step, this->unit, this->precision, 16);
+    lcd.printuu(this->pos * this->step, this->precision, 16, this->unit);
 }

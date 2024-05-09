@@ -62,9 +62,3 @@ Thermistor::get_temp() {
     t -= 273.15;
     return t;
 }
-
-
-void
-Thermistor::print(int precision, int len) {
-    lcd.printu(this->get_temp(), CHAR_DEGREE, precision, len);
-}
