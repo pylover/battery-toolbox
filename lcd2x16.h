@@ -35,14 +35,14 @@ POSSIBILITY OF SUCH DAMAGE.
 #include <LiquidCrystal.h>
 
 
-#define CHAR_UP '^'
+#define CHAR_UP byte(94)
+#define CHAR_DEGREE byte(223)
 #define CHAR_DOWN byte(0)
 #define CHAR_UPDOWN byte(1)
-#define CHAR_FULL byte(255)
-#define CHAR_75P byte(5)
-#define CHAR_50P byte(6)
-#define CHAR_25P byte(7)
-#define CHAR_DEGREE byte(223)
+#define CHAR_MILIAMPERE byte(2)
+#define CHAR_MICROAMPERE byte(3)
+#define CHAR_MILIVOLT byte(4)
+#define CHAR_MICROVOLT byte(5)
 
 
 class LCD2X16: public LiquidCrystal {

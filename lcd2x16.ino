@@ -53,51 +53,51 @@ static byte char_updown[8] = {
 };
 
 
-static byte char_full[8] = {
+static byte char_miliampere[8] = {
+    0b00100,
+    0b01010,
     0b11111,
-    0b11111,
-    0b11111,
-    0b11111,
-    0b11111,
-    0b11111,
-    0b11111,
-    0b11111,
+    0b10001,
+    0b00000,
+    0b11011,
+    0b10101,
+    0b10101,
 };
 
 
-static byte char_75p[8] = {
+static byte char_microampere[8] = {
+    0b00100,
+    0b01010,
+    0b11111,
+    0b10001,
     0b00000,
-    0b00000,
-    0b11111,
-    0b11111,
-    0b11111,
-    0b11111,
-    0b11111,
-    0b11111,
+    0b01001,
+    0b01111,
+    0b10000,
 };
 
 
-static byte char_50p[8] = {
+static byte char_milivolt[8] = {
+    0b10001,
+    0b10001,
+    0b01010,
+    0b00100,
     0b00000,
-    0b00000,
-    0b00000,
-    0b00000,
-    0b11111,
-    0b11111,
-    0b11111,
-    0b11111,
+    0b11011,
+    0b10101,
+    0b10101,
 };
 
 
-static byte char_25p[8] = {
+static byte char_microvolt[8] = {
+    0b10001,
+    0b10001,
+    0b01010,
+    0b00100,
     0b00000,
-    0b00000,
-    0b00000,
-    0b00000,
-    0b00000,
-    0b00000,
-    0b11111,
-    0b11111,
+    0b01001,
+    0b01111,
+    0b10000,
 };
 
 
@@ -107,10 +107,10 @@ LCD2X16::LCD2X16(int rs, int en, int d4, int d5, int d6, int d7):
     this->noAutoscroll();
     this->createChar(CHAR_DOWN, char_down);
     this->createChar(CHAR_UPDOWN, char_updown);
-    this->createChar(CHAR_FULL, char_full);
-    this->createChar(CHAR_75P, char_75p);
-    this->createChar(CHAR_50P, char_50p);
-    this->createChar(CHAR_25P, char_25p);
+    this->createChar(CHAR_MILIAMPERE, char_miliampere);
+    this->createChar(CHAR_MICROAMPERE, char_microampere);
+    this->createChar(CHAR_MILIVOLT, char_milivolt);
+    this->createChar(CHAR_MICROVOLT, char_microvolt);
 }
 
 
