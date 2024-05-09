@@ -42,7 +42,6 @@ class Discharge: public Program {
      bool completed(float v);
      struct watt * dbentry_get();
      char * title_get();
-     void animate(int frame);
      void prepare() override;
      void terminate() override;
 };

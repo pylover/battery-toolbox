@@ -51,7 +51,7 @@ class Program: public Dialog {
  public:
      int main() override;
      int rotated(int pos) override;
-     void printstatus(int counter, float t, float v, float c);
+     void printstatus(float t, float v, float c);
  protected:
      volatile int duty = 0;
      volatile int risk = 0;
@@ -67,7 +67,6 @@ class Program: public Dialog {
      virtual float voltage_get();
      virtual bool completed(float v);
      virtual char * title_get();
-     virtual void animate(int frame);
 };
 
 

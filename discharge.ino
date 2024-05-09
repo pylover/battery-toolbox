@@ -75,10 +75,3 @@ char *
 Discharge::title_get() {
     return "Discha";
 }
-
-
-void
-Discharge::animate(int frame) {
-    lcd.write((3 - frame) + CHAR_FULL);
-    lcd.write("D");
-}

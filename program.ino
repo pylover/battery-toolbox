@@ -114,7 +114,6 @@ Program::terminate() {
 
 int
 Program::main() {
-    int frame = 3;
     unsigned int ticks = 0;
     float t, v, c;
 
@@ -129,8 +128,7 @@ Program::main() {
         pwm_set(MOSFET, this->duty);
 
         if (!(ticks % 30)) {
-            this->printstatus(frame--, t, v, c);
-            frame = (frame + 4) % 4;
+            this->printstatus(t, v, c);
         }
 
         this->tick(ticks++, t, v, c);
@@ -175,12 +173,13 @@ Program::mosfet(int d) {
 
 
 void
-Program::printstatus(int frame, float t, float v, float c) {
+Program::printstatus(float t, float v, float c) {
     float d = (float)this->duty * 100.0 / 255;
+    char *title = this->title_get();
 
     lcd.setCursor(0, 0);
     if (this->status == CS_DONE) {
-        lcd.print(this->title_get());
+        lcd.print(title);
         lcd.print(" Completed");
 
         /* Voltage */
@@ -194,7 +193,7 @@ Program::printstatus(int frame, float t, float v, float c) {
     }
 
     /* Animation */
-    this->animate(frame);
+    lcd.write(title[0]);
 
     /* Duty Cycle */
     lcd.setCursor(3, 0);

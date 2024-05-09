@@ -58,10 +58,3 @@ char *
 Charge::title_get() {
     return "Charge";
 }
-
-
-void
-Charge::animate(int frame) {
-    lcd.write(frame + CHAR_FULL);
-    lcd.write("C");
-}
