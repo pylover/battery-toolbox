@@ -37,7 +37,6 @@ class Charge: public Program {
  public:
      static int show();
  protected:
-     float voltage_get();
      bool completed(float sv, float lv);
      struct watt * dbentry_get();
      char * title_get();

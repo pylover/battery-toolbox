@@ -1,4 +1,3 @@
-- Examination with 100% duty cycle
 - Turn on/off fan based on mosfet temperature
 - Readme: 
   - Circuit

@@ -45,6 +45,7 @@ struct watt {
 struct db {
     struct watt charge;
     struct watt discharge;
+    struct watt examine;
 };
 
 

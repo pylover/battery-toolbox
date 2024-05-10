@@ -203,17 +203,17 @@ Program::printstatus(float t, float c, float sv, float lv) {
 
         /* Current */
         lcd.setCursor(7, 0);
-        lcd.printuu(c, 1, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
+        lcd.printuu(c, 2, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
         lcd.write('<');
-        lcd.printuu(cth, 1, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
+        lcd.printuu(cth, 2, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
     }
 
     /* Voltage */
     lcd.setCursor(0, 1);
     lcd.write('S');
-    lcd.printuu(sv, 1, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
+    lcd.printuu(sv, 2, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
     lcd.print(" L");
-    lcd.printuu(lv, 1, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
+    lcd.printuu(lv, 2, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
     lcd.write(' ');
     lcd.printuu(t, 0, 4, CHAR_DEGREE);
 }

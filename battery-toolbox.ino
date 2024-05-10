@@ -38,7 +38,6 @@ POSSIBILITY OF SUCH DAMAGE.
 #include "rotary.h"
 #include "db.h"
 #include "dialog.h"
-#include "examine.h"
 #include "program.h"
 #include "discharge.h"
 #include "charge.h"
@@ -47,7 +46,6 @@ POSSIBILITY OF SUCH DAMAGE.
 static struct menu_entry actions[] = {
     {"Charge", Charge::show},
     {"Discharge", Discharge::show},
-    {"Examine", Examine::show},
 };
 
 

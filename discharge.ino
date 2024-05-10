@@ -58,9 +58,6 @@ Discharge::dbentry_get() {
 
 bool
 Discharge::completed(float sv, float lv) {
-    // Serial.print(this->voltage_threshold);
-    // Serial.print(' ');
-    // Serial.println(v);
     return sv && (sv < this->voltage_threshold);
 }
 
