@@ -55,17 +55,18 @@ class Message: public Dialog {
 
 class NumInput: public Dialog {
  public:
-    NumInput(char *title, char unit, float minval, float maxval,
-            float initial, float step, int precision = 0);
+    NumInput(char *title, float minval, float maxval, float initial,
+            float step, int precision = 0, char unit = 0, char miliunit = 0);
     int main();
     int rotated(int pos) override;
-    static float show(char *title, char unit, float minval, float maxval,
-            float initial, float step, int precision = 0);
+    static float show(char *title, float minval, float maxval, float initial,
+            float step, int precision = 0, char unit = 0, char miliunit = 0);
  protected:
     volatile int pos;
     char *title;
     int precision;
     char unit;
+    char miliunit;
     float minval;
     float maxval;
     float step;

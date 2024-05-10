@@ -57,21 +57,30 @@ Discharge::dbentry_get() {
 
 
 bool
-Discharge::completed(float v) {
+Discharge::completed(float sv, float lv) {
     // Serial.print(this->voltage_threshold);
     // Serial.print(' ');
     // Serial.println(v);
-    return v && (v < this->voltage_threshold);
-}
-
-
-float
-Discharge::voltage_get() {
-    return vmeter.vhigh();
+    return sv && (sv < this->voltage_threshold);
 }
 
 
 char *
 Discharge::title_get() {
     return "Discha";
+}
+
+
+float
+Discharge::sourcevoltage_get() {
+    pwm_set(MOSFET, 0);
+    float v = vmeter.vhigh();
+    pwm_set(MOSFET, this->duty);
+    return v;
+}
+
+
+float
+Discharge::loadvoltage_get() {
+    return vmeter.vdiff();
 }

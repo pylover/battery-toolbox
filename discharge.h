@@ -39,11 +39,13 @@ class Discharge: public Program {
      // int main() override;
  protected:
      float voltage_get();
-     bool completed(float v);
+     bool completed(float sv, float lv);
      struct watt * dbentry_get();
      char * title_get();
      void prepare() override;
      void terminate() override;
+     float sourcevoltage_get();
+     float loadvoltage_get();
 };
 
 

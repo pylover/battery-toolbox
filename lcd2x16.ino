@@ -139,18 +139,16 @@ LCD2X16::printuu(float val, int precision, int len, const char unit = 0,
     absval *= p;
 
     /* unit and ratio */
-    if (absval == 0) {
+    if (absval < 1) {
         precision = 0;
-    }
-    else if (microunit && (absval < .001)) {
-        val *= 1000000;
-        u = microunit;
-        precision = 0;
-    }
-    else if (miliunit && (absval < 1)) {
-        val *= 1000;
-        u = miliunit;
-        precision = 0;
+        if (absval && microunit && (absval < .001)) {
+            val *= 1000000;
+            u = microunit;
+        }
+        else if (absval && miliunit && (absval < 1)) {
+            val *= 1000;
+            u = miliunit;
+        }
     }
 
     if (!precision) {
@@ -161,7 +159,6 @@ LCD2X16::printuu(float val, int precision, int len, const char unit = 0,
     val /= p;
     val *= p;
     v = dtostrf(val, len, precision, buffer);
-    Serial.println(v);
     if (!u) {
         return;
     }

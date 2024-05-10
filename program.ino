@@ -34,11 +34,11 @@ Program::ask() {
     bool dirty = false;
     struct watt *entry = this->dbentry_get();
 
-    this->voltage_threshold = NumInput::show("Cut-off voltage:", 'V', 0, 14,
-            entry->voltage, VOLTAGE_STEP, 1);
+    this->voltage_threshold = NumInput::show("Cut-off voltage:", 0, 14,
+            entry->voltage, VOLTAGE_STEP, 1, 'V', CHAR_MILIVOLT);
 
-    this->current_threshold = NumInput::show("Current:", 'A', 0, 10,
-            entry->current, CURRENT_STEP, 2);
+    this->current_threshold = NumInput::show("Current:", 0, 10,
+            entry->current, CURRENT_STEP, 2, 'A', CHAR_MILIAMPERE);
 
     if (this->voltage_threshold != entry->voltage) {
         entry->voltage = this->voltage_threshold;
@@ -57,14 +57,14 @@ Program::ask() {
 
 
 void
-Program::tick(unsigned int ticks, float t, float v, float c) {
+Program::tick(unsigned int ticks, float t, float c, float sv, float lv) {
     /* Nothing to do when program was completed */
     if (this->status == CS_DONE) {
         return;
     }
 
     /* Check for completion */
-    if (this->completed(v)) {
+    if (this->completed(sv, lv)) {
         this->mosfet(0);
         this->status = CS_DONE;
         play(BUZZER, programfinish_melody, &this->active);
@@ -115,7 +115,7 @@ Program::terminate() {
 int
 Program::main() {
     unsigned int ticks = 0;
-    float t, v, c;
+    float t, c, sv, lv;
 
     this->prepare();
 
@@ -123,15 +123,14 @@ Program::main() {
     while (this->active) {
         t = heatsink.get_temp();
         c = ammeter.get_ampere();
-        pwm_set(MOSFET, 0);
-        v = this->voltage_get();
-        pwm_set(MOSFET, this->duty);
+        sv = this->sourcevoltage_get();
+        lv = this->loadvoltage_get();
 
         if (!(ticks % 30)) {
-            this->printstatus(t, v, c);
+            this->printstatus(t, c, sv, lv);
         }
 
-        this->tick(ticks++, t, v, c);
+        this->tick(ticks++, t, c, sv, lv);
         delay(10);
     }
 
@@ -172,57 +171,49 @@ Program::mosfet(int d) {
 }
 
 
+float
+Program::sourcevoltage_get() {
+    return vmeter.vhigh();
+}
+
+
+float
+Program::loadvoltage_get() {
+    return vmeter.vdiff();
+}
+
+
 void
-Program::printstatus(float t, float v, float c) {
+Program::printstatus(float t, float c, float sv, float lv) {
     float d = (float)this->duty * 100.0 / 255;
     char *title = this->title_get();
     float cth = this->current_threshold;
 
     lcd.clear();
-    /* Caption */
-    lcd.write(title[0]);
+    if (this->status == CS_DONE) {
+        lcd.print(title);
+        lcd.print(" Completed");
+    }
+    else {
+        /* Caption */
+        lcd.write(title[0]);
 
-    /* Duty cycle */
-    lcd.printuu(d, 1, 5, '%');
+        /* Duty cycle */
+        lcd.printuu(d, 1, 5, '%');
 
-    /* Current */
-    lcd.setCursor(7, 0);
-    lcd.printuu(c, 1, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
-    lcd.write('/');
-    lcd.printuu(cth, 1, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
-    lcd.setCursor(0, 1);
+        /* Current */
+        lcd.setCursor(7, 0);
+        lcd.printuu(c, 1, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
+        lcd.write('<');
+        lcd.printuu(cth, 1, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
+    }
 
     /* Voltage */
-    lcd.write('B');
-    lcd.printuu(v, 1, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
+    lcd.setCursor(0, 1);
+    lcd.write('S');
+    lcd.printuu(sv, 1, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
     lcd.print(" L");
-    lcd.printuu(v, 1, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
+    lcd.printuu(lv, 1, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
     lcd.write(' ');
     lcd.printuu(t, 0, 4, CHAR_DEGREE);
-
-    // lcd.setCursor(0, 0);
-    // if (this->status == CS_DONE) {
-    //     lcd.print(title);
-    //     lcd.print(" Completed");
-
-    //     /* Voltage */
-    //     lcd.setCursor(0, 1);
-    //     lcd.printu(v, 'V', 3, 9);
-
-    //     /* Temperature */
-    //     lcd.setCursor(10, 1);
-    //     lcd.printu(t, CHAR_DEGREE, 1, 6);
-    //     return;
-    // }
-
-    // /* Animation */
-    // lcd.write(title[0]);
-
-    // /* Duty Cycle */
-    // lcd.setCursor(3, 0);
-    // lcd.printu(d, '%', 1, 6, false);
-
-    // /* Temperature */
-    // lcd.setCursor(10, 0);
-    // lcd.printu(t, CHAR_DEGREE, 1, 6);
 }

@@ -43,18 +43,27 @@ Charge::dbentry_get() {
 
 
 bool
-Charge::completed(float v) {
-    return v >= this->voltage_threshold;
-}
-
-
-float
-Charge::voltage_get() {
-    return vmeter.vdiff();
+Charge::completed(float sv, float lv) {
+    return lv >= this->voltage_threshold;
 }
 
 
 char *
 Charge::title_get() {
     return "Charge";
+}
+
+
+float
+Charge::sourcevoltage_get() {
+    return vmeter.vhigh();
+}
+
+
+float
+Charge::loadvoltage_get() {
+    pwm_set(MOSFET, 0);
+    float v = vmeter.vdiff();
+    pwm_set(MOSFET, this->duty);
+    return v;
 }

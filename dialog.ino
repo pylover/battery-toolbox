@@ -88,10 +88,11 @@ Message::show(char *title, char *description, struct note *melody) {
 }
 
 
-NumInput::NumInput(char *title, char unit, float minval, float maxval,
-        float initial, float step, int precision = 0) {
+NumInput::NumInput(char *title, float minval, float maxval, float initial,
+        float step, int precision = 0, char unit = 0, char miliunit = 0) {
     this->title = title;
     this->unit = unit;
+    this->miliunit = miliunit;
     this->minval = minval;
     this->maxval = maxval;
     this->pos = (int) (initial / step);
@@ -131,9 +132,10 @@ NumInput::rotated(int pos) {
 
 
 static float
-NumInput::show(char *title, char unit, float minval, float maxval,
-        float initial, float step, int precision = 0) {
-    NumInput d(title, unit, minval, maxval, initial, step, precision);
+NumInput::show(char *title, float minval, float maxval, float initial,
+        float step, int precision = 0, char unit = 0, char miliunit = 0) {
+    NumInput d(title, minval, maxval, initial, step, precision, unit,
+            miliunit);
     Dialog::modal(&d);
     return d.pos * step;
 }
@@ -142,5 +144,6 @@ NumInput::show(char *title, char unit, float minval, float maxval,
 void
 NumInput::update() {
     lcd.setCursor(0, 1);
-    lcd.printuu(this->pos * this->step, this->precision, 16, this->unit);
+    lcd.printuu(this->pos * this->step, this->precision, 16, this->unit,
+            this->miliunit);
 }

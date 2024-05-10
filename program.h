@@ -51,7 +51,7 @@ class Program: public Dialog {
  public:
      int main() override;
      int rotated(int pos) override;
-     void printstatus(float t, float v, float c);
+     void printstatus(float t, float c, float sv, float lv);
  protected:
      volatile int duty = 0;
      volatile int risk = 0;
@@ -60,12 +60,13 @@ class Program: public Dialog {
      enum mosfet_status status;
      void ask();
      int mosfet(int d);
-     void tick(unsigned int ticks, float t, float v, float c);
+     void tick(unsigned int ticks, float t, float c, float sv, float lv);
+     virtual float sourcevoltage_get();
+     virtual float loadvoltage_get();
      virtual void prepare();
      virtual void terminate();
      virtual struct watt * dbentry_get();
-     virtual float voltage_get();
-     virtual bool completed(float v);
+     virtual bool completed(float sv, float lv);
      virtual char * title_get();
 };
 
