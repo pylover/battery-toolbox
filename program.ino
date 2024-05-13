@@ -57,7 +57,7 @@ Program::ask() {
 
 
 void
-Program::tick(unsigned int ticks, float t, float c, float sv, float lv) {
+Program::tick(unsigned long ticks, float t, float c, float sv, float lv) {
     /* Nothing to do when program was completed */
     if (this->status == CS_DONE) {
         return;
@@ -114,24 +114,28 @@ Program::terminate() {
 
 int
 Program::main() {
-    unsigned int ticks = 0;
+    unsigned long ticks = 0;
+    unsigned long start;
+    unsigned long milis;
     float t, c, sv, lv;
 
     this->prepare();
 
     /* main loop */
+    start = millis();
     while (this->active) {
         t = heatsink.get_temp();
         c = ammeter.get_ampere();
         sv = this->sourcevoltage_get();
         lv = this->loadvoltage_get();
 
-        if (!(ticks % 30)) {
-            this->printstatus(t, c, sv, lv);
-        }
-
         this->tick(ticks++, t, c, sv, lv);
-        delay(10);
+        milis =  millis() - start;
+
+        if (milis > 600) {
+            this->printstatus(t, c, sv, lv);
+            start = millis();
+        }
     }
 
     this->terminate();
@@ -211,9 +215,9 @@ Program::printstatus(float t, float c, float sv, float lv) {
     /* Voltage */
     lcd.setCursor(0, 1);
     lcd.write('S');
-    lcd.printuu(sv, 2, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
+    lcd.printuu(sv, 1, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
     lcd.print(" L");
-    lcd.printuu(lv, 2, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
+    lcd.printuu(lv, 1, 4, 'V', CHAR_MILIVOLT, CHAR_MICROVOLT);
     lcd.write(' ');
     lcd.printuu(t, 0, 4, CHAR_DEGREE);
 }

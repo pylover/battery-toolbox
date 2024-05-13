@@ -60,7 +60,7 @@ class Program: public Dialog {
      enum mosfet_status status;
      void ask();
      int mosfet(int d);
-     virtual void tick(unsigned int ticks, float t, float c, float sv,
+     virtual void tick(unsigned long ticks, float t, float c, float sv,
              float lv);
      virtual float sourcevoltage_get();
      virtual float loadvoltage_get();
