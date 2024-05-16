@@ -49,7 +49,8 @@ static struct menu_entry actions[] = {
 };
 
 
-#define MAXTEMP 125
+#define MAXTEMP 100
+#define MAXPOWER 60
 #define VREF 4.8
 #define MOSFET 9
 

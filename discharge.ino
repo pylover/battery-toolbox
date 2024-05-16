@@ -58,7 +58,8 @@ Discharge::dbentry_get() {
 
 bool
 Discharge::completed(float sv, float lv) {
-    return sv && (sv < this->voltage_threshold);
+    bool c = sv && (sv < this->voltage_threshold);
+    return c;
 }
 
 

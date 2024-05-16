@@ -37,8 +37,9 @@ Program::ask() {
     this->voltage_threshold = NumInput::show("Cut-off voltage:", 0, 14,
             entry->voltage, VOLTAGE_STEP, 1, 'V', CHAR_MILIVOLT);
 
-    this->current_threshold = NumInput::show("Current:", 0, 10,
-            entry->current, CURRENT_STEP, 2, 'A', CHAR_MILIAMPERE);
+    this->current_threshold = NumInput::show("Current:", 0,
+            MAXPOWER / this->voltage_threshold, entry->current, CURRENT_STEP,
+            2, 'A', CHAR_MILIAMPERE);
 
     if (this->voltage_threshold != entry->voltage) {
         entry->voltage = this->voltage_threshold;
@@ -64,7 +65,7 @@ Program::tick(unsigned long ticks, float t, float c, float sv, float lv) {
     }
 
     /* Check for completion */
-    if (this->completed(sv, lv)) {
+    if ((ticks > 5) && this->completed(sv, lv)) {
         this->mosfet(0);
         this->status = CS_DONE;
         play(BUZZER, programfinish_melody, &this->active);
@@ -83,6 +84,8 @@ Program::tick(unsigned long ticks, float t, float c, float sv, float lv) {
     /* Increase risk threshold if possible */
     if ((ticks % 100 == 0) && (this->risk < 255) &&
             ((this->current_threshold - c) > (CURRENT_STEP * 3))) {
+        this->risk++;
+        this->status = CS_PASSING;
         BUZZ(20);
         delay(20);
         BUZZ(20);
@@ -136,6 +139,7 @@ Program::main() {
             this->printstatus(t, c, sv, lv);
             start = millis();
         }
+        delay(10);
     }
 
     this->terminate();
