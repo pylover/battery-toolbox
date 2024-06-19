@@ -168,6 +168,7 @@ void
 Program::mosfet(int d) {
     analogWrite(MOSFET1, d);
     analogWrite(MOSFET2, d);
+    TCCR1B = TCCR1B & B11100000 | B00001001;
 }
 
 
@@ -222,8 +223,8 @@ Program::printstatus(float t, float c, float sv, float lv) {
         lcd.printuu(d, 1, 5, '%');
 
         /* Current */
-        lcd.setCursor(7, 0);
-        lcd.printuu(c, 2, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
+        lcd.setCursor(6, 0);
+        lcd.printuu(c, 2, 5, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
         lcd.write('<');
         lcd.printuu(cth, 2, 4, 'A', CHAR_MILIAMPERE, CHAR_MICROAMPERE);
     }
