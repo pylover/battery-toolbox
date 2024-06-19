@@ -71,9 +71,9 @@ Discharge::title_get() {
 
 float
 Discharge::sourcevoltage_get() {
-    pwm_set(MOSFET, 0);
+    this->mosfet(0);
     float v = vmeter.vhigh();
-    pwm_set(MOSFET, this->duty);
+    this->mosfet(this->duty);
     return v;
 }
 

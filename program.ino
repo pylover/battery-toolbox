@@ -66,7 +66,7 @@ Program::tick(unsigned long ticks, float t, float c, float sv, float lv) {
 
     /* Check for completion */
     if ((ticks > 5) && this->completed(sv, lv)) {
-        this->mosfet(0);
+        this->updateduty(0);
         this->status = CS_DONE;
         play(BUZZER, programfinish_melody, &this->active);
         return;
@@ -76,7 +76,7 @@ Program::tick(unsigned long ticks, float t, float c, float sv, float lv) {
     if (this->duty && ((t > MAXTEMP) || (c > this->current_threshold))) {
         this->status = CS_COOLING;
         this->risk = this->duty - 1;
-        this->mosfet(max(0, this->duty - COOLING_STEPDOWN));
+        this->updateduty(max(0, this->duty - COOLING_STEPDOWN));
         BUZZ(100);
         return;
     }
@@ -94,7 +94,7 @@ Program::tick(unsigned long ticks, float t, float c, float sv, float lv) {
     /* Do something */
     if ((this->status != CS_COOLING) || (ticks % 10 == 0)) {
         this->status = CS_PASSING;
-        this->mosfet(min(this->risk, this->duty + 1));
+        this->updateduty(min(this->risk, this->duty + 1));
     }
 }
 
@@ -102,7 +102,7 @@ Program::tick(unsigned long ticks, float t, float c, float sv, float lv) {
 void
 Program::prepare() {
     this->risk = 255;
-    this->mosfet(0);
+    this->updateduty(0);
     this->ask();
     rotary.setPosition(this->current_threshold / CURRENT_STEP);
     lcd.clear();
@@ -111,7 +111,7 @@ Program::prepare() {
 
 void
 Program::terminate() {
-    this->mosfet(0);
+    this->updateduty(0);
 }
 
 
@@ -164,18 +164,30 @@ Program::rotated(int pos) {
 }
 
 
-int
+void
 Program::mosfet(int d) {
-    if (d > 255) {
-        this->duty = 255;
+    analogWrite(MOSFET1, d);
+    analogWrite(MOSFET2, d);
+}
+
+
+void
+Program::updateduty(int d) {
+    int nd;
+    if (d >= 255) {
+        nd = 255;
     }
     else if (d < 0) {
-        this->duty = 0;
+        nd = 0;
     }
     else {
-        this->duty = d;
+        nd = d;
     }
-    pwm_set(MOSFET, this->duty);
+
+    if (this->duty != nd) {
+        this->duty = nd;
+        this->mosfet(nd);
+    }
 }
 
 

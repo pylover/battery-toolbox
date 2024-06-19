@@ -62,8 +62,8 @@ Charge::sourcevoltage_get() {
 
 float
 Charge::loadvoltage_get() {
-    pwm_set(MOSFET, 0);
+    this->mosfet(0);
     float v = vmeter.vdiff();
-    pwm_set(MOSFET, this->duty);
+    this->mosfet(this->duty);
     return v;
 }

@@ -7,6 +7,45 @@
 - Resume the (dis)charge programm after power cut-off.
 
 
+## Charge circuit
+```
+ +-----------------+
+ | Battery Toolbox |
+ |                 |
+ |           Load+ > Not Connected
+ |           Load- > Not Connected
+ |                 |
+ |            BAT+ >---> To battery
+ |            BAT- >---> To battery
+ +-----------------+
+```
+
+
+## Discharge circuit
+```
+ +-----------------+
+ | Battery Toolbox |
+ |                 |
+ |           Load+ >------|0Ω22|--+
+ |                 |              |
+ |           Load- >--------------+
+ |                 |
+ |            BAT+ >---> To battery
+ |            BAT- >---> To battery
+ +-----------------+
+
+
+VBAT: 14 (max)
+RLOAD: 2.2Ω 100W
+RMOSFET: 3mΩ
+
+MAXI: VBAT / (RLOAD + RMOSFET) = 6.35A
+MAXW: VBAT * MAXI = 88.89W
+VRLOAD: VBAT * RLOAD / (RLOAD + RMOSFET) = 13.9V
+WRLOAD: RLOAD * (MAXI ^ 2)
+MAXMOSFETW: (VBAT - VRLOAD) * MAXI = 0.12W
+```
+
 ## Let's cook
 
 ### What you need:

@@ -43,12 +43,12 @@ POSSIBILITY OF SUCH DAMAGE.
 #define info Serial.print
 
 
-void
-pwm_set(int pin, int duty) {
-    analogWrite(pin, duty);
-    /* for PWM frequency of ~62K Hz */
-    TCCR1B = TCCR1B & B11100000 | B00001001;
-}
+// void
+// pwm_set(int pin, int duty) {
+//     analogWrite(pin, duty);
+//     /* for PWM frequency of ~62K Hz */
+//     TCCR1B = TCCR1B & B11100000 | B00001001;
+// }
 
 
 #endif  // COMMON_H_

@@ -59,7 +59,8 @@ class Program: public Dialog {
      float voltage_threshold;
      enum mosfet_status status;
      void ask();
-     int mosfet(int d);
+     void mosfet(int d);
+     void updateduty(int d);
      virtual void tick(unsigned long ticks, float t, float c, float sv,
              float lv);
      virtual float sourcevoltage_get();

@@ -52,7 +52,8 @@ static struct menu_entry actions[] = {
 #define MAXTEMP 100
 #define MAXPOWER 60
 #define VREF 4.8
-#define MOSFET 9
+#define MOSFET1 9
+#define MOSFET2 10
 
 #define RELAY_PIN 11
 #define ON 0
@@ -91,8 +92,10 @@ setup() {
     pinMode(BUZZER, OUTPUT);
     digitalWrite(BUZZER, 0);
 
-    pinMode(MOSFET, OUTPUT);
-    digitalWrite(MOSFET, 0);
+    pinMode(MOSFET1, OUTPUT);
+    pinMode(MOSFET2, OUTPUT);
+    digitalWrite(MOSFET1, 0);
+    digitalWrite(MOSFET2, 0);
 
     pinMode(RELAY_PIN, OUTPUT);
     RELAY(OFF);
